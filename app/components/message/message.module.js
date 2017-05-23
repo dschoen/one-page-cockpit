@@ -1,0 +1,1 @@
+var message = angular.module('message', []);

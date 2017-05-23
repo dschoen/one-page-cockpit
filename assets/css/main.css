@@ -1,0 +1,78 @@
+@CHARSET "UTF-8";
+
+/* --- Layout -------------------------------------------------------- */
+
+body {
+	background-color: #F7F7F7;
+	color: #232323;
+	
+	margin:0;
+	padding:0;
+	height: 100%;
+	min-height: 100%;
+}
+
+.footer {	
+	position:absolute;
+	width:100%;
+	bottom:0;
+	height: 20px;
+	
+	text-align: right;
+	font-size: 0.8em;
+	color: #BABABA;
+	
+	background-color: #757575;
+}
+
+/* --- Navbar -------------------------------------------------------- */ 
+.navbar {
+	width: 100%;
+}
+
+.navbar-left {
+	background-color: #DDDDDD;
+	border-bottom: 1px solid #BBBBBB; 
+	
+	margin-bottom: 0px;
+}
+
+.navbar-left .container{
+	width: 100%;
+}
+
+.navbar-left .navbar-brand {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	background-color: #386caf;
+	color: transparent;
+	text-shadow: 0px 2px 3px rgba(255,255,255,0.25);
+	-webkit-background-clip: text;
+	-moz-background-clip: text;
+	background-clip: text;
+	
+	font-weight: bold;
+	font-size: 1.5em;
+}
+
+.nav li a {
+	font-weight: bold;
+}
+
+.selected {
+	font-weight: bold;
+}
+
+.nav-space {
+	padding-left: 50px;
+}
+
+/* --- Content -------------------------------------------------------- */ 
+
+
+/* ----------------------------------------------- */
+
+.clearfix::after {
+  clear: both;
+  display: block;
+}

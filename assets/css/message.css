@@ -1,0 +1,22 @@
+#alertContainer {
+	z-index: 1000;
+	position: fixed;
+	top: 40px;
+	right: 50px;
+	width: 500px;	
+}
+
+#pendingContainer {
+	z-index: 1000;
+	position: fixed;
+	top: 10px;
+	left: 10px;
+	width: ;	
+	font-size: 0.85em;
+}
+.pending-active {
+	display: ;
+}
+.pending-inactive {
+	display: none;
+}

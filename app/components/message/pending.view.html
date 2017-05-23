@@ -1,0 +1,7 @@
+<div id="pendingContainer" ng-controller='messageController' >	
+    <div ng-repeat="pending in pendings"
+         class="pending alert alert-info"
+    >
+        <i class="fa fa-spinner fa-spin"></i> loading {{pending.msg}}...
+    </div>    
+</div>
