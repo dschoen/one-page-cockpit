@@ -40,11 +40,19 @@ corkboard.controller('corkboardController', function($scope, corkboardService, m
 		
 		ctrl.card = $scope.card;	
 		console.log(JSON.stringify(ctrl.card));
-		corkboardService.addOrEditCard(ctrl.card);
+		corkboardService.addOrEditCard(ctrl.card).then( function() {
+			ctrl.getCards();
+		});
 	};
 
 	$scope.cancelCardForm = function() {
 		$scope.showOverlay = "overlay-hidden";
+	};
+	
+	$scope.deleteCard = function(card) {
+		corkboardService.deleteCard(card).then( function() {
+			ctrl.getCards();
+		});
 	};
 	
 	// ----------------------------------------------------------

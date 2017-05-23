@@ -90,12 +90,37 @@ corkboard.factory('corkboardService', function ($http, CONFIG, messageService) {
 	          headers: {
 	              "Content-Type": "application/json"
 	          }
-			}).then(function successCallback(response) {
-				
+			}).then(function successCallback(response) {				
 				messageService.addAlert("success", "Card saved.");
+				return;
 				
 			}, function errorCallback(response) {
 				messageService.addAlert("danger", "Cannot add Card");				
+			    return null;
+			});			
+	}
+	
+	// ------------------------------------------
+	
+	corkboardService.deleteCard = function(card) {
+
+		console.log("deleteCard " + card.id);
+				
+		// add remote Card data		
+		return $http({
+			  method: 'DELETE',
+			  url: CONFIG.BACKEND_URL + '/cards/' + card.id,
+			  data: '',
+	          headers: {
+	              "Content-Type": "application/json"
+	          }
+			}).then(function successCallback(response) {
+				
+				messageService.addAlert("success", "Card deleted.");
+				return;
+				
+			}, function errorCallback(response) {
+				messageService.addAlert("danger", "Cannot delete Card");				
 			    return null;
 			});			
 	}

@@ -1,7 +1,7 @@
 .corkboard {
 	position: absolute;	
-	top: 50px;
-	bottom: 220px;
+	top: 30px;
+	bottom: 200px;
 	
 	width: 100%;	
 	background-color: #DADADA;
@@ -9,19 +9,56 @@
 	padding-left: 0px;
 }
 
+/* -- card --*/
+
 .card {
-	background-color: #EFEFEF;
+	width: 120px;
+	height: 80px;
+	background-color: #F0E68C;
+	/*background-color: #EFEFEF;*/
 	color: #232323;
-	
-	padding: 10px;
-	margin: 5px;
-	
 	float: left;
 	
 	border: 1px solid #CECECE;
 	border-radius: 0px;
 	box-shadow: 0px 10px 6px -6px #999999;
 }
+.card-header {
+	padding: 2px;
+}
+.card-light {
+	float: left;
+	margin: 0 auto;
+  	width: 12px;
+  	height: 12px;  	
+  	border-radius: 50%;
+}
+.light-ok {
+	background-color: #ABFF00;
+  	box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px, #89FF00 0 2px 12px;
+}
+.light-nok {
+	background-color: #CC0000;
+  	box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #440000 0 -1px 9px, #890000 0 2px 12px;
+}
+.light-warn {
+	background-color: #FFFF00;
+  	box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #BBBB00 0 -1px 9px, #DDDD00 0 2px 12px;
+}
+.light-none {
+	background-color: #BBBBBB;
+	background: -moz-radial-gradient(circle, #BBBBBB, #888888, #333333); /* Firefox 3.6 to 15 */
+  	background: radial-gradient(circle, #BBBBBB, #888888, #333333); /* Standard syntax */
+}
+.card-button {
+	float: right;
+}
+.card-body{
+	padding: 5px;
+	text-align: center;
+	font-size: 1.0em;
+}
+/* --- Table ---*/
 
 .cork-table {
 	width: 100%;
@@ -33,12 +70,14 @@
 .priority {
 }
 
-.category {
-	
-	height: 33%;
-	
+.category {	
+	height: 33%;	
 	border: 1px solid #CECECE;
+	vertical-align: top;
+	padding: 5px;
 }
+
+/* -- Other --*/
 
 .drag-over {
 	border: 1px solid #9ecaed;
@@ -61,15 +100,17 @@
 }
 .overlay-visible {
 }
-.card-form{
+.card-form {
 	margin: 0 auto;
-	margin-top:200px;
-	
+	margin-top:100px;	
 	width: 800px;
 	
 	background-color: #dedede;
 	border-radius: 5px;
-	border: 1px solid #BBBBBB;
-	
+	border: 1px solid #BBBBBB;	
 	padding: 10px;
+}
+
+.card-form-close {
+	float:right;
 }

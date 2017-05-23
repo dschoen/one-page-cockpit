@@ -15,7 +15,6 @@ $input = json_decode(file_get_contents('php://input'),true);
 
 error_log("Request: " . $method . " " . $module . "/" . $id );  // get
 
-
 // ------------------------------------------------------------------------------------
 
 // -- Get Module ---
@@ -29,55 +28,55 @@ switch ($module) {
 		break;
 }
 
+// open file
+$file = fopen(dirname(__FILE__)."/".$data_file, "r") or die("Unable to open file!");
+$elements = json_decode( fread($file,filesize(dirname(__FILE__)."/".$data_file)), true );
+fclose($file);
 
-if ($method == 'GET') {
-
-	$file = fopen(dirname(__FILE__)."/".$data_file, "r") or die("Unable to open file!");
-	$json = json_decode( fread($file,filesize(dirname(__FILE__)."/".$data_file)), true );
-	fclose($file);
+switch ($method) {
+	case 'GET':	
+		echo json_encode($elements);
+		return;
+		break;
+	case 'POST':	
+		// create ID
+		$input['id'] = hexdec(uniqid());
+		
+		// add element to list
+		$elements[] = $input;
+		break;
+	case 'PUT':
 	
-	echo json_encode($json);
-	
-} elseif ($method == 'POST') {
-	//get all cards
-	$file = fopen(dirname(__FILE__)."/".$data_file, "r") or die("Unable to open file!");
-	$elements = json_decode( fread($file,filesize(dirname(__FILE__)."/".$data_file)), true );
-	fclose($file);
-	
-	// create ID
-	$input['id'] = uniqid();
-	
-	// add element to list
-	$elements[] = $input;
-	
-	// save again
-	$file = fopen(dirname(__FILE__)."/".$data_file, "w") or die("Unable to open file!");
-	fwrite($file, json_encode($elements));
-	fclose($file);
-
-} elseif ($method == 'PUT') {
-	
-	//get all cards
-	$file = fopen(dirname(__FILE__)."/".$data_file, "r") or die("Unable to open file!");
-	$elements = json_decode( fread($file,filesize(dirname(__FILE__)."/".$data_file)), true );
-	fclose($file);
-	
-	// update the one
-	for ($i = 0; $i < sizeof($elements); $i++) {
-		$element = $elements[$i];
-		if ($element['id'] = $input['id']) {
-			$elements[$i] = $input;
-			break;
+		// update the one
+		for ($i = 0; $i < sizeof($elements); $i++) {
+			$element = $elements[$i];
+			if ($element['id'] = $input['id']) {
+				$elements[$i] = $input;
+				break;
+			}
 		}
-	}
-	
-	// save again
-	$file = fopen(dirname(__FILE__)."/".$data_file, "w") or die("Unable to open file!");
-	fwrite($file, json_encode($elements));
-	fclose($file);
-	
-} elseif ($method == 'DELETE') {
-	
-} else {
-
+		break;
+	case 'DELETE':
+		// delete the one
+		for ($i = 0; $i < sizeof($elements); $i++) {
+			$element = $elements[$i];
+			if ($element['id'] = $id) {			
+				
+				array_splice($elements, $i, 1);
+				
+				break;
+			}
+		}
+		break;
+	default:
+		echo "Bad Request.";
+		break;		
 }
+
+// save again
+$file = fopen(dirname(__FILE__)."/".$data_file, "w") or die("Unable to open file!");
+fwrite($file, json_encode($elements));
+fclose($file);
+
+
+?>

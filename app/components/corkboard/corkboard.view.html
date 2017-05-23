@@ -4,20 +4,28 @@
 		<tr ng-repeat="prio in prios" class="priority">
 		
 			<td ng-repeat="cat in cats" class="category" droppable priority="{{prio}}" category="{{cat}}">
-		
 				
 				<div ng-repeat="card in cards[prio][cat]" class="card" draggable id="{{card.id}}">
 		
-					<div>{{card.title}} - {{card.status}} - 
-						<a href="#" class="btn btn-default btn-xs" ng-click="openCardFormEdit(card)">edit</a>
-					</div>
-					<div>{{card.text}}</div>
-		
-				</div>
+					<div class="card-header">
+						<span class="card-light light-{{card.status}}" >&nbsp;</span>						
+						<a href="#" 
+							class="btn btn-default btn-xs card-button" 
+							ng-click="deleteCard(card)">
+							<span class="glyphicon glyphicon-trash"></span>
+						</a>
+						<a href="#" 
+							class="btn btn-default btn-xs card-button" 
+							ng-click="openCardFormEdit(card)">
+							<span class="glyphicon glyphicon-pencil"></span>
+						</a>
+						<div class="clearfix"></div>
+					</div>					
+					
+					<div class="card-body">{{card.title}}</div>
+				</div>				
 				
-				<div class="new-card" ng-click="openCardForm()"><a href="#" class="btn btn-default btn-xs">+</a></div>
-				
-				<div class="clearfix">&nbsp;</div>
+				<div class="clearfix"></div>
 			</td>	
 		</tr>	
 	</table>	
@@ -25,47 +33,69 @@
 
 	<!-- --------------------------- -->
 	
+	<div class="buttons-new" >
+		<a href="#" class="btn btn-primary btn-xs"
+			ng-click="openCardForm()">
+		<span class="glyphicon glyphicon-plus"></span>
+		Add new Card
+		</a>
+	</div>
+	
+	
+	<!-- ---Overlay--- -->
 	<div class="form-overlay {{ showOverlay }}">
 		<div class="card-form">
-			<form name="form.cardForm">
+			<button class="btn btn-default btn-xs card-form-close" ng-click="cancelCardForm()">
+				<span class="glyphicon glyphicon-remove"></span>
+			</button>
+			<form name="form.cardForm" class="form-horizontal">
+		        
 		        <!-- titel -->
 		        <div class="form-group">
-		            <label>Titel:</label>
-		            <input type="text" name="card-title" class="form-control" ng-model="card.title">
+		            <label class="control-label col-sm-2" for="card.title">Titel:</label>
+		            <div class="col-sm-9">
+		            	<input class="form-control" type="text" name="card.title" ng-model="card.title" placeholder="Titel">
+		            </div>
 		        </div>		       
 		        <!-- status -->
 		        <div class="form-group">
-		            <label>Status:</label>
-		            <select name="singleSelect" ng-model="card.status">
-      					<option value="ok">ok</option>
-				      	<option value="nok">nok</option>
-				      	<option value="warn">warn</option>
-				      	<option value="none">none</option>
-				    </select>
+		            <label class="control-label col-sm-2" for="card.status">Status:</label>
+		            <div class="col-sm-9">
+			            <select name="card.status" ng-model="card.status">
+	      					<option value="ok">ok</option>
+					      	<option value="nok">nok</option>
+					      	<option value="warn">warn</option>
+					      	<option value="none" selected>none</option>
+					    </select>
+					</div>
 		        </div>
 		        <!-- priority -->
 		        <div class="form-group">
-		            <label>Priorität:</label>
-		            <select name="singleSelect" ng-model="card.priority">
-      					<option value="high">high</option>
-				      	<option value="medium">medium</option>
-				      	<option value="low">low</option>
-				    </select>
+		            <label class="control-label col-sm-2" for="card.priority">Priorität:</label>
+		            <div class="col-sm-9">
+			            <select name="card.priority" ng-model="card.priority">
+	      					<option value="high">high</option>
+					      	<option value="medium">medium</option>
+					      	<option value="low">low</option>
+					    </select>
+					</div>
 		        </div>  
 		        <!-- category -->
 		        <div class="form-group">
-		            <label>Kategorie:</label>
-		            <select name="singleSelect" ng-model="card.category">
-      					<option value="backlog">backlog</option>
-				      	<option value="inProgress">inProgress</option>
-				      	<option value="todo">todo</option>
-				    </select>
+		            <label class="control-label col-sm-2" for="card.category">Kategorie:</label>
+		            <div class="col-sm-9">
+			            <select name="card.category" ng-model="card.category">
+	      					<option value="backlog">backlog</option>
+					      	<option value="inProgress">inProgress</option>
+					      	<option value="todo">todo</option>
+					    </select>
+					</div>
 		        </div>	        
 			 	<!-- text -->
-		        <div class="form-group">
-		            <label>Beschreibung:</label>
-		            <!-- <textarea rows="10" cols="50" name="card-text" class="form-control" ng-model="card.text"></textarea>-->
-		            <div text-angular ng-model="card.text"></div>
+		        <div class="">
+		            <div text-angular 
+		            	ng-model="card.text" 
+		            	ta-toolbar="[['h1','h2','h3'],['pre', 'quote'],['bold','italics','underline','strikeThrough'],['ul','ol'],['html','insertImage','insertLink'],['undo','clear']]"></div>
 		        </div>
 			    <div class="form-footer">
 			        <button class="btn btn-primary" ng-click="submitCardForm()">Submit</button>
