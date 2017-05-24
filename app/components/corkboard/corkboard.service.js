@@ -3,8 +3,6 @@ corkboard.factory('corkboardService', function ($http, CONFIG, messageService) {
 	corkboardService = this;
 	
 	corkboardService.cards = [];	
-	corkboardService.prios = ["high", "medium", "low"];
-	corkboardService.cats = ["backlog", "inProgress", "todo"];
 	
 	// ------------------------------------------
 	
@@ -61,7 +59,7 @@ corkboard.factory('corkboardService', function ($http, CONFIG, messageService) {
 		return $http({
 			  method: 'PUT',
 			  url: CONFIG.BACKEND_URL + '/cards/' + id,
-			  data: JSON.stringify(card),
+			  data: angular.toJson(card),
 	          headers: {
 	              "Content-Type": "application/json"
 	          }
@@ -79,14 +77,16 @@ corkboard.factory('corkboardService', function ($http, CONFIG, messageService) {
 	
 	corkboardService.addOrEditCard = function(card) {
 
-		console.log("addCard " + card.title);	
+		console.log("addOrEditCard " + card.title);	
 		console.log(JSON.stringify(card));
-				
+		
+		var http_method = (card.id > 0 ? 'PUT' : 'POST');		
+		
 		// add remote Card data		
 		return $http({
-			  method: 'POST',
+			  method: http_method,
 			  url: CONFIG.BACKEND_URL + '/cards/',
-			  data: JSON.stringify(card),
+			  data: angular.toJson(card),
 	          headers: {
 	              "Content-Type": "application/json"
 	          }
@@ -129,23 +129,52 @@ corkboard.factory('corkboardService', function ($http, CONFIG, messageService) {
 	
 	corkboardService.sort = function(cards) {
 		
-		var data = ["high", "medium", "low"];
-		data["high"] = new Array("backend", "inProgress", "todo");
-		data["medium"] = new Array("backend", "inProgress", "todo");
-		data["low"] = new Array ("backend", "inProgress", "todo");
+		var grid = {};
+		var priorities = CONFIG.PRIORITIES;
+		var categories = CONFIG.CATEGORIES;
 		
-		
+				
+		// set up grid
+		for (var i=0; i<priorities.length; i++  ){
+			for (var j=0; j<categories.length; j++  ){				
+				var field = priorities[i]+"-"+categories[j];				
+				grid[field] = new Array();				
+			}			
+		}		
+				
+		// sort Cards into grid
 		for(var i = 0; i < cards.length; i++) {			
-			var card = cards[i];
-			
-			data[ card.priority ][ card.category ] = new Array();
-			data[ card.priority ][ card.category ].push(card);
+			var card = cards[i];			
+			var field = card.priority+"-"+card.category;			
+			grid[ field ].push(card);
 		}
 		
-		return data;
+		return grid;
 	}
 	
     // ------------------------------------------
     
+	corkboardService.getCardTemplate = function() {
+		
+		let createDate = new Date().toISOString().substr(0, 10);
+		
+		var cardTemplate = {
+				"id": '0',
+				"title": '',
+				"text": '',
+				"status": 'none',
+				"priority": 'medium',
+				"category": 'inProgress',
+				"effort" : 'normal',				
+				"createdate": createDate,
+				"startdate": '',
+				"enddate": ''
+		};
+		
+		return cardTemplate;
+	}
+	
+	// ------------------------------------------
+	
     return corkboardService;
 });

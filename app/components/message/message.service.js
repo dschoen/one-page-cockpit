@@ -24,7 +24,7 @@ message.factory('messageService', function($rootScope, $timeout) {
     	
     	$timeout(function(){
     		messageService.alerts.splice(index, 1);
-        }, 5000);
+        }, 2000);
     	
     }
 

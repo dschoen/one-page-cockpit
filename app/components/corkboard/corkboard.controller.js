@@ -1,22 +1,13 @@
-corkboard.controller('corkboardController', function($scope, corkboardService, messageService) {
+corkboard.controller('corkboardController', function($scope, corkboardService, messageService, CONFIG) {
 		
 	var ctrl = this;	//remember controller
-	
-	ctrl.card = {
-			"id": '',
-			"title": 'test',
-			"text": '',
-			"status": '',
-			"priority": '',
-			"category": ''	
-	};
 	
 	// --- Methods ----------------------------------------------
 
 	ctrl.getCards = function() {		
 		
 		corkboardService.getCards().then( function(data) {
-			$scope.cards = data;
+			$scope.data.cards = data;
 		});		
 	}		
 	
@@ -24,29 +15,33 @@ corkboard.controller('corkboardController', function($scope, corkboardService, m
 	
 	// ----------------------------------------------------------
 	
-	$scope.openCardForm = function() {
-		$scope.showOverlay = "overlay-visible";
-		console.log("Open Form.");
+	$scope.openCardFormNew = function() {
+		$scope.data.showOverlay = "overlay-visible";
+		$scope.data.card = corkboardService.getCardTemplate();
 	};
 	
 	$scope.openCardFormEdit = function(card) {
-		$scope.showOverlay = "overlay-visible";
-		$scope.card = card;
-		console.log("Open Form.");
+		$scope.data.showOverlay = "overlay-visible";
+		
+		$scope.data.card = card;
+		$scope.data.card.startdate = new Date($scope.data.card.startdate);
+		$scope.data.card.enddate = new Date($scope.data.card.enddate);
 	};
 
 	$scope.submitCardForm = function() {
-		$scope.showOverlay = "overlay-hidden";
+		$scope.data.showOverlay = "overlay-hidden";
 		
-		ctrl.card = $scope.card;	
-		console.log(JSON.stringify(ctrl.card));
-		corkboardService.addOrEditCard(ctrl.card).then( function() {
+		$scope.data.card.startdate = $scope.data.card.startdate.toISOString().substr(0, 10);
+		$scope.data.card.enddate = $scope.data.card.enddate.toISOString().substr(0, 10);
+		
+		corkboardService.addOrEditCard($scope.data.card).then( function() {
 			ctrl.getCards();
 		});
 	};
 
 	$scope.cancelCardForm = function() {
-		$scope.showOverlay = "overlay-hidden";
+		$scope.data.showOverlay = "overlay-hidden";
+		$scope.data.card = corkboardService.getCardTemplate();
 	};
 	
 	$scope.deleteCard = function(card) {
@@ -56,12 +51,15 @@ corkboard.controller('corkboardController', function($scope, corkboardService, m
 	};
 	
 	// ----------------------------------------------------------
-	$scope.prios = corkboardService.prios;
-	$scope.cats = corkboardService.cats;
 	
-	$scope.showOverlay = 'overlay-hidden';
 	
-	$scope.card = ctrl.card;
+	$scope.data = {};
+	$scope.data.today 		= new Date().toISOString().substr(0, 10);;
+	$scope.data.showOverlay = 'overlay-hidden';	
+	$scope.data.card 		= corkboardService.cardTemplate;
+	$scope.data.prios 		= CONFIG.PRIORITIES;
+	$scope.data.cats 		= CONFIG.CATEGORIES;
+	$scope.data.efforts 	= CONFIG.EFFORTS;
 	
     return ctrl;    
 });

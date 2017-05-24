@@ -6,9 +6,9 @@
 	height: 200px;
 	
 	background-color: #DADADA;	
-	border-top: 1px solid #BEBEBE;
+	/* border-top: 1px solid #BEBEBE; */
 	
-	padding-left: 20px;
+	padding-left: 50px;
 }
 
 .memo-card {

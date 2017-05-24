@@ -1,11 +1,17 @@
 <div ng-controller="corkboardController as cork" class="corkboard">
 	
 	<table class="cork-table">	
-		<tr ng-repeat="prio in prios" class="priority">
+		<tr ng-repeat="prio in data.prios" class="priority">
 		
-			<td ng-repeat="cat in cats" class="category" droppable priority="{{prio}}" category="{{cat}}">
+			<td ng-repeat="cat in data.cats" class="category" droppable priority="{{prio}}" category="{{cat}}">
 				
-				<div ng-repeat="card in cards[prio][cat]" class="card" draggable id="{{card.id}}">
+				<div ng-repeat="card in data.cards[prio+'-'+cat] track by card.id"
+					draggable
+					id="{{card.id}}"
+					class="card"
+					ng-style="{'background-color': data.efforts[ card.effort ]}"
+					ng-class="{ 'card-overtime' : card.enddate < data.today, 'card-undertime' : data.today < card.startdate }"
+					>
 		
 					<div class="card-header">
 						<span class="card-light light-{{card.status}}" >&nbsp;</span>						
@@ -23,6 +29,7 @@
 					</div>					
 					
 					<div class="card-body">{{card.title}}</div>
+					<div class="card-footer">{{card.enddate}}</div>
 				</div>				
 				
 				<div class="clearfix"></div>
@@ -31,11 +38,11 @@
 	</table>	
 
 
-	<!-- --------------------------- -->
+	<!-- ----------------------------------------------------------------------------------------------------- -->
 	
 	<div class="buttons-new" >
 		<a href="#" class="btn btn-primary btn-xs"
-			ng-click="openCardForm()">
+			ng-click="openCardFormNew()">
 		<span class="glyphicon glyphicon-plus"></span>
 		Add new Card
 		</a>
@@ -43,37 +50,25 @@
 	
 	
 	<!-- ---Overlay--- -->
-	<div class="form-overlay {{ showOverlay }}">
+	<div class="form-overlay {{ data.showOverlay }}">
 		<div class="card-form">
-			<button class="btn btn-default btn-xs card-form-close" ng-click="cancelCardForm()">
+			<button class="btn btn-warning btn-xs card-form-close" ng-click="cancelCardForm()">
 				<span class="glyphicon glyphicon-remove"></span>
 			</button>
 			<form name="form.cardForm" class="form-horizontal">
 		        
 		        <!-- titel -->
 		        <div class="form-group">
-		            <label class="control-label col-sm-2" for="card.title">Titel:</label>
+		            <label class="control-label col-sm-2" for="data.card.title">Titel:</label>
 		            <div class="col-sm-9">
-		            	<input class="form-control" type="text" name="card.title" ng-model="card.title" placeholder="Titel">
+		            	<input class="form-control" type="text" name="data.card.title" ng-model="data.card.title" placeholder="Titel">
 		            </div>
-		        </div>		       
-		        <!-- status -->
-		        <div class="form-group">
-		            <label class="control-label col-sm-2" for="card.status">Status:</label>
-		            <div class="col-sm-9">
-			            <select name="card.status" ng-model="card.status">
-	      					<option value="ok">ok</option>
-					      	<option value="nok">nok</option>
-					      	<option value="warn">warn</option>
-					      	<option value="none" selected>none</option>
-					    </select>
-					</div>
 		        </div>
 		        <!-- priority -->
 		        <div class="form-group">
-		            <label class="control-label col-sm-2" for="card.priority">Priorität:</label>
+		            <label class="control-label col-sm-2" for="data.card.priority">Priorität:</label>
 		            <div class="col-sm-9">
-			            <select name="card.priority" ng-model="card.priority">
+			            <select name="data.card.priority" ng-model="data.card.priority" class='selectpicker'>
 	      					<option value="high">high</option>
 					      	<option value="medium">medium</option>
 					      	<option value="low">low</option>
@@ -82,19 +77,65 @@
 		        </div>  
 		        <!-- category -->
 		        <div class="form-group">
-		            <label class="control-label col-sm-2" for="card.category">Kategorie:</label>
+		            <label class="control-label col-sm-2" for="data.card.category">Kategorie:</label>
 		            <div class="col-sm-9">
-			            <select name="card.category" ng-model="card.category">
+			            <select name="data.card.category" ng-model="data.card.category" class=''>
 	      					<option value="backlog">backlog</option>
 					      	<option value="inProgress">inProgress</option>
 					      	<option value="todo">todo</option>
 					    </select>
 					</div>
-		        </div>	        
+		        </div>
+		        <!-- status -->
+		        <div class="form-group">
+		            <label class="control-label col-sm-2" for="data.card.status">Status:</label>
+		            <div class="col-sm-9">
+			            <select name="data.card.status" ng-model="data.card.status">
+	      					<option value="ok">ok</option>
+					      	<option value="nok">nok</option>
+					      	<option value="warn">warn</option>
+					      	<option value="none">none</option>
+					    </select>
+					</div>
+		        </div>
+		        <!-- effort -->
+		        <div class="form-group">
+		            <label class="control-label col-sm-2" for="data.card.effort">Aufwand:</label>
+		            <div class="col-sm-9">
+			            <select name="data.card.status" ng-model="data.card.effort" >
+	      					 <option ng-repeat="(effort, color) in data.efforts" value="{{effort}}">{{effort}}</option>
+					    </select>
+					</div>
+		        </div>   
+		        
+		        <!-- startdate -->
+		        <div class="form-group">
+		            <label class="control-label col-sm-2" for="data.card.startdate">Beginn:</label>
+		            <div class="col-sm-9">
+		            	<input class="form-control" 
+		            	type="date" 
+		            	name="data.card.startdate" 
+		            	ng-model="data.card.startdate" 
+		            	placeholder="yyyy-MM-dd" min="2017-01-01" max="2050-12-31">
+		            </div>
+		        </div>
+		        
+		        <!-- enddate -->
+		        <div class="form-group">
+		            <label class="control-label col-sm-2" for="data.card.enddate">Ende:</label>
+		            <div class="col-sm-9">
+		            	<input class="form-control" 
+		            	type="date" 
+		            	name="data.card.enddate" 
+		            	ng-model="data.card.enddate" 
+		            	placeholder="yyyy-MM-dd" min="2017-01-01" max="2050-12-31">
+		            </div>
+		        </div>		        
+		            
 			 	<!-- text -->
 		        <div class="">
 		            <div text-angular 
-		            	ng-model="card.text" 
+		            	ng-model="data.card.text" 
 		            	ta-toolbar="[['h1','h2','h3'],['pre', 'quote'],['bold','italics','underline','strikeThrough'],['ul','ol'],['html','insertImage','insertLink'],['undo','clear']]"></div>
 		        </div>
 			    <div class="form-footer">

@@ -45,12 +45,11 @@ switch ($method) {
 		// add element to list
 		$elements[] = $input;
 		break;
-	case 'PUT':
-	
-		// update the one
+	case 'PUT':	
+		// update one Element
 		for ($i = 0; $i < sizeof($elements); $i++) {
 			$element = $elements[$i];
-			if ($element['id'] = $input['id']) {
+			if ($element['id'] == $input['id']) {
 				$elements[$i] = $input;
 				break;
 			}
@@ -60,10 +59,9 @@ switch ($method) {
 		// delete the one
 		for ($i = 0; $i < sizeof($elements); $i++) {
 			$element = $elements[$i];
-			if ($element['id'] = $id) {			
-				
-				array_splice($elements, $i, 1);
-				
+			if ($element['id'] == $id) {				
+				//error_log("DELETE Element: ".json_encode($element));				
+				array_splice($elements, $i, 1);				
 				break;
 			}
 		}
