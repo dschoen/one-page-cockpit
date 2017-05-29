@@ -23,7 +23,7 @@ corkboard.factory('corkboardService', function ($http, CONFIG, messageService) {
 				corkboardService.cards = response.data;
 				
 				messageService.closePending(pend);					
-				return corkboardService.sort(corkboardService.cards);
+				return corkboardService.prepareCards(corkboardService.cards);
 				
 			}, function errorCallback(response) {
 			    messageService.addAlert("danger", "Cannot read Cards.");
@@ -77,15 +77,24 @@ corkboard.factory('corkboardService', function ($http, CONFIG, messageService) {
 	
 	corkboardService.addOrEditCard = function(card) {
 
-		console.log("addOrEditCard " + card.title);	
+		console.log("addOrEditCard: " + card.title);	
 		console.log(JSON.stringify(card));
 		
-		var http_method = (card.id > 0 ? 'PUT' : 'POST');		
+		// add enddatestring			
+		if (card.enddate) {
+			var date = new Date (card.enddate);
+			card.enddatestring = date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear();
+		} else {
+			card.enddatestring = "";
+		}	
+		
+		var http_method = (card.id > 0 ? 'PUT' : 'POST');
+		var http_url = (card.id > 0 ? CONFIG.BACKEND_URL + '/cards/' + card.id : CONFIG.BACKEND_URL + '/cards/');
 		
 		// add remote Card data		
 		return $http({
 			  method: http_method,
-			  url: CONFIG.BACKEND_URL + '/cards/',
+			  url: http_url,
 			  data: angular.toJson(card),
 	          headers: {
 	              "Content-Type": "application/json"
@@ -127,7 +136,7 @@ corkboard.factory('corkboardService', function ($http, CONFIG, messageService) {
 	
 	// ------------------------------------------
 	
-	corkboardService.sort = function(cards) {
+	corkboardService.prepareCards = function(cards) {
 		
 		var grid = {};
 		var priorities = CONFIG.PRIORITIES;
@@ -144,12 +153,7 @@ corkboard.factory('corkboardService', function ($http, CONFIG, messageService) {
 				
 		// sort Cards into grid
 		for(var i = 0; i < cards.length; i++) {			
-			var card = cards[i];	
-			
-			// add enddatestring
-			var date = new Date (card.enddate);
-			card.enddatestring = date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear();
-			
+			var card = cards[i];			
 			var field = card.priority+"-"+card.category;			
 			grid[ field ].push(card);
 		}
@@ -172,8 +176,9 @@ corkboard.factory('corkboardService', function ($http, CONFIG, messageService) {
 				"category": 'inProgress',
 				"effort" : 'normal',				
 				"createdate": createDate,
-				"startdate": '',
-				"enddate": ''
+				"startdate": null,
+				"enddate": null,
+				"enddatestring": ''					
 		};
 		
 		return cardTemplate;

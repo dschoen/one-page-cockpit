@@ -70,9 +70,6 @@ body {
 
 /* --- Content -------------------------------------------------------- */ 
 
-
-/* ----------------------------------------------- */
-
 .clearfix::after {
   clear: both;
   display: block;
@@ -86,7 +83,7 @@ body {
 }
 
 .ta-editor {
-    min-height: 300px;
+    min-height: 200px;
     height: auto;
     overflow: auto;
     font-family: inherit;

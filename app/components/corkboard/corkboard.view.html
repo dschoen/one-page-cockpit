@@ -13,7 +13,8 @@
 					ng-class="{ 'card-overtime' : card.enddate < data.today, 'card-undertime' : data.today < card.startdate }"
 					>
 					<div class="card-header">
-						<span class="card-light light-{{card.status}}" >&nbsp;</span>						
+						<span class="card-light light-{{card.status}}" >&nbsp;</span>
+						<span class="card-date">{{card.enddatestring}}</span>					
 						<a href="#" 
 							class="btn btn-default btn-xs card-button" 
 							ng-click="deleteCard(card)">
@@ -27,11 +28,9 @@
 						<div class="clearfix"></div>
 					</div>					
 					
-					<div class="card-body">{{card.title}}</div>
-					<div class="card-footer">{{card.enddatestring}}</div>
-				</div>				
-				
-				<div class="clearfix"></div>
+					<div class="card-body" data-toggle="tooltip" title="{{card.title}}">{{card.title}}</div>
+					<div class="card-footer"></div>
+				</div>
 			</td>	
 		</tr>	
 	</table>	
@@ -56,83 +55,95 @@
 			</button>
 			<form name="form.cardForm" class="form-horizontal">
 		        
+		        <!-- 1. row -->
 		        <!-- titel -->
 		        <div class="form-group">
-		            <label class="control-label col-sm-2" for="data.card.title">Titel:</label>
-		            <div class="col-sm-9">
+		            <label class="control-label col-xs-2" for="data.card.title">Titel:</label>
+		            <div class="col-xs-9">
 		            	<input name="title" ng-model="data.card.title" class="form-control" type="text"  placeholder="Titel">
 		            </div>
 		        </div>
-		        <!-- priority -->
-		        <div class="form-group">
-		            <label class="control-label col-sm-2" for="data.card.priority">Priorität:</label>
-		            <div class="col-sm-9">
-			            <select name="priority" ng-model="data.card.priority" class='selectpicker'>
-	      					<option value="high">high</option>
-					      	<option value="medium">medium</option>
-					      	<option value="low">low</option>
-					    </select>
-					</div>
-		        </div>  
-		        <!-- category -->
-		        <div class="form-group">
-		            <label class="control-label col-sm-2" for="data.card.category">Kategorie:</label>
-		            <div class="col-sm-9">
-			            <select name="category" ng-model="data.card.category" class=''>
-	      					<option value="backlog">backlog</option>
-					      	<option value="inProgress">inProgress</option>
-					      	<option value="todo">todo</option>
-					    </select>
-					</div>
-		        </div>
-		        <!-- status -->
-		        <div class="form-group">
-		            <label class="control-label col-sm-2" for="data.card.status">Status:</label>
-		            <div class="col-sm-9">
-			            <select name="status" ng-model="data.card.status">
-	      					<option value="ok">ok</option>
-					      	<option value="nok">nok</option>
-					      	<option value="warn">warn</option>
-					      	<option value="none">none</option>
-					    </select>
-					</div>
-		        </div>
-		        <!-- effort -->
-		        <div class="form-group">
-		            <label class="control-label col-sm-2" for="data.card.effort">Aufwand:</label>
-		            <div class="col-sm-9">
-			            <select name="effort" ng-model="data.card.effort" >
-	      					 <option ng-repeat="(effort, color) in data.efforts" value="{{effort}}">{{effort}}</option>
-					    </select>
-					</div>
-		        </div>   
 		        
-		        <!-- startdate -->
+		        <!-- 2.  and 3.row -->
 		        <div class="form-group">
-		            <label class="control-label col-sm-2" for="data.card.startdate">Beginn:</label>
-		            <div class="col-sm-9">
-		            	<input class="form-control" 
-		            	type="date" 
-		            	name="startdate" 
-		            	ng-model="data.card.startdate" 
-		            	placeholder="yyyy-MM-dd" min="2017-01-01" max="2050-12-31">
-		            	<span class="form-invalid-message" ng-show="form.cardForm.startdate.$invalid" >Enter a valid date.</span>
-		            </div>
-		        </div>
-		        
-		        <!-- enddate -->
-		        <div class="form-group">
-		            <label class="control-label col-sm-2" for="data.card.enddate">Ende:</label>
-		            <div class="col-sm-9">
-		            	<input class="form-control" 
-		            	type="date" 
-		            	name="enddate" 
-		            	ng-model="data.card.enddate" 
-		            	placeholder="yyyy-MM-dd" min="2017-01-01" max="2050-12-31">
-		            	<span class="form-invalid-message" ng-show="form.cardForm.enddate.$invalid" >Enter a valid date.</span>
-		            </div>
-		            
-		        </div>		        
+		        	<div class="col-xs-1"></div>
+		        	<div class="col-xs-11">
+				        <!-- 2. row -->
+				        <div class="form-group">
+					        <!-- priority -->
+					        <div class="form-group col-xs-4">
+					            <label class="control-label col-xs-5" for="data.card.priority">Priorität:</label>
+					            <div class="col-xs-7">
+						            <select name="priority" ng-model="data.card.priority" class='selectpicker'>
+				      					<option value="high">high</option>
+								      	<option value="medium">medium</option>
+								      	<option value="low">low</option>
+								    </select>
+								</div>
+					        </div>  
+					        <!-- category -->
+					        <div class="form-group col-xs-4">
+					            <label class="control-label col-xs-5" for="data.card.category">Kategorie:</label>
+					            <div class="col-xs-7">
+						            <select name="category" ng-model="data.card.category" class=''>
+				      					<option value="backlog">backlog</option>
+								      	<option value="inProgress">inProgress</option>
+								      	<option value="todo">todo</option>
+								    </select>
+								</div>
+					        </div>					    
+					    	<!-- effort -->
+					        <div class="form-group col-xs-4">
+					            <label class="control-label col-xs-5" for="data.card.effort">Aufwand:</label>
+					            <div class="col-xs-7">
+						            <select name="effort" ng-model="data.card.effort" >
+				      					 <option ng-repeat="(effort, color) in data.efforts" value="{{effort}}">{{effort}}</option>
+								    </select>
+								</div>
+					        </div>
+					   </div>
+					   
+					   <!-- 3 row -->
+					   <div class="form-group">
+					        <!-- status -->
+					        <div class="form-group col-xs-4">
+					            <label class="control-label col-xs-5" for="data.card.status">Status:</label>
+					            <div class="col-xs-7">
+						            <select name="status" ng-model="data.card.status">
+				      					<option value="ok">ok</option>
+								      	<option value="nok">nok</option>
+								      	<option value="warn">warn</option>
+								      	<option value="none">none</option>
+								    </select>
+								</div>
+					        </div>
+					        <!-- startdate -->
+					        <div class="form-group col-xs-4">
+					            <label class="control-label col-xs-5" for="data.card.startdate">Beginn:</label>
+					            <div class="col-xs-7">
+					            	<input class="form-control" 
+					            	type="date" 
+					            	name="startdate" 
+					            	ng-model="data.card.startdate" 
+					            	placeholder="yyyy-MM-dd" min="2017-01-01" max="2050-12-31">
+					            	<span class="form-invalid-message" ng-show="form.cardForm.startdate.$invalid" >Enter a valid date.</span>
+					            </div>
+					        </div>			        
+					        <!-- enddate -->
+					        <div class="form-group col-xs-4">
+					            <label class="control-label col-xs-5" for="data.card.enddate">Ende:</label>
+					            <div class="col-xs-7">
+					            	<input class="form-control" 
+					            	type="date" 
+					            	name="enddate" 
+					            	ng-model="data.card.enddate" 
+					            	placeholder="yyyy-MM-dd" min="2017-01-01" max="2050-12-31">
+					            	<span class="form-invalid-message" ng-show="form.cardForm.enddate.$invalid" >Enter a valid date.</span>
+					            </div>		            
+					        </div>
+				        </div>
+				    </div>
+				</div>	        
 		            
 			 	<!-- text -->
 		        <div class="">

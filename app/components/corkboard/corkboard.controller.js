@@ -26,8 +26,8 @@ corkboard.controller('corkboardController', function($scope, corkboardService, m
 		// Make a Copy of the chosen Card
 		$scope.data.card = JSON.parse(JSON.stringify(card));
 		// parse Dates
-		$scope.data.card.startdate = ($scope.data.card.startdate != null ? new Date ($scope.data.card.startdate) : "");
-		$scope.data.card.enddate = ($scope.data.card.enddate != null ? new Date ($scope.data.card.enddate) : "");
+		$scope.data.card.startdate = ($scope.data.card.startdate != null ? new Date ($scope.data.card.startdate) : null);
+		$scope.data.card.enddate = ($scope.data.card.enddate != null ? new Date ($scope.data.card.enddate) : null);
 	};
 
 	$scope.submitCardForm = function() {

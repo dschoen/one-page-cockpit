@@ -9,8 +9,9 @@
 /* -- card --*/
 
 .card {
-	width: 120px;
-	height: 80px;
+	position: relative;
+	width: 150px;
+	height: 100px;
 	color: #232323;
 	float: left;
 	
@@ -22,20 +23,32 @@
 }
 .card-header {
 	padding: 2px;
+	cursor:move;
 }
-.card-body{
-	padding: 5px;
+.card-body{	
+	height: 70px;
+	padding: 2px;
 	text-align: center;
-	font-size: 1.0em;
+	font-size: 1.0em;	
+	overflow: auto;
+	cursor:move;
 }
 .card-footer {
+	position: absolute; 
 	bottom: 0px;
+	right: 0px;
 	padding-right: 2px;
-	float: right;
 	font-size: 0.8em;
 }
+.card-date {
+	float: left;	
+	margin-left: 15px;
+	margin-top: 2px;
+  	height: 12px;
+  	font-size: 0.8em;
+}
 .card-light {
-	float: left;
+	float: left;	
 	margin: 0 auto;
   	width: 12px;
   	height: 12px;  	
@@ -106,7 +119,7 @@
   left: 0;
   height: 100%;
   width: 100%;
-  z-index: 1000;
+  z-index: 1010;
   background-color: rgba(0,0,0,0.5);
 }
 .overlay-hidden {
@@ -127,4 +140,8 @@
 
 .card-form-close {
 	float:right;
+}
+
+.form-group {
+	margin-bottom:8px;
 }
