@@ -1,5 +1,8 @@
 <?php		
-		
+	
+CONST AUTH = "dGVzdDp0ZXN0";	//test-test
+CONST SECRET = "jahd7audn7fnafz7aenaw7ezn78eaew7eown87xnraw87erxne7rzcneworafhadvnnt48tu0rjwhkfa3rehfhnafao87w34rnao87ONBW8aw7dbo87n7BW";
+
 // POST, GET, DELETE
 $method = $_SERVER['REQUEST_METHOD'];
 
@@ -14,6 +17,8 @@ $id = array_shift($request)+0;
 $input = json_decode(file_get_contents('php://input'),true);
 
 error_log("Request: " . $method . " " . $module . "/" . $id );  // get
+//error_log("AAA ".json_encode(getallheaders()));
+
 
 // ------------------------------------------------------------------------------------
 
@@ -26,6 +31,33 @@ switch ($module) {
 	case "cards":
 		$data_file = "cards.json";
 		break;
+	case "login":
+		error_log("LOGIN: " . json_encode($input));
+		
+		$raw = $input['username'] . ":" . $input['password'];
+		$base = base64_encode($raw);
+		
+		if ($base == AUTH) {
+			http_response_code(200);
+			echo json_encode( ['secret' => SECRET ]);
+			return;
+		} else {
+			http_response_code(401);
+			echo '';
+			return;
+		}		
+		break;
+	default:
+		http_response_code(400);
+		echo "Bad Request!";
+		return;
+}
+
+// check Security
+if (getallheaders()['Authorization'] != SECRET) {
+	http_response_code(401);
+	echo "Not allowed.";
+	return;
 }
 
 // open file

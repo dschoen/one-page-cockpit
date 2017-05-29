@@ -1,6 +1,6 @@
 
 // create the controller and inject Angular's $scope
-memo.controller('memoController', function($scope, memoService, messageService, $window) {
+memo.controller('memoController', function($scope, memoService, messageService, $window, authService) {
 		
 	var ctrl = this;	//remember controller
 	
@@ -8,20 +8,14 @@ memo.controller('memoController', function($scope, memoService, messageService, 
 	
 	ctrl.getMemos = function() {		
 		
+		if(!authService.isAuthenticated()) {							
+			return;
+		}
+		
 		memoService.getMemos().then( function(data) {
 			$scope.memos = data;			
 		});		
 	}
-	
-	// ----------------------------------------------------------
-	
-	ctrl.addMemo = function() {
-		//TOFO
-	}
-	
-	ctrl.getMemos();
-	
-	// ----------------------------------------------------------
 	
 	// ----------------------------------------------------------
 	
@@ -87,9 +81,26 @@ memo.controller('memoController', function($scope, memoService, messageService, 
 	
 	// ----------------------------------------------------------
 	
+	ctrl.callback = function() {
+		ctrl.getMemos();
+	}
+	
+	// ----------------------------------------------------------
+	
 	$scope.data = {};
 	$scope.data.showMemoOverlay = 'overlay-hidden';	
 	$scope.data.memo 			= memoService.getMemoTemplate();
+	
+	// ----------------------------------------------------------
+	
+	ctrl.init = function() {
+		//register callback
+		authService.registerObserver(ctrl);
+	}
+	
+	// ----------------------------------------------------------
+	
+	ctrl.init();
 	
     return ctrl;    
 });

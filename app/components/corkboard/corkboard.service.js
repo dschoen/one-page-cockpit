@@ -1,4 +1,4 @@
-corkboard.factory('corkboardService', function ($http, CONFIG, messageService) {
+corkboard.factory('corkboardService', function ($http, $rootScope, CONFIG, messageService, authService) {
 		
 	corkboardService = this;
 	

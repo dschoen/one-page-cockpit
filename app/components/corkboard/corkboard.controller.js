@@ -1,4 +1,4 @@
-corkboard.controller('corkboardController', function($scope, corkboardService, messageService, CONFIG) {
+corkboard.controller('corkboardController', function($scope, corkboardService, messageService, CONFIG, authService) {
 		
 	var ctrl = this;	//remember controller
 	
@@ -6,12 +6,14 @@ corkboard.controller('corkboardController', function($scope, corkboardService, m
 
 	ctrl.getCards = function() {		
 		
+		if(!authService.isAuthenticated()) {								
+			return;
+		} 
+		
 		corkboardService.getCards().then( function(data) {
 			$scope.data.cards = data;
-		});		
-	}		
-	
-	ctrl.getCards();
+		});
+	}
 	
 	// ----------------------------------------------------------
 	
@@ -67,8 +69,14 @@ corkboard.controller('corkboardController', function($scope, corkboardService, m
 	$scope.printCard = function(divName) {
 		// TODO
 	}
+	
 	// ----------------------------------------------------------
 	
+	ctrl.callback = function() {
+		ctrl.getCards();
+	}
+	
+	// ----------------------------------------------------------
 	
 	$scope.data = {};
 	$scope.data.today 		= new Date().toISOString();
@@ -77,6 +85,17 @@ corkboard.controller('corkboardController', function($scope, corkboardService, m
 	$scope.data.prios 		= CONFIG.PRIORITIES;
 	$scope.data.cats 		= CONFIG.CATEGORIES;
 	$scope.data.efforts 	= CONFIG.EFFORTS;
+	
+	// ----------------------------------------------------------
+	
+	ctrl.init = function() {
+		//register callback
+		authService.registerObserver(ctrl);
+	}	
+	
+	// ----------------------------------------------------------
+	
+	ctrl. init();
 	
     return ctrl;    
 });

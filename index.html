@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="assets/css/message.css" />
 <link rel="stylesheet" href="assets/css/memo.css" />
 <link rel="stylesheet" href="assets/css/corkboard.css" />
+<link rel="stylesheet" href="assets/css/auth.css" />
 
 
 <!-- load angular and angular route -->
@@ -43,6 +44,10 @@
 <script src="app/components/memo/memo.module.js"></script>
 <script src="app/components/memo/memo.service.js"></script>
 <script src="app/components/memo/memo.controller.js"></script>
+
+<script src="app/components/auth/auth.module.js"></script>
+<script src="app/components/auth/auth.service.js"></script>
+<script src="app/components/auth/auth.controller.js"></script>
 
 <script src="app/shared/config.js"></script>
 
@@ -73,6 +78,10 @@
 	
 		<div ng-include="'app/components/message/alert.view.html'"></div>
 		<div ng-include="'app/components/message/pending.view.html'"></div>
+		
+		<!-- --- Authentication --- -->
+		<div ng-include="'app/components/auth/auth.view.html'"></div>
+	
 	
 		<!-- ------------------------------------------------------------------------- -->
 	

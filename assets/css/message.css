@@ -1,5 +1,5 @@
 #alertContainer {
-	z-index: 1000;
+	z-index: 1100;
 	position: fixed;
 	top: 40px;
 	right: 50px;
@@ -7,7 +7,7 @@
 }
 
 #pendingContainer {
-	z-index: 1000;
+	z-index: 1100;
 	position: fixed;
 	top: 10px;
 	left: 10px;

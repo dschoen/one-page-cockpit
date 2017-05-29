@@ -1,4 +1,4 @@
-memo.factory('memoService', function ($http, CONFIG, messageService) {
+memo.factory('memoService', function ($http, $rootScope, CONFIG, messageService, authService) {
 		 
 	memoService = this;
 	
