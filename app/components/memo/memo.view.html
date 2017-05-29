@@ -1,13 +1,76 @@
-<div ng-controller="memoController as ctrl" class="memo">
+<div ng-controller="memoController as memo" class="memo">
 	
-	<div ng-repeat="memo in memos">
-	
+	<div ng-repeat="memo in memos">	
 		<div class="memo-card">
-			<div>{{ memo.titel }}</div>
-			<div>{{ memo.text }}</div>
-		</div>		
-	
+			<div class="memo-card-header">			
+				<a href="#" 
+					class="btn btn-default btn-xs memo-card-button" 
+					ng-click="deleteMemo(memo)">
+					<span class="glyphicon glyphicon-trash"></span>
+				</a>
+				<a href="#" 
+					class="btn btn-default btn-xs memo-card-button" 
+					ng-click="openMemoFormEdit(memo)">
+					<span class="glyphicon glyphicon-pencil"></span>
+				</a>
+				<div class="clearfix"></div>
+			</div>			
+			<div class="memo-card-text">{{ memo.title }}</div>
+		</div>	
 	</div>
 	
 	<div class="clearfix"></div>		
+
+
+	<!-- ----------------------------------------------------------------------------------------------------- -->
+	
+	<div class="button-new-memo" >
+		<a href="#" class="btn btn-primary btn-xs"
+			ng-click="openMemoFormNew()">
+		<span class="glyphicon glyphicon-plus"></span>
+		Add new Memo
+		</a>
+	</div>
+	
+	<!-- ---Overlay--- --------------------------------------------------------------------------------------- -->
+	<div class="form-overlay {{ data.showMemoOverlay }}">
+		<div id="memo-form" class="card-form">
+			<button class="btn btn-warning btn-xs card-form-button" ng-click="cancelMemoForm()">
+				<span class="glyphicon glyphicon-remove"></span>
+			</button>
+			<button class="btn btn-primary btn-xs card-form-button" ng-click="printMemo('memo-print')">
+				<span class="glyphicon glyphicon-print"></span>
+			</button>
+			<form name="form.memoForm" class="form-horizontal">
+		        
+		        <!-- 1. row -->
+		        <!-- titel -->
+		        <div class="form-group">
+		            <label class="control-label col-xs-2" for="title">Titel:</label>
+		            <div class="col-xs-8">
+		            	<input name="title" ng-model="data.memo.title" class="form-control" type="text" placeholder="Titel">
+		            </div>
+		        </div>
+		            
+			 	<!-- text -->
+		        <div class="">
+		            <div text-angular 
+		            	ng-model="data.memo.text" 
+		            	ta-toolbar="[['h1','h2','h3'],['pre', 'quote'],['bold','italics','underline','strikeThrough'],['ul','ol'],['html','insertImage','insertLink'],['undo','clear']]"></div>
+		        </div>
+			    <div class="form-footer">
+			        <button class="btn btn-primary" ng-click="submitMemoForm()" ng-disabled="form.memoForm.$invalid">Submit</button>
+			        <button class="btn btn-primary" ng-click="cancelMemoForm()">Cancel</button>
+			        <div class="memo-lastupdate">Last update: {{data.memo.lastupdate}}</div>
+			    </div>
+			</form>
+			<div id="memo-print" class="memo-print">
+				<div class="memo-print-title">{{data.memo.title}}</div>
+				<hr />
+				<div text-angular ta-bind ng-model="data.memo.text" class="memo-print-text"></div>
+				<hr />
+				<div class="memo-print-lastupdate">{{data.memo.lastupdate}}</div>
+			</div> 
+		</div>
+	</div>
 </div>

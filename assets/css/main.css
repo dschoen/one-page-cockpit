@@ -3,16 +3,17 @@
 /* --- Layout -------------------------------------------------------- */
 
 body {
-	background-color: #F7F7F7;
-	color: #232323;	
 	margin:0;
 	padding:0px 0px 0px 0px;
 	height: 100%;
 	min-height: 100%;
+	
+	color: #232323;
+	background-color: #565656;
 }
 
 .wrapper {
-
+	
 }
 
 .footer {	
@@ -36,7 +37,7 @@ body {
 }
 
 .navbar-left {
-	background-color: #DEDEDE;
+	background-color: #CDCDCD;
 	border-bottom: 1px solid #ABABAB; 
 	margin-bottom: 0px;
 	height:
@@ -73,13 +74,6 @@ body {
 .clearfix::after {
   clear: both;
   display: block;
-}
-
-.buttons-new{
-	position: fixed;
-	top: 5px;
-	right: 20px;
-	z-index: 1001;	
 }
 
 .ta-editor {

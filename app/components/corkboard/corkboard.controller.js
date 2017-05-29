@@ -20,6 +20,8 @@ corkboard.controller('corkboardController', function($scope, corkboardService, m
 		$scope.data.card = corkboardService.getCardTemplate();
 	};
 	
+	// ----------------------------------------------------------
+	
 	$scope.openCardFormEdit = function(card) {
 		$scope.data.showOverlay = "overlay-visible";
 		
@@ -30,6 +32,8 @@ corkboard.controller('corkboardController', function($scope, corkboardService, m
 		$scope.data.card.enddate = ($scope.data.card.enddate != null ? new Date ($scope.data.card.enddate) : null);
 	};
 
+	// ----------------------------------------------------------
+	
 	$scope.submitCardForm = function() {
 		$scope.data.showOverlay = "overlay-hidden";
 		
@@ -42,11 +46,15 @@ corkboard.controller('corkboardController', function($scope, corkboardService, m
 		});
 	};
 
+	// ----------------------------------------------------------
+	
 	$scope.cancelCardForm = function() {
 		$scope.data.showOverlay = "overlay-hidden";
 		// reset Template
 		$scope.data.card = corkboardService.getCardTemplate();
 	};
+	
+	// ----------------------------------------------------------
 	
 	$scope.deleteCard = function(card) {
 		corkboardService.deleteCard(card).then( function() {
@@ -56,11 +64,16 @@ corkboard.controller('corkboardController', function($scope, corkboardService, m
 	
 	// ----------------------------------------------------------
 	
+	$scope.printCard = function(divName) {
+		// TODO
+	}
+	// ----------------------------------------------------------
+	
 	
 	$scope.data = {};
 	$scope.data.today 		= new Date().toISOString();
 	$scope.data.showOverlay = 'overlay-hidden';	
-	$scope.data.card 		= corkboardService.cardTemplate;
+	$scope.data.card 		= corkboardService.getCardTemplate;
 	$scope.data.prios 		= CONFIG.PRIORITIES;
 	$scope.data.cats 		= CONFIG.CATEGORIES;
 	$scope.data.efforts 	= CONFIG.EFFORTS;
