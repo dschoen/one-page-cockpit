@@ -23,24 +23,28 @@ corkboard.controller('corkboardController', function($scope, corkboardService, m
 	$scope.openCardFormEdit = function(card) {
 		$scope.data.showOverlay = "overlay-visible";
 		
-		$scope.data.card = card;
-		$scope.data.card.startdate = new Date($scope.data.card.startdate);
-		$scope.data.card.enddate = new Date($scope.data.card.enddate);
+		// Make a Copy of the chosen Card
+		$scope.data.card = JSON.parse(JSON.stringify(card));
+		// parse Dates
+		$scope.data.card.startdate = ($scope.data.card.startdate != null ? new Date ($scope.data.card.startdate) : "");
+		$scope.data.card.enddate = ($scope.data.card.enddate != null ? new Date ($scope.data.card.enddate) : "");
 	};
 
 	$scope.submitCardForm = function() {
 		$scope.data.showOverlay = "overlay-hidden";
 		
-		$scope.data.card.startdate = $scope.data.card.startdate.toISOString().substr(0, 10);
-		$scope.data.card.enddate = $scope.data.card.enddate.toISOString().substr(0, 10);
-		
 		corkboardService.addOrEditCard($scope.data.card).then( function() {
+			
+			// reset card in scope
+			$scope.data.card = corkboardService.getCardTemplate();
+			// Reload all Cards
 			ctrl.getCards();
 		});
 	};
 
 	$scope.cancelCardForm = function() {
 		$scope.data.showOverlay = "overlay-hidden";
+		// reset Template
 		$scope.data.card = corkboardService.getCardTemplate();
 	};
 	
@@ -54,7 +58,7 @@ corkboard.controller('corkboardController', function($scope, corkboardService, m
 	
 	
 	$scope.data = {};
-	$scope.data.today 		= new Date().toISOString().substr(0, 10);;
+	$scope.data.today 		= new Date().toISOString();
 	$scope.data.showOverlay = 'overlay-hidden';	
 	$scope.data.card 		= corkboardService.cardTemplate;
 	$scope.data.prios 		= CONFIG.PRIORITIES;

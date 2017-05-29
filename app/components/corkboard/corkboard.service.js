@@ -144,7 +144,12 @@ corkboard.factory('corkboardService', function ($http, CONFIG, messageService) {
 				
 		// sort Cards into grid
 		for(var i = 0; i < cards.length; i++) {			
-			var card = cards[i];			
+			var card = cards[i];	
+			
+			// add enddatestring
+			var date = new Date (card.enddate);
+			card.enddatestring = date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear();
+			
 			var field = card.priority+"-"+card.category;			
 			grid[ field ].push(card);
 		}
@@ -156,7 +161,7 @@ corkboard.factory('corkboardService', function ($http, CONFIG, messageService) {
     
 	corkboardService.getCardTemplate = function() {
 		
-		let createDate = new Date().toISOString().substr(0, 10);
+		let createDate = new Date();
 		
 		var cardTemplate = {
 				"id": '0',

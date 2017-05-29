@@ -12,7 +12,6 @@
 					ng-style="{'background-color': data.efforts[ card.effort ]}"
 					ng-class="{ 'card-overtime' : card.enddate < data.today, 'card-undertime' : data.today < card.startdate }"
 					>
-		
 					<div class="card-header">
 						<span class="card-light light-{{card.status}}" >&nbsp;</span>						
 						<a href="#" 
@@ -29,7 +28,7 @@
 					</div>					
 					
 					<div class="card-body">{{card.title}}</div>
-					<div class="card-footer">{{card.enddate}}</div>
+					<div class="card-footer">{{card.enddatestring}}</div>
 				</div>				
 				
 				<div class="clearfix"></div>
@@ -61,14 +60,14 @@
 		        <div class="form-group">
 		            <label class="control-label col-sm-2" for="data.card.title">Titel:</label>
 		            <div class="col-sm-9">
-		            	<input class="form-control" type="text" name="data.card.title" ng-model="data.card.title" placeholder="Titel">
+		            	<input name="title" ng-model="data.card.title" class="form-control" type="text"  placeholder="Titel">
 		            </div>
 		        </div>
 		        <!-- priority -->
 		        <div class="form-group">
 		            <label class="control-label col-sm-2" for="data.card.priority">Priorität:</label>
 		            <div class="col-sm-9">
-			            <select name="data.card.priority" ng-model="data.card.priority" class='selectpicker'>
+			            <select name="priority" ng-model="data.card.priority" class='selectpicker'>
 	      					<option value="high">high</option>
 					      	<option value="medium">medium</option>
 					      	<option value="low">low</option>
@@ -79,7 +78,7 @@
 		        <div class="form-group">
 		            <label class="control-label col-sm-2" for="data.card.category">Kategorie:</label>
 		            <div class="col-sm-9">
-			            <select name="data.card.category" ng-model="data.card.category" class=''>
+			            <select name="category" ng-model="data.card.category" class=''>
 	      					<option value="backlog">backlog</option>
 					      	<option value="inProgress">inProgress</option>
 					      	<option value="todo">todo</option>
@@ -90,7 +89,7 @@
 		        <div class="form-group">
 		            <label class="control-label col-sm-2" for="data.card.status">Status:</label>
 		            <div class="col-sm-9">
-			            <select name="data.card.status" ng-model="data.card.status">
+			            <select name="status" ng-model="data.card.status">
 	      					<option value="ok">ok</option>
 					      	<option value="nok">nok</option>
 					      	<option value="warn">warn</option>
@@ -102,7 +101,7 @@
 		        <div class="form-group">
 		            <label class="control-label col-sm-2" for="data.card.effort">Aufwand:</label>
 		            <div class="col-sm-9">
-			            <select name="data.card.status" ng-model="data.card.effort" >
+			            <select name="effort" ng-model="data.card.effort" >
 	      					 <option ng-repeat="(effort, color) in data.efforts" value="{{effort}}">{{effort}}</option>
 					    </select>
 					</div>
@@ -114,9 +113,10 @@
 		            <div class="col-sm-9">
 		            	<input class="form-control" 
 		            	type="date" 
-		            	name="data.card.startdate" 
+		            	name="startdate" 
 		            	ng-model="data.card.startdate" 
 		            	placeholder="yyyy-MM-dd" min="2017-01-01" max="2050-12-31">
+		            	<span class="form-invalid-message" ng-show="form.cardForm.startdate.$invalid" >Enter a valid date.</span>
 		            </div>
 		        </div>
 		        
@@ -126,10 +126,12 @@
 		            <div class="col-sm-9">
 		            	<input class="form-control" 
 		            	type="date" 
-		            	name="data.card.enddate" 
+		            	name="enddate" 
 		            	ng-model="data.card.enddate" 
 		            	placeholder="yyyy-MM-dd" min="2017-01-01" max="2050-12-31">
+		            	<span class="form-invalid-message" ng-show="form.cardForm.enddate.$invalid" >Enter a valid date.</span>
 		            </div>
+		            
 		        </div>		        
 		            
 			 	<!-- text -->
@@ -139,7 +141,7 @@
 		            	ta-toolbar="[['h1','h2','h3'],['pre', 'quote'],['bold','italics','underline','strikeThrough'],['ul','ol'],['html','insertImage','insertLink'],['undo','clear']]"></div>
 		        </div>
 			    <div class="form-footer">
-			        <button class="btn btn-primary" ng-click="submitCardForm()">Submit</button>
+			        <button class="btn btn-primary" ng-click="submitCardForm()" ng-disabled="form.cardForm.$invalid">Submit</button>
 			        <button class="btn btn-primary" ng-click="cancelCardForm()">Cancel</button>
 			    </div>
 			</form>
