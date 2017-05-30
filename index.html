@@ -55,25 +55,35 @@
 
 
 <body>
-	<!-- HEADER AND NAVBAR -->
-	<header>
-		<nav class="navbar navbar-left navbar-static-top">
-			<div class="container">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="#">One Page Cockpit</a>
-				</div>
-			</div>
-		</nav>
-	</header>
+	
+
 	<div class="wrapper">
+		<!-- Navbar -->
+		<header>
+			<nav class="navbar navbar-left navbar-static-top">
+				<div class="container">
+					<div class="navbar-header">
+						<a class="navbar-brand" href="#">One Page Cockpit</a>
+					</div>
+				</div>
+			</nav>
+		</header>
+	
 		<!-- --- Corkbaord --- -->
 	
 		<div ng-include="'app/components/corkboard/corkboard.view.html'"></div>
 	
 		<!-- --- Memo --- -->
 	
-		<div ng-include="'app/components/memo/memo.view.html'"></div>
+		<div ng-include="'app/components/memo/memo.view.html'"></div>	
 	
+		<!-- --- Footer --- -->
+	
+		<div class="footer">
+				&copy; 2017 - Daniel Schön
+		</div>		
+		
+		<!-- --- Invisible Elements ------------------------------------ -->
 		<!-- --- Messages --- -->
 	
 		<div ng-include="'app/components/message/alert.view.html'"></div>
@@ -81,13 +91,6 @@
 		
 		<!-- --- Authentication --- -->
 		<div ng-include="'app/components/auth/auth.view.html'"></div>
-	
-	
-		<!-- ------------------------------------------------------------------------- -->
-	
-		<div class="footer">
-				&copy; 2017 - Daniel Schön
-		</div>
 	</div>		
 </body>
 </html>

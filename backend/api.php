@@ -1,7 +1,8 @@
 <?php		
-	
-CONST AUTH = "dGVzdDp0ZXN0";	//test-test
-CONST SECRET = "jahd7audn7fnafz7aenaw7ezn78eaew7eown87xnraw87erxne7rzcneworafhadvnnt48tu0rjwhkfa3rehfhnafao87w34rnao87ONBW8aw7dbo87n7BW";
+
+CONST USER 		= "test";
+CONST PASSWORD 	= "test";
+CONST SECRET 	= "jahd7audn7fnafz7aenaw7ezn78eaew7eown87xnraw87erxne7rzcneworafhadvnnt48tu0rjwhkfa3rehfhnafao87w34rnao87ONBW8aw7dbo87n7BW";
 
 // POST, GET, DELETE
 $method = $_SERVER['REQUEST_METHOD'];
@@ -34,10 +35,10 @@ switch ($module) {
 	case "login":
 		error_log("LOGIN: " . json_encode($input));
 		
-		$raw = $input['username'] . ":" . $input['password'];
-		$base = base64_encode($raw);
+		$auth = $input['auth'];		
+		$base = base64_encode(USER.":".PASSWORD);
 		
-		if ($base == AUTH) {
+		if ($base == $auth) {
 			http_response_code(200);
 			echo json_encode( ['secret' => SECRET ]);
 			return;

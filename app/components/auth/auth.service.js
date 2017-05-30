@@ -17,7 +17,8 @@ auth.factory('authService',
 
     	var pend = messageService.addPending("Login");
     	
-    	var data = { username: username, password: password };
+    	var base = Base64.encode(username+":"+password);
+    	var data = { auth: base };
     	
     	return $http({
 			  method: 'POST',
