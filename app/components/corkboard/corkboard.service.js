@@ -173,7 +173,7 @@ corkboard.factory('corkboardService', function ($http, $rootScope, CONFIG, messa
 				"text": '',
 				"status": 'none',
 				"priority": 'medium',
-				"category": 'inProgress',
+				"category": 'backlog',
 				"effort" : 'normal',				
 				"createdate": createDate,
 				"startdate": null,

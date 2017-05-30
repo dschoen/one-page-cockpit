@@ -9,8 +9,8 @@ onpaco.constant('CONFIG', {
 		  EFFORTS:	{
 			  'unknown' : '#FBFBFB',
 			  'simple'  : '#ADD8E6',	
-			  'normal'  : '#F5EA8F',
-			  'large'   : '#C8ED3B',
-			  'epic'    : '#FFCD28'				 
+			  'normal'  : '#FFFF99',
+			  'large'   : '#BFEE90',
+			  'epic'    : '#FBC97F'				 
 		  	}
 	});

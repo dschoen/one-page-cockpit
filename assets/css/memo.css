@@ -43,7 +43,7 @@
 .button-new-memo{
 	position: fixed;
 	top: 5px;
-	right: 150px;
+	right: 50px;
 	z-index: 1001;	
 }
 .memo-lastupdate {

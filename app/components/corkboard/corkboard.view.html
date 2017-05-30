@@ -5,6 +5,8 @@
 		
 			<td ng-repeat="cat in data.cats" class="category" droppable priority="{{prio}}" category="{{cat}}">
 				
+				<div class="cork-table-cell-label">{{prio}} - {{cat}}</div>
+				
 				<div ng-repeat="card in data.cards[prio+'-'+cat] track by card.id"
 					draggable
 					id="{{card.id}}"
@@ -30,7 +32,7 @@
 					
 					<div class="card-body" data-toggle="tooltip" title="{{card.title}}">{{card.title}}</div>
 					<div class="card-footer"></div>
-				</div>
+				</div>				
 			</td>	
 		</tr>	
 	</table>	
@@ -76,7 +78,7 @@
 					        <div class="form-group col-xs-4">
 					            <label class="control-label col-xs-5" for="data.card.priority">Priorität:</label>
 					            <div class="col-xs-7">
-						            <select name="priority" ng-model="data.card.priority" class='selectpicker'>
+						            <select name="priority" ng-model="data.card.priority" class='selectpicker form-control'>
 				      					<option value="high">high</option>
 								      	<option value="medium">medium</option>
 								      	<option value="low">low</option>
@@ -87,10 +89,10 @@
 					        <div class="form-group col-xs-4">
 					            <label class="control-label col-xs-5" for="data.card.category">Kategorie:</label>
 					            <div class="col-xs-7">
-						            <select name="category" ng-model="data.card.category" class=''>
-				      					<option value="backlog">backlog</option>
-								      	<option value="inProgress">inProgress</option>
-								      	<option value="todo">todo</option>
+						            <select name="category" ng-model="data.card.category" class='form-control'>
+				      					<option value="todo">todo</option>
+				      					<option value="inProgress">inProgress</option>
+				      					<option value="backlog">backlog</option>								      	
 								    </select>
 								</div>
 					        </div>					    
@@ -98,7 +100,7 @@
 					        <div class="form-group col-xs-4">
 					            <label class="control-label col-xs-5" for="data.card.effort">Aufwand:</label>
 					            <div class="col-xs-7">
-						            <select name="effort" ng-model="data.card.effort" >
+						            <select name="effort" ng-model="data.card.effort" class="form-control">
 				      					 <option ng-repeat="(effort, color) in data.efforts" value="{{effort}}">{{effort}}</option>
 								    </select>
 								</div>
@@ -111,7 +113,7 @@
 					        <div class="form-group col-xs-4">
 					            <label class="control-label col-xs-5" for="data.card.status">Status:</label>
 					            <div class="col-xs-7">
-						            <select name="status" ng-model="data.card.status">
+						            <select name="status" ng-model="data.card.status" class="form-control">
 				      					<option value="ok">ok</option>
 								      	<option value="nok">nok</option>
 								      	<option value="warn">warn</option>
@@ -151,7 +153,7 @@
 		        <div class="">
 		            <div text-angular 
 		            	ng-model="data.card.text" 
-		            	ta-toolbar="[['h1','h2','h3'],['pre', 'quote'],['bold','italics','underline','strikeThrough'],['ul','ol'],['html','insertImage','insertLink'],['undo','clear']]"></div>
+		            	ta-toolbar="[['h1','h2','h3'],['pre', 'quote'],['bold','italics','underline','strikeThrough'],['ul','ol','indent','outdent'],['html','insertLink'],['undo','clear']]"></div>
 		        </div>
 			    <div class="form-footer">
 			        <button class="btn btn-primary" ng-click="submitCardForm()" ng-disabled="form.cardForm.$invalid">Submit</button>

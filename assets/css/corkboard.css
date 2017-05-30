@@ -17,7 +17,7 @@
 	color: #232323;
 	border: 1px solid #CECECE;
 	border-radius: 0px;
-	box-shadow: 0px 10px 6px -6px #050505;	
+	box-shadow: 0px 10px 6px -6px #050505;
 }
 .card-header {
 	padding: 2px;
@@ -90,6 +90,9 @@
 	border: 1px solid #9A9A9A;
 }
 
+.cork-table-cell-label {
+	margin-bottom:5px;
+}
 .priority {
 }
 
@@ -148,6 +151,6 @@
 .buttons-new{
 	position: fixed;
 	top: 5px;
-	right: 20px;
+	right: 170px;
 	z-index: 1001;	
 }
