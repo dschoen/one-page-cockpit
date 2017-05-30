@@ -1,8 +1,6 @@
 <?php		
 
-CONST USER 		= "test";
-CONST PASSWORD 	= "test";
-CONST SECRET 	= "jahd7audn7fnafz7aenaw7ezn78eaew7eown87xnraw87erxne7rzcneworafhadvnnt48tu0rjwhkfa3rehfhnafao87w34rnao87ONBW8aw7dbo87n7BW";
+include 'config.php';
 
 // POST, GET, DELETE
 $method = $_SERVER['REQUEST_METHOD'];
@@ -27,10 +25,10 @@ error_log("Request: " . $method . " " . $module . "/" . $id );  // get
 $data_file = "";
 switch ($module) {
 	case "memos":
-		$data_file = "memos.json";
+		$data_file = DATA_PATH."memos.json";
 		break;
 	case "cards":
-		$data_file = "cards.json";
+		$data_file = DATA_PATH."cards.json";
 		break;
 	case "login":
 		error_log("LOGIN: " . json_encode($input));
