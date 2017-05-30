@@ -67,87 +67,80 @@
 		            	<input name="title" ng-model="data.card.title" class="form-control" type="text"  placeholder="Titel">
 		            </div>
 		        </div>
-		        
-		        <!-- 2.  and 3.row -->
+		        <!-- 2. row -->
 		        <div class="form-group">
-		        	<div class="col-xs-1"></div>
-		        	<div class="col-xs-11">
-				        <!-- 2. row -->
-				        <div class="form-group">
-					        <!-- priority -->
-					        <div class="form-group col-xs-4">
-					            <label class="control-label col-xs-5" for="data.card.priority">Priorität:</label>
-					            <div class="col-xs-7">
-						            <select name="priority" ng-model="data.card.priority" class='selectpicker form-control'>
-				      					<option value="high">high</option>
-								      	<option value="medium">medium</option>
-								      	<option value="low">low</option>
-								    </select>
-								</div>
-					        </div>  
-					        <!-- category -->
-					        <div class="form-group col-xs-4">
-					            <label class="control-label col-xs-5" for="data.card.category">Kategorie:</label>
-					            <div class="col-xs-7">
-						            <select name="category" ng-model="data.card.category" class='form-control'>
-				      					<option value="todo">todo</option>
-				      					<option value="inProgress">inProgress</option>
-				      					<option value="backlog">backlog</option>								      	
-								    </select>
-								</div>
-					        </div>					    
-					    	<!-- effort -->
-					        <div class="form-group col-xs-4">
-					            <label class="control-label col-xs-5" for="data.card.effort">Aufwand:</label>
-					            <div class="col-xs-7">
-						            <select name="effort" ng-model="data.card.effort" class="form-control">
-				      					 <option ng-repeat="(effort, color) in data.efforts" value="{{effort}}">{{effort}}</option>
-								    </select>
-								</div>
-					        </div>
-					   </div>
-					   
-					   <!-- 3 row -->
-					   <div class="form-group">
-					        <!-- status -->
-					        <div class="form-group col-xs-4">
-					            <label class="control-label col-xs-5" for="data.card.status">Status:</label>
-					            <div class="col-xs-7">
-						            <select name="status" ng-model="data.card.status" class="form-control">
-				      					<option value="ok">ok</option>
-								      	<option value="nok">nok</option>
-								      	<option value="warn">warn</option>
-								      	<option value="none">none</option>
-								    </select>
-								</div>
-					        </div>
-					        <!-- startdate -->
-					        <div class="form-group col-xs-4">
-					            <label class="control-label col-xs-5" for="data.card.startdate">Beginn:</label>
-					            <div class="col-xs-7">
-					            	<input class="form-control" 
-					            	type="date" 
-					            	name="startdate" 
-					            	ng-model="data.card.startdate" 
-					            	placeholder="yyyy-MM-dd" min="2017-01-01" max="2050-12-31">
-					            	<span class="form-invalid-message" ng-show="form.cardForm.startdate.$invalid" >Enter a valid date.</span>
-					            </div>
-					        </div>			        
-					        <!-- enddate -->
-					        <div class="form-group col-xs-4">
-					            <label class="control-label col-xs-5" for="data.card.enddate">Ende:</label>
-					            <div class="col-xs-7">
-					            	<input class="form-control" 
-					            	type="date" 
-					            	name="enddate" 
-					            	ng-model="data.card.enddate" 
-					            	placeholder="yyyy-MM-dd" min="2017-01-01" max="2050-12-31">
-					            	<span class="form-invalid-message" ng-show="form.cardForm.enddate.$invalid" >Enter a valid date.</span>
-					            </div>		            
-					        </div>
-				        </div>
-				    </div>
-				</div>	        
+			        <!-- priority -->
+			        <div class="form-group col-xs-4">
+			            <label class="control-label col-xs-5" for="data.card.priority">Priorität:</label>
+			            <div class="col-xs-7">
+				            <select name="priority" ng-model="data.card.priority" class='selectpicker form-control'>
+		      					<option value="high">high</option>
+						      	<option value="medium">medium</option>
+						      	<option value="low">low</option>
+						    </select>
+						</div>
+			        </div>  
+			        <!-- category -->
+			        <div class="form-group col-xs-4">
+			            <label class="control-label col-xs-5" for="data.card.category">Kategorie:</label>
+			            <div class="col-xs-7">
+				            <select name="category" ng-model="data.card.category" class='form-control'>
+		      					<option value="todo">todo</option>
+		      					<option value="inProgress">inProgress</option>
+		      					<option value="backlog">backlog</option>								      	
+						    </select>
+						</div>
+			        </div>					    
+			    	<!-- effort -->
+			        <div class="form-group col-xs-4">
+			            <label class="control-label col-xs-5" for="data.card.effort">Aufwand:</label>
+			            <div class="col-xs-7">
+				            <select name="effort" ng-model="data.card.effort" class="form-control">
+		      					 <option ng-repeat="(effort, color) in data.efforts" value="{{effort}}">{{effort}}</option>
+						    </select>
+						</div>
+			        </div>
+			   </div>
+			   
+			   <!-- 3 row -->
+			   <div class="form-group">
+			        <!-- status -->
+			        <div class="form-group col-xs-4">
+			            <label class="control-label col-xs-5" for="data.card.status">Status:</label>
+			            <div class="col-xs-7">
+				            <select name="status" ng-model="data.card.status" class="form-control">				      					
+						      	<option value="none">none</option>
+		      					<option value="ok">ok</option>				      					
+						      	<option value="warn">warn</option>
+						      	<option value="nok">nok</option>
+						    </select>
+						</div>
+			        </div>
+			        <!-- startdate -->
+			        <div class="form-group col-xs-4">
+			            <label class="control-label col-xs-5" for="data.card.startdate">Beginn:</label>
+			            <div class="col-xs-7">
+			            	<input class="form-control" 
+			            	type="date" 
+			            	name="startdate" 
+			            	ng-model="data.card.startdate" 
+			            	placeholder="yyyy-MM-dd" min="2017-01-01" max="2050-12-31">
+			            	<span class="form-invalid-message" ng-show="form.cardForm.startdate.$invalid" >Enter a valid date.</span>
+			            </div>
+			        </div>			        
+			        <!-- enddate -->
+			        <div class="form-group col-xs-4">
+			            <label class="control-label col-xs-5" for="data.card.enddate">Ende:</label>
+			            <div class="col-xs-7">
+			            	<input class="form-control" 
+			            	type="date" 
+			            	name="enddate" 
+			            	ng-model="data.card.enddate" 
+			            	placeholder="yyyy-MM-dd" min="2017-01-01" max="2050-12-31">
+			            	<span class="form-invalid-message" ng-show="form.cardForm.enddate.$invalid" >Enter a valid date.</span>
+			            </div>		            
+			        </div> 
+			     </div>   
 		            
 			 	<!-- text -->
 		        <div class="">
