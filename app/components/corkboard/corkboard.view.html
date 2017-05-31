@@ -13,6 +13,7 @@
 					class="card"
 					ng-style="{'background-color': data.efforts[ card.effort ]}"
 					ng-class="{ 'card-overtime' : card.enddate < data.today, 'card-undertime' : data.today < card.startdate }"
+					ng-dblclick="openCardFormEdit(card)"
 					>
 					<div class="card-header">
 						<span class="card-light light-{{card.status}}" >&nbsp;</span>
@@ -125,7 +126,7 @@
 			            	name="startdate" 
 			            	ng-model="data.card.startdate" 
 			            	placeholder="yyyy-MM-dd" min="2017-01-01" max="2050-12-31">
-			            	<span class="form-invalid-message" ng-show="form.cardForm.startdate.$invalid" >Enter a valid date.</span>
+			            	<span ng-show="form.cardForm.startdate.$invalid" class="form-invalid-message">Enter a valid date.</span>
 			            </div>
 			        </div>			        
 			        <!-- enddate -->
@@ -137,7 +138,7 @@
 			            	name="enddate" 
 			            	ng-model="data.card.enddate" 
 			            	placeholder="yyyy-MM-dd" min="2017-01-01" max="2050-12-31">
-			            	<span class="form-invalid-message" ng-show="form.cardForm.enddate.$invalid" >Enter a valid date.</span>
+			            	<span ng-show="form.cardForm.enddate.$invalid" class="form-invalid-message">Enter a valid date.</span>
 			            </div>		            
 			        </div> 
 			     </div>   

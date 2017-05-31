@@ -1,23 +1,21 @@
 <div ng-controller="memoController as memo" class="memo">
 	
-	<div ng-repeat="memo in memos">	
-		<div class="memo-card">
-			<div class="memo-card-header">			
-				<a href="#" 
-					class="btn btn-default btn-xs memo-card-button" 
-					ng-click="deleteMemo(memo)">
-					<span class="glyphicon glyphicon-trash"></span>
-				</a>
-				<a href="#" 
-					class="btn btn-default btn-xs memo-card-button" 
-					ng-click="openMemoFormEdit(memo)">
-					<span class="glyphicon glyphicon-pencil"></span>
-				</a>
-				<div class="clearfix"></div>
-			</div>			
-			<div class="memo-card-text">{{ memo.title }}</div>
-		</div>	
-	</div>
+	<div ng-repeat="memo in memos" class="memo-card" ng-dblclick="openMemoFormEdit(memo)">	
+		<div class="memo-card-header">			
+			<a href="#" 
+				class="btn btn-default btn-xs memo-card-button" 
+				ng-click="deleteMemo(memo)">
+				<span class="glyphicon glyphicon-trash"></span>
+			</a>
+			<a href="#" 
+				class="btn btn-default btn-xs memo-card-button" 
+				ng-click="openMemoFormEdit(memo)">
+				<span class="glyphicon glyphicon-pencil"></span>
+			</a>
+			<div class="clearfix"></div>
+		</div>			
+		<div class="memo-card-text">{{ memo.title }}</div>
+	</div>	
 	
 	<div class="clearfix"></div>		
 
