@@ -1,0 +1,55 @@
+.memo {
+	position: absolute;
+	bottom: 0px;
+	
+	width: 100%;
+	height: 160px;	
+	
+	padding-left: 50px;
+}
+.memo-card {	
+	width: 150px;
+	height: 140px;
+	padding: 5px;
+	margin: 5px;	
+	float: left;
+	
+	color: #353535;
+	background-color: #DADADA;	
+	border: 1px solid #232323;
+	border-radius: 0px;
+	box-shadow: 0px 10px 6px -6px #050505;
+}
+.memo-card-header {
+}
+.memo-card-button {
+	margin-left: 3px;
+	float: right;
+}
+.memo-card-text {	
+	padding-top: 20px;
+	font-weight: bold;
+	font-size: 1.2em;
+	text-align:center;
+	padding-top: 20px;	
+}
+.overlay-hidden {
+	display: none;
+}
+.overlay-visible {
+}
+
+/* ------*/
+.button-new-memo{
+	position: fixed;
+	top: 5px;
+	right: 50px;
+	z-index: 1001;	
+}
+.memo-lastupdate {
+	float: right;
+	font-size: 0.7em;
+}
+.memo-print {
+	display: none;
+}

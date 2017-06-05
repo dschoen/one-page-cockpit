@@ -1,0 +1,1 @@
+var memo = angular.module('memo', []);

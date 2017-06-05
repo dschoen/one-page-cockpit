@@ -1,0 +1,17 @@
+.memo-print {
+	display: ;
+	width: 1000px;
+}
+.memo-print-title {
+	font-size: 2.0em;
+	font-weight: bold;
+	text-align: center;
+}
+.memo-print-text{
+	margin: 50px;
+	
+}
+.memo-print-lastupdate {
+	text-align: right;
+	font-size: 1.0em;
+}
