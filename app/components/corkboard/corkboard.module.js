@@ -1,1 +1,0 @@
-var corkboard = angular.module('corkboard', ['textAngular']);
