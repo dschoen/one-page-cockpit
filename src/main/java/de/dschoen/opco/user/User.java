@@ -2,13 +2,22 @@ package de.dschoen.opco.user;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import de.dschoen.opco.board.Board;
+import de.dschoen.opco.board.Card;
 
 @Entity
 @Table(name="users")
@@ -21,8 +30,8 @@ public class User implements Serializable {
 	@Column(name="user_id")
     private int userId;  
 	
-	@Column(name="login", unique=true, length = 50)
-    private String login;
+	@Column(name="username", unique=true, length = 50)
+    private String username;
 	
 	@Column(name="firstname", length = 100)
     private String firstname;
@@ -36,11 +45,19 @@ public class User implements Serializable {
 	@Column(name="password")
     private String password;
 	
-	@Column(name="create_date", columnDefinition="DATETIME")
+	@Column(name="create_date")
     private LocalDateTime createDate;
 	
-	@Column(name="last_login", columnDefinition="DATETIME")
+	@Column(name="last_login")
     private LocalDateTime lastLogin;
+	
+	@JsonIgnore
+	@ManyToMany(cascade = CascadeType.ALL)
+	private Collection<Board> boards = new ArrayList<Board>();
+
+	@JsonIgnore
+	@ManyToMany(cascade = CascadeType.ALL)
+	private Collection<Card> cards = new ArrayList<Card>();
 	
 	// -----------------------------------------------
 	
@@ -52,12 +69,12 @@ public class User implements Serializable {
 		this.userId = userId;
 	}
 
-	public String getLogin() {
-		return login;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setLogin(String login) {
-		this.login = login;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getFirstname() {
@@ -108,5 +125,19 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
+	public Collection<Board> getBoards() {
+		return boards;
+	}
 
+	public void setBoards(Collection<Board> boards) {
+		this.boards = boards;
+	}
+
+	public Collection<Card> getCards() {
+		return cards;
+	}
+
+	public void setCards(Collection<Card> cards) {
+		this.cards = cards;
+	}
 }

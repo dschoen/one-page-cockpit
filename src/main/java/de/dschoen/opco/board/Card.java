@@ -3,6 +3,7 @@ package de.dschoen.opco.board;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,27 +37,30 @@ public class Card implements Serializable{
 	@Column(name="effort")
     private String effort;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
     private BoardRow boardRow;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
     private BoardColumn boardColumn;
 	
-	@ManyToOne
+	@JsonIgnore
+	@ManyToOne(cascade = CascadeType.ALL)
     private Board board;
 	
-	@Column(name="create_date", columnDefinition="DATETIME")
+	@Column(name="create_date")
     private LocalDateTime createDate;
 	
-	@Column(name="start_date", columnDefinition="DATETIME")
+	@Column(name="start_date")
     private LocalDateTime startDate;
 	
-	@Column(name="end_date", columnDefinition="DATETIME")
+	@Column(name="end_date")
     private LocalDateTime endDate;
 	
-	@Column(name="last_update", columnDefinition="DATETIME")
+	@Column(name="last_update")
     private LocalDateTime lastUpdate;
 
+	// ------------------------------------------------------
+	
 	public int getCardId() {
 		return cardId;
 	}

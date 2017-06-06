@@ -2,16 +2,21 @@ package de.dschoen.opco.board;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import de.dschoen.opco.user.User;
 
 @Service
 public class BoardService implements IBoardService{
 
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	@Autowired
 	private IBoardDAO boardDAO;
+	
+	@Autowired
+	private ICardDAO cardDAO;
 	
 	// ----------------------------------------------------
 	
@@ -24,8 +29,8 @@ public class BoardService implements IBoardService{
 	// ----------------------------------------------------
 	
 	@Override
-	public List<Board> getAllBoardsOfUser(User user){
-		return boardDAO.getAllBoardsOfUser(user);
+	public List<Board> getAllBoards(){
+		return boardDAO.getAllBoards();
 	}
 	
 	// ----------------------------------------------------
@@ -50,4 +55,59 @@ public class BoardService implements IBoardService{
 		boardDAO.deleteBoard(boardId);
 	}
 	
+	// ----------------------------------------------------
+	
+	@Override
+	public synchronized boolean addCard(Card card){
+        cardDAO.addCard(card);
+        return true;
+	}
+	
+	// ----------------------------------------------------
+	
+	@Override
+	public void updateCard(Card card) {
+		cardDAO.updateCard(card);
+	}
+	
+	// ----------------------------------------------------
+	
+	@Override
+	public void deleteCard(int cardId) {
+		cardDAO.deleteCard(cardId);
+	}
+
+	// ----------------------------------------------------	
+	
+	@Override
+	public BoardColumn getBoardColumnById(int boardColumnId) {
+		BoardColumn obj = boardDAO.getBoardColumnById(boardColumnId);
+		return obj;
+	}
+		
+	// ----------------------------------------------------	
+	
+	@Override
+	public BoardRow getBoardRowById(int boardRowId) {
+		BoardRow obj = boardDAO.getBoardRowById(boardRowId);
+		return obj;
+	}
+	
+	// ----------------------------------------------------
+	
+	@Override
+	public Card cardDTOtoCard(CardDTO cardDTO) {
+		Card card = new Card();
+		card.setCardId(cardDTO.cardId);
+		card.setTitle(cardDTO.title);
+		card.setText(cardDTO.text);
+		card.setStatus(cardDTO.status);
+		card.setEffort(cardDTO.effort);
+		
+		card.setBoard(this.getBoardById(cardDTO.boardId));
+		card.setBoardColumn(this.getBoardColumnById(cardDTO.boardColumnId));
+		card.setBoardRow(this.getBoardRowById(cardDTO.boardRowId));
+		
+		return card;
+	}
 }

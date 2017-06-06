@@ -18,6 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+
 import de.dschoen.opco.user.IUserService;
 import de.dschoen.opco.user.User;
 
@@ -45,8 +49,11 @@ public class BoardController {
 	
 	@GetMapping("/user/{id}/boards")
 	public ResponseEntity<List<Board>> getAllBoardsOfUserById(@PathVariable("id") Integer id) {	
+		
+		logger.debug("getAllBoardsOfUserById "+id);
+		
 		User user = userService.getUserById(id);
-		List<Board> list = boardService.getAllBoardsOfUser(user);
+		List<Board> list = (List<Board>)user.getBoards();
 		return new ResponseEntity<List<Board>>(list, HttpStatus.OK);
 	}
 	
@@ -82,11 +89,54 @@ public class BoardController {
 	
 	// ----------------------------------------------------
 	
-	
 	@GetMapping("boards/{id}/cards")
 	public ResponseEntity<List<Card>> getCardsOfBoard(@PathVariable("id") Integer id) {
 		Board board = boardService.getBoardById(id);
 		List<Card> cards = (List<Card>)board.getCards();
 		return new ResponseEntity<List<Card>>(cards, HttpStatus.OK);
 	}
+	
+	// ----------------------------------------------------
+	
+	@PostMapping("boards/{boardId}/cards")
+	public ResponseEntity<Void> addCard(@RequestBody CardDTO cardDTO, @PathVariable("boardId") Integer boardId, UriComponentsBuilder builder) {
+
+		try {
+			ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+			String json;
+			json = ow.writeValueAsString(cardDTO);
+			logger.debug("AAAAAA " + json);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// encode CardInformation
+		// cardDTO.boardId = boardId;
+		Card card = boardService.cardDTOtoCard(cardDTO);
+		
+		boolean result = boardService.addCard(card);
+        if (result == false) {
+        	return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(builder.path("/boards/{id}/cards/").buildAndExpand(card.getCardId()).toUri());
+        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+	}
+	
+	// ----------------------------------------------------
+	
+	@PutMapping("boards/{id}/cards/")
+	public ResponseEntity<Card> updateCard(@RequestBody Card card) {
+		boardService.updateCard(card);
+		return new ResponseEntity<Card>(card, HttpStatus.OK);
+	}
+	
+	// ----------------------------------------------------
+	
+	@DeleteMapping("boards/{id}/cards/{cardId}")
+	public ResponseEntity<Void> deleteBoard(@PathVariable("id") Integer id, @PathVariable("cardId") Integer cardId) {
+		boardService.deleteCard(cardId);
+		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+	}	
 }

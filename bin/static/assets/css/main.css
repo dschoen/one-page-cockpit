@@ -41,38 +41,6 @@ body {
 	color: #ABABAB;
 }
 
-/* --- Navbar -------------------------------------------------------- */ 
-header {
-}
-
-.navbar {
-	width: 100%;
-	min-height: 20px;
-}
-.navbar-left {
-	background-color: #CDCDCD;
-	border-bottom: 1px solid #ABABAB; 
-	margin-bottom: 0px;
-	height:
-}
-.navbar-left .container{
-	width: 100%;
-}
-.navbar-left .navbar-brand {
-	margin-top: 0px;
-	margin-bottom: 0px;
-	
-	font-weight: bold;
-	font-size: 1.3em;
-	
-	height: 30px;
-	padding-top: 5px;
-	padding-left: 30px;	
-}
-.nav-space {
-	padding-left: 50px;
-}
-
 /* --- Content -------------------------------------------------------- */ 
 
 .clearfix::after {

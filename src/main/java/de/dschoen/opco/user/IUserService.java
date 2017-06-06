@@ -9,5 +9,8 @@ public interface IUserService {
 	User getUserByLogin(String login);
 	boolean addUser(User user);
 	void updateUser(User user);
-	void deleteUser(int userId);     
+	void deleteUser(int userId);
+	
+	User login(User user);
+	void init();
 } 

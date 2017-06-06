@@ -18,10 +18,20 @@ auth.controller('authController', function($scope, authService, messageService) 
         	
         });
     };
+    
+    // ----------------------------------------------------------
+    
+    $scope.logout = function() {
+    	
+    	//TODO implement
+    	alert("logout");
+    };
 	
     // -----------------------------------------------------------
     
     $scope.authenticated = authService.isAuthenticated();
+    $scope.data = {};
+    $scope.data.user = authService.user;
     $scope.username = null;
     $scope.password = null;
 		

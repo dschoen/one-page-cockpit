@@ -22,7 +22,7 @@ public class BoardDao implements IBoardDAO{
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Board> getAllBoardsOfUser(User user) {
+	public List<Board> getAllBoards() {
 		String hql = "FROM Board as brd ORDER BY brd.boardId";
 		return (List<Board>) entityManager.createQuery(hql).getResultList();
 	}
@@ -60,4 +60,23 @@ public class BoardDao implements IBoardDAO{
 
 	// ----------------------------------------------------
 	
+	@Override
+	public int countBoards() {
+		String hql = "FROM Board";
+		return entityManager.createQuery(hql).getResultList().size();	
+	}
+	
+	// ----------------------------------------------------
+	
+	@Override
+	public BoardColumn getBoardColumnById(int id) {
+		return entityManager.find(BoardColumn.class, id);
+	}
+	
+	// ----------------------------------------------------
+		
+	@Override
+	public BoardRow getBoardRowById(int id) {
+		return entityManager.find(BoardRow.class, id);
+	}
 }

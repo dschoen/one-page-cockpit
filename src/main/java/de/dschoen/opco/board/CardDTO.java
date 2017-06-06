@@ -1,0 +1,20 @@
+package de.dschoen.opco.board;
+
+public class CardDTO {
+				
+    public int cardId;  
+	public String title;
+    public String text;
+    public String status;
+    public String effort;
+    public String boardRow;
+    public int boardRowId;
+    public String boardColumn;
+    public int boardColumnId;
+    public String board;
+    public int boardId;
+    public String createDate;
+    public String startDate;
+    public String endDate;
+    public String lastUpdate;	
+}

@@ -23,6 +23,15 @@ public class BoardColumn implements Serializable{
 	@Column(name="name")
     private String name;
 	
+	// --- Constructor -------------------------------
+	
+	public BoardColumn() {
+	}
+	
+	public BoardColumn(String name) {
+		this.name = name;
+	}
+	
 	// -----------------------------------------------
 	
 	public int getBoardColumnId() {

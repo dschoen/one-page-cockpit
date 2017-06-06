@@ -52,7 +52,7 @@ public class UserController {
         	return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         }
         HttpHeaders headers = new HttpHeaders();
-        User newUser = userService.getUserByLogin(user.getLogin());
+        User newUser = userService.getUserByLogin(user.getUsername());
         headers.setLocation(builder.path("/users/{id}").buildAndExpand(newUser.getUserId()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
@@ -76,21 +76,17 @@ public class UserController {
 	// ----------------------------------------------------
 	
 	@PostMapping("users/login")
-	public ResponseEntity<Void> login(@RequestBody User user) {
+	public ResponseEntity<User> login(@RequestBody User user) {
 		
-		//TODO das in den Service auslagern
-		
-		User usr = userService.getUserByLogin(user.getLogin());
+		User usr = userService.login(user);	
 		
 		//check UserPassword
-		if (usr.getPassword().equals(user.getPassword())) {
-			
-			//TODO Sicherheitstoken zurückgeben
-			
-			return new ResponseEntity<Void>(HttpStatus.OK);
+		if (usr != null) {			
+			//TODO Sicherheitstoken zurückgeben			
+			return new ResponseEntity<User>(usr, HttpStatus.OK);
 		} else {
-			logger.warn("Bad Login Request: " + user.getLogin());
-			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+			logger.warn("Bad Login Request: " + user.getUsername());
+			return new ResponseEntity<User>(new User(), HttpStatus.BAD_REQUEST);
 		}		
 	}
 }  

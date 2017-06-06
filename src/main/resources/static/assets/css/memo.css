@@ -42,7 +42,7 @@
 /* ------*/
 .button-new-memo{
 	position: fixed;
-	top: 5px;
+	top: 50px;
 	right: 50px;
 	z-index: 1001;	
 }

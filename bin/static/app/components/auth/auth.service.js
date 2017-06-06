@@ -4,7 +4,10 @@ auth.factory('authService',
 	var authService = {};
 	
 	authService.user = {
+			userId : null,
 			username: null,
+			firstname: null,
+			lastname: null,
 			password: null,
 			authdata: null,
 			secret:null,
@@ -20,7 +23,7 @@ auth.factory('authService',
 //    	var base = Base64.encode(username+":"+password);
     	
     	var data = {
-    			'login': username,
+    			'username': username,
     			'password': password
     	};  	
     	
@@ -32,10 +35,17 @@ auth.factory('authService',
 	              "Content-Type": "application/json"
 	          }
 			}).then(function successCallback(response) {
-											
+								
+				// set currentUser
+				authService.user.userId = response.data.userId;
+				authService.user.username = response.data.username;
+				authService.user.firstname = response.data.firstname;
+				authService.user.lastname = response.data.lastname;
+				
 				//set Credentials
 				authService.setCredentials(username, password);
-				authService.user.secret = response.data.secret;
+				//authService.user.secret = response.data.secret;
+				authService.user.secret = 1;
 				
 				// set overall auth Token
 				$http.defaults.headers.common.Authorization = authService.user.secret;
@@ -59,10 +69,13 @@ auth.factory('authService',
     // ----------------------------------------------------------
     
     authService.setCredentials = function (username, password) {
-        var authdata = Base64.encode(username + ':' + password);
-        
-        authService.user.username = username;
-        authService.user.authdata =  authdata;
+//        var authdata = Base64.encode(username + ':' + password);
+//        
+//        authService.user.username = username;
+//        authService.user.authdata =  authdata;
+    	
+    	var authdata = 1;
+    	authService.user.authdata =  1;
 
         $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; // jshint ignore:line
     };

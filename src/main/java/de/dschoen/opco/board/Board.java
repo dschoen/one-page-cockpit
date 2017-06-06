@@ -44,6 +44,15 @@ public class Board implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL)
 	private Collection<Card> cards = new ArrayList<Card>();
 
+	// --- Constructor -------------------------------
+	
+	public Board() {
+	}
+	
+	public Board(String name) {
+		this.name = name;
+	}
+	
 	// -----------------------------------------------
 	
 	public int getBoardId() {

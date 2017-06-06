@@ -2,14 +2,20 @@ package de.dschoen.opco.board;
 
 import java.util.List;
 
-import de.dschoen.opco.user.User;
-
 public interface IBoardService {
 
 	Board getBoardById(int id);
-	List<Board> getAllBoardsOfUser(User user);
+	List<Board> getAllBoards();
 	boolean addBoard(Board board);
 	void updateBoard(Board board);
-	void deleteBoard(int boardId);     
+	void deleteBoard(int boardId); 
 	
+	boolean addCard(Card card);
+	void updateCard(Card card);
+	void deleteCard(int cardId);
+	
+	Card cardDTOtoCard(CardDTO cardDTO);
+	
+	BoardColumn getBoardColumnById(int id);
+	BoardRow getBoardRowById(int id);
 }

@@ -4,22 +4,38 @@ corkboard.controller('corkboardController', function($scope, corkboardService, m
 	
 	// --- Methods ----------------------------------------------
 
-	ctrl.getCards = function() {		
+	ctrl.getBoards = function() {		
 		
 		if(!authService.isAuthenticated()) {								
 			return;
 		} 
 		
-		corkboardService.getCards().then( function(data) {
-			$scope.data.cards = data;
-		});
+		corkboardService.getBoards().then( function(data) {
+			$scope.data.boards = data;
+			$scope.data.currentBoard = corkboardService.currentBoard;			
+		});		
+	}
+	
+	// --- Methods ----------------------------------------------
+
+	ctrl.getBoard = function() {		
+		
+		// TODO	
 	}
 	
 	// ----------------------------------------------------------
 	
 	$scope.openCardFormNew = function() {
-		$scope.data.showOverlay = "overlay-visible";
+		$scope.data.showCardOverlay = "overlay-visible";
 		$scope.data.card = corkboardService.getCardTemplate();
+	};
+	
+	// ----------------------------------------------------------
+	
+	$scope.openBoardFormNew = function() {
+		
+		// TODO
+		alert("New Board");
 	};
 	
 	// ----------------------------------------------------------
@@ -37,14 +53,14 @@ corkboard.controller('corkboardController', function($scope, corkboardService, m
 	// ----------------------------------------------------------
 	
 	$scope.submitCardForm = function() {
-		$scope.data.showOverlay = "overlay-hidden";
+		$scope.data.showCardOverlay = "overlay-hidden";
 		
 		corkboardService.addOrEditCard($scope.data.card).then( function() {
 			
 			// reset card in scope
 			$scope.data.card = corkboardService.getCardTemplate();
 			// Reload all Cards
-			ctrl.getCards();
+			ctrl.getBoard();
 		});
 	};
 
@@ -73,18 +89,17 @@ corkboard.controller('corkboardController', function($scope, corkboardService, m
 	// ----------------------------------------------------------
 	
 	ctrl.callback = function() {
-		ctrl.getCards();
+		ctrl.getBoards();
 	}
 	
 	// ----------------------------------------------------------
 	
 	$scope.data = {};
-	$scope.data.today 		= new Date().toISOString();
-	$scope.data.showOverlay = 'overlay-hidden';	
-	$scope.data.card 		= corkboardService.getCardTemplate;
-	$scope.data.prios 		= CONFIG.PRIORITIES;
-	$scope.data.cats 		= CONFIG.CATEGORIES;
-	$scope.data.efforts 	= CONFIG.EFFORTS;
+	$scope.data.today 				= new Date().toISOString();
+	$scope.data.showCardOverlay 	= 'overlay-hidden';	
+	$scope.data.showBoardOverlay 	= 'overlay-hidden';	
+	$scope.data.card 				= corkboardService.getCardTemplate;
+	$scope.data.efforts 			= CONFIG.EFFORTS;
 	
 	// ----------------------------------------------------------
 	
