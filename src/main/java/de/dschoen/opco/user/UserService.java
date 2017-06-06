@@ -1,5 +1,6 @@
 package de.dschoen.opco.user;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -85,7 +86,7 @@ public class UserService implements IUserService {
 		
 		// check password		
 		if (usr.getPassword().equals(user.getPassword())) {
-			usr.setLastLogin(LocalDateTime.now());
+			usr.setLastLogin(Instant.now());
 			userDAO.updateUser(usr);
 			return usr;
 		}

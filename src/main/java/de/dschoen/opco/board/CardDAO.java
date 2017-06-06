@@ -1,5 +1,6 @@
 package de.dschoen.opco.board;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class CardDAO implements ICardDAO {
 	
 	@Override
 	public void addCard(Card card) {		
-		card.setCreateDate(LocalDateTime.now());
+		card.setCreateDate(Instant.now());
 		entityManager.persist(card);		
 	}
 
@@ -55,7 +56,7 @@ public class CardDAO implements ICardDAO {
 		crd.setBoardColumn(card.getBoardColumn());
 		crd.setBoardRow(card.getBoardRow());		
 		
-		crd.setLastUpdate(LocalDateTime.now());
+		crd.setLastUpdate(Instant.now());
 		
 		entityManager.flush();		
 	}

@@ -1,7 +1,7 @@
 package de.dschoen.opco.user;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -46,10 +46,10 @@ public class User implements Serializable {
     private String password;
 	
 	@Column(name="create_date")
-    private LocalDateTime createDate;
+    private Instant createDate;
 	
 	@Column(name="last_login")
-    private LocalDateTime lastLogin;
+    private Instant lastLogin;
 	
 	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.ALL)
@@ -101,19 +101,19 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
-	public LocalDateTime getCreateDate() {
+	public Instant getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(LocalDateTime createDate) {
+	public void setCreateDate(Instant createDate) {
 		this.createDate = createDate;
 	}
 
-	public LocalDateTime getLastLogin() {
+	public Instant getLastLogin() {
 		return lastLogin;
 	}
 
-	public void setLastLogin(LocalDateTime lastLogin) {
+	public void setLastLogin(Instant lastLogin) {
 		this.lastLogin = lastLogin;
 	}
 

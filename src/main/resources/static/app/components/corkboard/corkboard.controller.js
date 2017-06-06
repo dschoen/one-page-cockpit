@@ -12,15 +12,19 @@ corkboard.controller('corkboardController', function($scope, corkboardService, m
 		
 		corkboardService.getBoards().then( function(data) {
 			$scope.data.boards = data;
-			$scope.data.currentBoard = corkboardService.currentBoard;			
+			$scope.data.currentBoard = corkboardService.currentBoard;
+			$scope.data.currentCards = corkboardService.currentCards;
 		});		
 	}
 	
 	// --- Methods ----------------------------------------------
 
-	ctrl.getBoard = function() {		
+	ctrl.updateCurrentBoard = function() {
 		
-		// TODO	
+		corkboardService.updateCurrentBoard().then( function(data) {
+			$scope.data.currentBoard = corkboardService.currentBoard;
+			$scope.data.currentCards = corkboardService.currentCards;
+		});	
 	}
 	
 	// ----------------------------------------------------------
@@ -41,13 +45,14 @@ corkboard.controller('corkboardController', function($scope, corkboardService, m
 	// ----------------------------------------------------------
 	
 	$scope.openCardFormEdit = function(card) {
-		$scope.data.showOverlay = "overlay-visible";
+		$scope.data.showCardOverlay = "overlay-visible";
 		
 		// Make a Copy of the chosen Card
 		$scope.data.card = JSON.parse(JSON.stringify(card));
-		// parse Dates
-		$scope.data.card.startdate = ($scope.data.card.startdate != null ? new Date ($scope.data.card.startdate) : null);
-		$scope.data.card.enddate = ($scope.data.card.enddate != null ? new Date ($scope.data.card.enddate) : null);
+		
+		// create real Date Objects for Form
+		$scope.data.card.startDate = ($scope.data.card.startDate ? new Date($scope.data.card.startDate) : null );
+		$scope.data.card.endDate = ($scope.data.card.endDate ? new Date($scope.data.card.endDate) : null);
 	};
 
 	// ----------------------------------------------------------
@@ -59,15 +64,15 @@ corkboard.controller('corkboardController', function($scope, corkboardService, m
 			
 			// reset card in scope
 			$scope.data.card = corkboardService.getCardTemplate();
-			// Reload all Cards
-			ctrl.getBoard();
+			// Reload current Board
+			ctrl.updateCurrentBoard();
 		});
 	};
 
 	// ----------------------------------------------------------
 	
 	$scope.cancelCardForm = function() {
-		$scope.data.showOverlay = "overlay-hidden";
+		$scope.data.showCardOverlay = "overlay-hidden";
 		// reset Template
 		$scope.data.card = corkboardService.getCardTemplate();
 	};
@@ -76,7 +81,7 @@ corkboard.controller('corkboardController', function($scope, corkboardService, m
 	
 	$scope.deleteCard = function(card) {
 		corkboardService.deleteCard(card).then( function() {
-			ctrl.getCards();
+			ctrl.updateCurrentBoard();
 		});
 	};
 	
@@ -95,7 +100,7 @@ corkboard.controller('corkboardController', function($scope, corkboardService, m
 	// ----------------------------------------------------------
 	
 	$scope.data = {};
-	$scope.data.today 				= new Date().toISOString();
+	$scope.data.today 				= new Date();
 	$scope.data.showCardOverlay 	= 'overlay-hidden';	
 	$scope.data.showBoardOverlay 	= 'overlay-hidden';	
 	$scope.data.card 				= corkboardService.getCardTemplate;

@@ -1,5 +1,6 @@
 package de.dschoen.opco.board;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class BoardDao implements IBoardDAO{
 	
 	@Override
 	public void addBoard(Board board) {		
-		board.setCreateDate(LocalDateTime.now());
+		board.setCreateDate(Instant.now());
 		entityManager.persist(board);		
 	}
 
@@ -46,8 +47,8 @@ public class BoardDao implements IBoardDAO{
 	
 	@Override
 	public void updateBoard(Board board) {
-		Board usr = getBoardById(board.getBoardId());
-		usr.setName(board.getName());
+		Board brd = getBoardById(board.getBoardId());
+		brd.setName(board.getName());
 		entityManager.flush();		
 	}
 

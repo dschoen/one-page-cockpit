@@ -78,13 +78,13 @@ corkboard.directive('droppable', function() {
     		        this.appendChild(item);
 
     		        var id = e.dataTransfer.getData('id');
-    		        var prio = attrs.priority;
-    		        var category = attrs.category;
+    		        var row = attrs.row;
+    		        var col = attrs.column;
     		        
-    		        console.log("Dropped Card: "+ id + " to " + prio + "/" + category );
+    		        console.log("Dropped Card: "+ id + " to " + row + "/" + col );
     		        
     		        // call Service to update Card data
-    		        corkboardService.moveCard(id, prio, category);
+    		        corkboardService.moveCard(id, row, col);
     		        
     		        return false;
     		    },

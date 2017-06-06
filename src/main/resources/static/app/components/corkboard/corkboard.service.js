@@ -1,9 +1,8 @@
-corkboard.factory('corkboardService', function ($http, $rootScope, CONFIG, messageService, authService) {
+corkboard.factory('corkboardService', function ($http, $rootScope, CONFIG, messageService, authService, $filter) {
 		
-	corkboardService = this;
-	
+	corkboardService = this;	
 	corkboardService.boards = [];
-	corkboardService.cards = [];
+	corkboardService.currentCards = [];
 	corkboardService.currentBoard = {};
 	
 	// ------------------------------------------
@@ -26,7 +25,10 @@ corkboard.factory('corkboardService', function ($http, $rootScope, CONFIG, messa
 				
 				// set active Board
 				// TODO check if there is at least one
-				corkboardService.currentBoard = response.data[0];				
+				corkboardService.currentBoard = response.data[0];
+				
+				// generate current set of Cards
+				corkboardService.currentCards = corkboardService.prepareCards(corkboardService.currentBoard.cards);
 				
 				messageService.closePending(pend);
 				return corkboardService.boards;				
@@ -41,59 +43,59 @@ corkboard.factory('corkboardService', function ($http, $rootScope, CONFIG, messa
 	
 	// ------------------------------------------
 	
-	corkboardService.getCards = function() {
+	corkboardService.updateCurrentBoard = function() {
 		
-		var pend = messageService.addPending("Cards")
+		var pend = messageService.addPending("CurrentBoard")
 		
 		return $http({
 			  method: 'GET',
-			  url: CONFIG.BACKEND_URL + 'boards/'+corkboardService.currentBoard.boardId+'/cards',
+			  url: CONFIG.BACKEND_URL + 'boards/'+corkboardService.currentBoard.boardId,
 			  data: '',
 	          headers: {
 	              "Content-Type": "application/json"
 	          }
 			}).then(function successCallback(response) {
 				
-				// update List of Cards
-				corkboardService.cards = response.data;
+				// update current Board
+				corkboardService.currentBoard = response.data;
+				
+				// generate current set of Cards
+				corkboardService.currentCards = corkboardService.prepareCards(corkboardService.currentBoard.cards);
 				
 				messageService.closePending(pend);					
-				return corkboardService.prepareCards(corkboardService.cards);
+				return corkboardService.currentCards;
 				
 			}, function errorCallback(response) {
 			    messageService.addAlert("danger", "Cannot read Cards.");
 			    console.log("Cannot read Cards");
 			    messageService.closePending(pend);
 			    return null;
-			  });		
+			});		
 	}
     
 	// ------------------------------------------
 	
-	corkboardService.moveCard = function(id, priority, category) {
-
-		console.log("moveCard " + id);
+	corkboardService.moveCard = function(id, rowId, columnId) {
 		
 		// get Data
 		var card;
-		for(var i = 0; i < corkboardService.cards.length; i++) {			
-			card = corkboardService.cards[i];
-			if (card.id == id) {
-				
-				// edit Card data
-				card.priority = priority;
-				card.category = category;
-				
-				// update Card List
-				corkboardService.cards[i] = card;
+		for(var i = 0; i < corkboardService.currentBoard.cards.length; i++) {			
+			card = corkboardService.currentBoard.cards[i];
+			
+			if (card.cardId == id) {				
+				// prepare Card data
+				card.boardRowId 	= rowId;
+				card.boardColumnId 	= columnId;
+				card.boardRow 		= null;
+				card.boardColumn	= null;			
 				break;			
 			}
-		}				
+		}
 				
 		// update remote Card data		
 		return $http({
 			  method: 'PUT',
-			  url: CONFIG.BACKEND_URL + '/cards/' + id,
+			  url: CONFIG.BACKEND_URL + 'boards/'+corkboardService.currentBoard.boardId+'/cards/' + id,
 			  data: angular.toJson(card),
 	          headers: {
 	              "Content-Type": "application/json"
@@ -113,19 +115,14 @@ corkboard.factory('corkboardService', function ($http, $rootScope, CONFIG, messa
 	corkboardService.addOrEditCard = function(card) {
 
 		console.log("addOrEditCard: " + card.title);	
-		console.log(JSON.stringify(card));
-			
 		
-		// add enddatestring			
-		if (card.endDate) {
-			var date = new Date (card.enddate);
-//			card.endDateString = date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear();
-		} else {
-//			card.endDatestring = "";
-		}	
-		
-		//set currentBoard
+	
+		// prepare Card data
 		card.boardId = corkboardService.currentBoard.boardId;
+		card.boardRow 		= null;
+		card.boardColumn	= null;
+		card.createDate		= null;
+		card.lastUpdate		= null;	
 		
 		// if new Request
 		if (card.cardId == 0) {
@@ -133,7 +130,7 @@ corkboard.factory('corkboardService', function ($http, $rootScope, CONFIG, messa
 			var http_url = CONFIG.BACKEND_URL + 'boards/'+corkboardService.currentBoard.boardId+'/cards/';
 		} else {
 			var http_method = 'PUT';
-			var http_url = CONFIG.BACKEND_URL + 'boards/'+corkboardService.currentBoard.boardId+'/cards/';
+			var http_url = CONFIG.BACKEND_URL + 'boards/'+corkboardService.currentBoard.boardId+'/cards/'+card.cardId;
 		}
 		
 		// add remote Card data		
@@ -157,19 +154,16 @@ corkboard.factory('corkboardService', function ($http, $rootScope, CONFIG, messa
 	// ------------------------------------------
 	
 	corkboardService.deleteCard = function(card) {
-
-		console.log("deleteCard " + card.id);
 				
 		// add remote Card data		
 		return $http({
 			  method: 'DELETE',
-			  url: CONFIG.BACKEND_URL + '/cards/' + card.id,
+			  url: CONFIG.BACKEND_URL + 'boards/'+corkboardService.currentBoard.boardId+'/cards/' + card.cardId,
 			  data: '',
 	          headers: {
 	              "Content-Type": "application/json"
 	          }
-			}).then(function successCallback(response) {
-				
+			}).then(function successCallback(response) {				
 				messageService.addAlert("success", "Card deleted.");
 				return;
 				
@@ -184,8 +178,8 @@ corkboard.factory('corkboardService', function ($http, $rootScope, CONFIG, messa
 	corkboardService.prepareCards = function(cards) {
 		
 		var grid = {};
-		var rows = sorkboardService.currentBoard.boardRows;
-		var cols = sorkboardService.currentBoard.boardColumns;
+		var rows = corkboardService.currentBoard.boardRows;
+		var cols = corkboardService.currentBoard.boardColumns;
 		
 				
 		// set up grid
@@ -193,7 +187,7 @@ corkboard.factory('corkboardService', function ($http, $rootScope, CONFIG, messa
 			for (var j=0; j<cols.length; j++  ){
 				let row = rows[i];
 				let col = cols[j];				
-				var field = row.name+"-"+col.name;				
+				var field = row.boardRowId+"-"+col.boardColumnId;				
 				grid[field] = new Array();				
 			}			
 		}		
@@ -201,8 +195,16 @@ corkboard.factory('corkboardService', function ($http, $rootScope, CONFIG, messa
 		// sort Cards into grid
 		for(var i = 0; i < cards.length; i++) {			
 			var card = cards[i];			
-			var field = card.boardRow.name+"-"+card.boardColumn.name;			
-			grid[ field ].push(card);
+			var field = card.boardRow.boardRowId+"-"+card.boardColumn.boardColumnId;
+			
+			// prepare additional Fields
+			card.endDateString = (card.endDate ? $filter('date')((card.endDate.epochSecond * 1000),'dd.MM.yyyy') : null);
+			card.startDate = (card.startDate ? new Date(card.startDate.epochSecond * 1000) : null);
+			card.endDate = (card.endDate ? new Date(card.endDate.epochSecond * 1000) : null);			
+			card.boardColumnId = card.boardColumn.boardColumnId;
+			card.boardRowId = card.boardRow.boardRowId;
+			
+			grid[ field ].push(card);			
 		}
 		
 		return grid;

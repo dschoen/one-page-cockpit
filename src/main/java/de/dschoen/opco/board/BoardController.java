@@ -48,10 +48,7 @@ public class BoardController {
 	// ----------------------------------------------------
 	
 	@GetMapping("/user/{id}/boards")
-	public ResponseEntity<List<Board>> getAllBoardsOfUserById(@PathVariable("id") Integer id) {	
-		
-		logger.debug("getAllBoardsOfUserById "+id);
-		
+	public ResponseEntity<List<Board>> getAllBoardsOfUserById(@PathVariable("id") Integer id) {		
 		User user = userService.getUserById(id);
 		List<Board> list = (List<Board>)user.getBoards();
 		return new ResponseEntity<List<Board>>(list, HttpStatus.OK);
@@ -112,7 +109,6 @@ public class BoardController {
 		}
 		
 		// encode CardInformation
-		// cardDTO.boardId = boardId;
 		Card card = boardService.cardDTOtoCard(cardDTO);
 		
 		boolean result = boardService.addCard(card);
@@ -126,8 +122,11 @@ public class BoardController {
 	
 	// ----------------------------------------------------
 	
-	@PutMapping("boards/{id}/cards/")
-	public ResponseEntity<Card> updateCard(@RequestBody Card card) {
+	@PutMapping("boards/{boardId}/cards/{cardId}")
+	public ResponseEntity<Card> updateCard(@RequestBody CardDTO cardDTO) {
+		
+		Card card = boardService.cardDTOtoCard(cardDTO);
+		
 		boardService.updateCard(card);
 		return new ResponseEntity<Card>(card, HttpStatus.OK);
 	}

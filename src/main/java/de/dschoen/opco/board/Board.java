@@ -1,6 +1,7 @@
 package de.dschoen.opco.board;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,7 +31,7 @@ public class Board implements Serializable {
     private String name;
 	
 	@Column(name="create_date", columnDefinition="DATETIME")
-    private LocalDateTime createDate;
+    private Instant createDate;
 	
 	@Column(name="last_update", columnDefinition="DATETIME")
     private LocalDateTime lastUpdate;
@@ -41,7 +42,7 @@ public class Board implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL)
 	private Collection<BoardRow> boardRows = new ArrayList<BoardRow>();
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="board", cascade = CascadeType.ALL)
 	private Collection<Card> cards = new ArrayList<Card>();
 
 	// --- Constructor -------------------------------
@@ -71,11 +72,11 @@ public class Board implements Serializable {
 		this.name = name;
 	}
 
-	public LocalDateTime getCreateDate() {
+	public Instant getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(LocalDateTime createDate) {
+	public void setCreateDate(Instant createDate) {
 		this.createDate = createDate;
 	}
 

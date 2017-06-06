@@ -1,5 +1,6 @@
 package de.dschoen.opco.user;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -53,7 +54,7 @@ public class UserDAO implements IUserDAO {
 	@Override
 	public void addUser(User user) {
 		
-		user.setCreateDate(LocalDateTime.now());
+		user.setCreateDate(Instant.now());
 		entityManager.persist(user);		
 	}
 

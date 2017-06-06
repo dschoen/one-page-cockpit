@@ -13,8 +13,6 @@ public class CardDTO {
     public int boardColumnId;
     public String board;
     public int boardId;
-    public String createDate;
     public String startDate;
     public String endDate;
-    public String lastUpdate;	
 }

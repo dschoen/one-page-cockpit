@@ -25,21 +25,21 @@
 		<table class="cork-table">	
 			<tr ng-repeat="row in data.currentBoard.boardRows" class="priority">
 			
-				<td ng-repeat="col in data.currentBoard.boardColumns" class="category" droppable priority="{{prio}}" category="{{cat}}">
+				<td ng-repeat="col in data.currentBoard.boardColumns" class="category" droppable row="{{row.boardRowId}}" column="{{col.boardColumnId}}">
 					
 					<div class="cork-table-cell-label">{{row.name}} - {{col.name}}</div>
 					
-					<div ng-repeat="card in data.cards[prio+'-'+cat] track by card.id"
+					<div ng-repeat="card in data.currentCards[row.boardRowId+'-'+col.boardColumnId] track by card.cardId"
 						draggable
-						id="{{card.id}}"
+						id="{{card.cardId}}"
 						class="card"
 						ng-style="{'background-color': data.efforts[ card.effort ]}"
-						ng-class="{ 'card-overtime' : card.enddate < data.today, 'card-undertime' : data.today < card.startdate }"
+						ng-class="{ 'card-overtime' : (card.endDate && (card.endDate < data.today)), 'card-undertime' : data.today < card.startDate }"
 						ng-dblclick="openCardFormEdit(card)"
 						>
 						<div class="card-header">
 							<span class="card-light light-{{card.status}}" >&nbsp;</span>
-							<span class="card-date">{{card.enddatestring}}</span>					
+							<span class="card-date">{{card.endDateString}}</span>					
 							<a href="#" 
 								class="btn btn-default btn-xs card-button" 
 								ng-click="deleteCard(card)">
@@ -85,21 +85,25 @@
 		        </div>
 		        <!-- 2. row -->
 		        <div class="form-group">
-			        <!-- priority -->
+			        <!-- row -->
 			        <div class="form-group col-xs-4">
 			            <label class="control-label col-xs-5" for="data.card.priority">Priorität:</label>
 			            <div class="col-xs-7">
 				            <select name="priority" ng-model="data.card.boardRowId"  class='selectpicker form-control'>
-		      					<option ng-repeat="row in data.currentBoard.boardRows" value="{{row.boardRowId}}">{{row.name}}</option>
+		      					<option ng-repeat="row in data.currentBoard.boardRows" 
+		      							ng-selected="data.card.boardRowId == row.boardRowId"
+		      							value="{{row.boardRowId}}">{{row.name}}</option>
 						    </select>
 						</div>
 			        </div>  
-			        <!-- category -->
+			        <!-- column -->
 			        <div class="form-group col-xs-4">
 			            <label class="control-label col-xs-5" for="data.card.category">Kategorie:</label>
 			            <div class="col-xs-7">
 				            <select name="category" ng-model="data.card.boardColumnId" class='form-control'>
-		      					<option ng-repeat="col in data.currentBoard.boardColumns" value="{{col.boardColumnId}}">{{col.name}}</option>							      	
+		      					<option ng-repeat="col in data.currentBoard.boardColumns" 
+		      							ng-selected="data.card.boardColumnId == col.boardColumnId"
+		      							value="{{col.boardColumnId}}">{{col.name}}</option>							      	
 						    </select>
 						</div>
 			        </div>					    

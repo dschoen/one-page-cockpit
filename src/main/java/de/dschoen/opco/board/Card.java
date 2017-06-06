@@ -1,17 +1,20 @@
 package de.dschoen.opco.board;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -37,27 +40,30 @@ public class Card implements Serializable{
 	@Column(name="effort")
     private String effort;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
+	@JoinColumn(name="board_row_id")
     private BoardRow boardRow;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
+	@JoinColumn(name="board_column_id")
     private BoardColumn boardColumn;
 	
 	@JsonIgnore
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
+	@JoinColumn(name="board_id")
     private Board board;
 	
 	@Column(name="create_date")
-    private LocalDateTime createDate;
+    private Instant createDate;
 	
 	@Column(name="start_date")
-    private LocalDateTime startDate;
+    private Instant startDate;
 	
 	@Column(name="end_date")
-    private LocalDateTime endDate;
+    private Instant endDate;
 	
 	@Column(name="last_update")
-    private LocalDateTime lastUpdate;
+    private Instant lastUpdate;
 
 	// ------------------------------------------------------
 	
@@ -101,7 +107,6 @@ public class Card implements Serializable{
 		this.effort = effort;
 	}
 
-	@JsonIgnore
 	public BoardRow getBoardRow() {
 		return boardRow;
 	}
@@ -110,7 +115,6 @@ public class Card implements Serializable{
 		this.boardRow = boardRow;
 	}
 
-	@JsonIgnore
 	public BoardColumn getBoardColumn() {
 		return boardColumn;
 	}
@@ -119,7 +123,6 @@ public class Card implements Serializable{
 		this.boardColumn = boardColumn;
 	}
 
-	@JsonIgnore
 	public Board getBoard() {
 		return board;
 	}
@@ -128,35 +131,35 @@ public class Card implements Serializable{
 		this.board = board;
 	}
 
-	public LocalDateTime getCreateDate() {
+	public Instant getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(LocalDateTime createDate) {
+	public void setCreateDate(Instant createDate) {
 		this.createDate = createDate;
 	}
 
-	public LocalDateTime getStartDate() {
+	public Instant getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(LocalDateTime startDate) {
+	public void setStartDate(Instant startDate) {
 		this.startDate = startDate;
 	}
 
-	public LocalDateTime getEndDate() {
+	public Instant getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(LocalDateTime endDate) {
+	public void setEndDate(Instant endDate) {
 		this.endDate = endDate;
 	}
 
-	public LocalDateTime getLastUpdate() {
+	public Instant getLastUpdate() {
 		return lastUpdate;
 	}
 
-	public void setLastUpdate(LocalDateTime lastUpdate) {
+	public void setLastUpdate(Instant lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
 }

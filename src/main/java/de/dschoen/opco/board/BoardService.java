@@ -1,5 +1,9 @@
 package de.dschoen.opco.board;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -104,9 +108,19 @@ public class BoardService implements IBoardService{
 		card.setStatus(cardDTO.status);
 		card.setEffort(cardDTO.effort);
 		
+		// get Board, Row and Column
 		card.setBoard(this.getBoardById(cardDTO.boardId));
 		card.setBoardColumn(this.getBoardColumnById(cardDTO.boardColumnId));
 		card.setBoardRow(this.getBoardRowById(cardDTO.boardRowId));
+		
+
+		if (cardDTO.startDate != null) {			
+			card.setStartDate( Instant.parse(cardDTO.startDate) );
+		}
+		if (cardDTO.endDate != null) {
+			card.setEndDate( Instant.parse(cardDTO.endDate) );
+		}
+
 		
 		return card;
 	}

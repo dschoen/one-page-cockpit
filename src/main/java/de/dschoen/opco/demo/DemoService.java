@@ -66,8 +66,6 @@ public class DemoService implements IDemoService {
 		
 		demo.getBoards().add(board);
 		
-		userDAO.addUser(demo);
-		
 		// create Cards
 		Card card = new Card();
 		card.setBoard(board);
@@ -77,7 +75,9 @@ public class DemoService implements IDemoService {
 		card.setText("Demotext");
 		card.setEffort("normal");
 		
-		cardDAO.addCard(card);
+		board.getCards().add(card);
+		
+		userDAO.addUser(demo);
 		
 	}
 }
