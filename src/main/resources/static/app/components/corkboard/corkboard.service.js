@@ -221,17 +221,29 @@ corkboard.factory('corkboardService', function ($http, $rootScope, CONFIG, messa
 				"status": 'none',
 				"boardId": null,
 				"boardRow": null,
-				"boardRowId": null,
+				"boardRowId": corkboardService.currentBoard.boardRows[0].boardRowId,
 				"boardColumn": null,
-				"boardColumnId": null,
+				"boardColumnId": corkboardService.currentBoard.boardColumns[0].boardColumnId,
 				"effort" : 'normal',				
 				"createDate": null,
 				"startDate": null,
 				"endDate": null,
 				"endDateString": ''					
-		};
-		
+		};		
 		return cardTemplate;
+	}
+	
+	// ------------------------------------------
+    
+	corkboardService.getBoardTemplate = function() {
+		
+		var boardTemplate = {				
+				"boardId": null,
+				"name": '',
+				"boardRows": [''],
+				"boardColumns": [''],				
+		};		
+		return boardTemplate;
 	}
 	
 	// ------------------------------------------

@@ -9,7 +9,7 @@
 		  		class="btn btn-primary btn-xs"
 				ng-click="openBoardFormNew()">
 				<span class="glyphicon glyphicon-plus"></span>
-			</a>
+				</a>
 			</li>
 			<div class="corkboard-button-new-card" >
 				<a href="#" class="btn btn-success btn-sm"
@@ -63,7 +63,7 @@
 
 
 	<!-- ----------------------------------------------------------------------------------------------------- -->
-	<!-- ---Overlay--- --------------------------------------------------------------------------------------- -->
+	<!-- ---Overlay Card --- --------------------------------------------------------------------------------- -->
 	
 	<div class="form-overlay {{ data.showCardOverlay }}">
 		<div id="card-form" class="card-form">
@@ -89,29 +89,31 @@
 			        <div class="form-group col-xs-4">
 			            <label class="control-label col-xs-5" for="data.card.priority">Priorität:</label>
 			            <div class="col-xs-7">
-				            <select name="priority" ng-model="data.card.boardRowId"  class='selectpicker form-control'>
-		      					<option ng-repeat="row in data.currentBoard.boardRows" 
-		      							ng-selected="data.card.boardRowId == row.boardRowId"
-		      							value="{{row.boardRowId}}">{{row.name}}</option>
-						    </select>
+				            <select name="priority" 
+				            		class='form-control'
+				            		ng-model="data.card.boardRowId"
+				            		ng-options="row.boardRowId as row.name for row in data.currentBoard.boardRows"
+				            		/>
 						</div>
 			        </div>  
 			        <!-- column -->
 			        <div class="form-group col-xs-4">
 			            <label class="control-label col-xs-5" for="data.card.category">Kategorie:</label>
 			            <div class="col-xs-7">
-				            <select name="category" ng-model="data.card.boardColumnId" class='form-control'>
-		      					<option ng-repeat="col in data.currentBoard.boardColumns" 
-		      							ng-selected="data.card.boardColumnId == col.boardColumnId"
-		      							value="{{col.boardColumnId}}">{{col.name}}</option>							      	
-						    </select>
+				            <select name="category"
+				           			class='form-control'
+				            		ng-model="data.card.boardColumnId"
+		      						ng-options="col.boardColumnId as col.name for col in data.currentBoard.boardColumns"
+		      						/>
 						</div>
 			        </div>					    
 			    	<!-- effort -->
 			        <div class="form-group col-xs-4">
 			            <label class="control-label col-xs-5" for="data.card.effort">Aufwand:</label>
 			            <div class="col-xs-7">
-				            <select name="effort" ng-model="data.card.effort" class="form-control">
+				            <select name="effort" 
+				            		class="form-control"
+				            		ng-model="data.card.effort" >
 		      					 <option ng-repeat="(effort, color) in data.efforts" value="{{effort}}">{{effort}}</option>
 						    </select>
 						</div>
@@ -168,6 +170,77 @@
 			        <button class="btn btn-primary" ng-click="submitCardForm()" ng-disabled="form.cardForm.$invalid">Submit</button>
 			        <button class="btn btn-primary" ng-click="cancelCardForm()">Cancel</button>
 			    </div>
+			</form>
+		</div>
+	</div>
+	
+	<!-- ---Overlay Board --- --------------------------------------------------------------------------------- -->
+	<div class="form-overlay {{ data.showBoardOverlay }}">
+		<div id="card-form" class="card-form">
+			<button class="btn btn-warning btn-xs card-form-button" ng-click="cancelBoardForm()">
+				<span class="glyphicon glyphicon-remove"></span>
+			</button>
+			<form name="form.boardForm" class="form-horizontal">
+		        
+		        <!-- 1. row -->
+		        <!-- titel -->
+		        <div class="form-group col-xs-12">
+		            <label class="control-label col-xs-2" for="data.board.name">Name:</label>
+		            <div class="col-xs-8">
+		            	<input name="name" ng-model="data.card.name" class="form-control" type="name"  placeholder="Boardname">
+		            </div>
+		        </div>		        
+		        <hr />
+		        <!-- 2. row -->
+		        <div class="form-group">
+			        <!-- row -->
+			        <div class="form-group col-sm-6">
+			        	<label class="control-label col-xs-10">Reihen:</label>
+			        	<div class="form-group col-xs-10" ng-repeat="row in data.board.boardRows track by $index">
+				            <input
+				            	name="data.board.row"
+				            	type='text'
+				            	class="col-xs-10"
+				            	placeholder='rowname'
+				            	ng-model='data.board.boardRows[$index]'
+				            	/>
+				            <button class="btn btn-sm btn-default col-xs-2" ng-click="removeBoardRow($index)">			            
+			            		<span class="glyphicon glyphicon-minus"></span>
+			            	</button>
+				        </div>
+				        <div class="form-group col-xs-10">
+				            <button class="btn btn-sm btn-success" ng-click="addBoardRow()">
+				            	<span class="glyphicon glyphicon-plus"></span>
+				            </button>
+				        </div>
+			        </div>  
+			        <!-- column -->
+			        <div class="form-group col-sm-6">
+			        	<label class="control-label col-xs-10">Spalten:</label>
+			        	<div class="form-group col-xs-10" ng-repeat="col in data.board.boardColumns track by $index">
+				        	<input
+				        		name="data.board.row"
+				            	type='text'
+				            	class="col-xs-10"
+				            	placeholder='columnname'
+				            	ng-model='data.board.boardColumns[$index]'
+				            	/>
+				            <button class="btn btn-sm btn-default col-xs-2" ng-click="removeBoardColumn($index)">			            
+			            		<span class="glyphicon glyphicon-minus"></span>
+			            	</button>
+				        </div>
+				        <div class="form-group col-xs-10">
+				            <button class="btn btn-sm btn-success" ng-click="addBoardColumn()">			            
+				            	<span class="glyphicon glyphicon-plus"></span>
+				            </button>
+				        </div>
+			        </div>
+			   </div>
+			   <hr />
+			   <div class="form-footer">
+			        <button class="btn btn-primary" ng-click="submitBoardForm()">Submit</button>
+			        <button class="btn btn-primary" ng-click="cancelBoardForm()">Cancel</button>
+			   </div>
 			</form>
 		</div>
 	</div>

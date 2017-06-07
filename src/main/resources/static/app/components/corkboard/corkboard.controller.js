@@ -37,9 +37,8 @@ corkboard.controller('corkboardController', function($scope, corkboardService, m
 	// ----------------------------------------------------------
 	
 	$scope.openBoardFormNew = function() {
-		
-		// TODO
-		alert("New Board");
+		$scope.data.showBoardOverlay = "overlay-visible";
+		$scope.data.board = corkboardService.getBoardTemplate();
 	};
 	
 	// ----------------------------------------------------------
@@ -79,6 +78,38 @@ corkboard.controller('corkboardController', function($scope, corkboardService, m
 	
 	// ----------------------------------------------------------
 	
+	$scope.cancelBoardForm = function() {
+		$scope.data.showBoardOverlay = "overlay-hidden";
+		// reset Template
+		$scope.data.board = corkboardService.getBoardTemplate();
+	};
+	
+	// ----------------------------------------------------------
+	
+	$scope.addBoardRow = function() {	    
+		$scope.data.board.boardRows.push('');	
+	};
+
+	// ----------------------------------------------------------
+	
+	$scope.addBoardColumn = function() {    
+		$scope.data.board.boardColumns.push('');
+	};
+	
+	// ----------------------------------------------------------
+	
+	$scope.removeBoardColumn = function(index) {    
+		$scope.data.board.boardColumns.splice(index, 1);
+	};
+	
+	// ----------------------------------------------------------
+	
+	$scope.removeBoardRow = function(index) {    
+		$scope.data.board.boardRows.splice(index, 1);
+	};
+	
+	// ----------------------------------------------------------
+	
 	$scope.deleteCard = function(card) {
 		corkboardService.deleteCard(card).then( function() {
 			ctrl.updateCurrentBoard();
@@ -90,6 +121,8 @@ corkboard.controller('corkboardController', function($scope, corkboardService, m
 	$scope.printCard = function(divName) {
 		// TODO
 	}
+	
+	
 	
 	// ----------------------------------------------------------
 	
@@ -104,6 +137,7 @@ corkboard.controller('corkboardController', function($scope, corkboardService, m
 	$scope.data.showCardOverlay 	= 'overlay-hidden';	
 	$scope.data.showBoardOverlay 	= 'overlay-hidden';	
 	$scope.data.card 				= corkboardService.getCardTemplate;
+	$scope.data.board 				= corkboardService.getBoardTemplate;
 	$scope.data.efforts 			= CONFIG.EFFORTS;
 	
 	// ----------------------------------------------------------
