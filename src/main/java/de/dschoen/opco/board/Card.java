@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -22,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Card implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	
+		
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="card_id")
@@ -39,6 +40,10 @@ public class Card implements Serializable{
 	
 	@Column(name="effort")
     private String effort;
+	
+	@Column(name="active")
+	@NotNull
+    private boolean active;
 
 	@ManyToOne
 	@JoinColumn(name="board_row_id")
@@ -65,7 +70,14 @@ public class Card implements Serializable{
 	@Column(name="last_update")
     private Instant lastUpdate;
 
-	// ------------------------------------------------------
+	
+	// --- Constructor -----------------------------
+	
+	public Card() {
+		this.active = true;
+	}
+	
+	// ---------------------------------------------
 	
 	public int getCardId() {
 		return cardId;
@@ -161,5 +173,13 @@ public class Card implements Serializable{
 
 	public void setLastUpdate(Instant lastUpdate) {
 		this.lastUpdate = lastUpdate;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 }

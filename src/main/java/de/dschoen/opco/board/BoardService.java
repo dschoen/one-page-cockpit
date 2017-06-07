@@ -78,7 +78,16 @@ public class BoardService implements IBoardService{
 	
 	@Override
 	public void deleteCard(int cardId) {
-		cardDAO.deleteCard(cardId);
+		Card card = cardDAO.getCardById(cardId);
+		cardDAO.deleteCard(card);
+	}
+	
+	// ----------------------------------------------------
+	
+	@Override
+	public void disableCardById(int cardId) {
+		Card card = cardDAO.getCardById(cardId);
+		cardDAO.disableCard(card);
 	}
 
 	// ----------------------------------------------------	

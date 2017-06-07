@@ -15,6 +15,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Where;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name="boards")
@@ -42,7 +46,14 @@ public class Board implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL)
 	private Collection<BoardRow> boardRows = new ArrayList<BoardRow>();
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="board", cascade = CascadeType.ALL)
+
+	@Where(clause = "active = false")
+	private Collection<Card> disabledCards = new ArrayList<Card>();
+	
+	@OneToMany(mappedBy="board", cascade = CascadeType.ALL)
+	@Where(clause = "active = true")
 	private Collection<Card> cards = new ArrayList<Card>();
 
 	// --- Constructor -------------------------------
@@ -110,5 +121,13 @@ public class Board implements Serializable {
 
 	public void setCards(Collection<Card> cards) {
 		this.cards = cards;
+	}
+
+	public Collection<Card> getDisabledCards() {
+		return disabledCards;
+	}
+
+	public void setDisabledCards(Collection<Card> disabledCards) {
+		this.disabledCards = disabledCards;
 	}
 }

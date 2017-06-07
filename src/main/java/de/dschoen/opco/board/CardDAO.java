@@ -1,7 +1,6 @@
 package de.dschoen.opco.board;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -64,10 +63,27 @@ public class CardDAO implements ICardDAO {
 	// ----------------------------------------------------
 	
 	@Override
-	public void deleteCard(int id) {
-		entityManager.remove(getCardById(id));		
+	public void deleteCard(Card card) {
+		entityManager.remove(getCardById(card.getCardId()));		
 	}
 
 	// ----------------------------------------------------
 	
+	@Override
+	public void enableCard(Card card) {
+		Card crd = getCardById(card.getCardId());
+		crd.setActive(true);		
+		crd.setLastUpdate(Instant.now());		
+		entityManager.flush();		
+	}
+	
+	// ----------------------------------------------------
+	
+	@Override
+	public void disableCard(Card card) {
+		Card crd = getCardById(card.getCardId());
+		crd.setActive(false);		
+		crd.setLastUpdate(Instant.now());		
+		entityManager.flush();		
+	}
 }

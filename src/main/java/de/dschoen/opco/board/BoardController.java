@@ -135,7 +135,8 @@ public class BoardController {
 	
 	@DeleteMapping("boards/{id}/cards/{cardId}")
 	public ResponseEntity<Void> deleteBoard(@PathVariable("id") Integer id, @PathVariable("cardId") Integer cardId) {
-		boardService.deleteCard(cardId);
+		boardService.disableCardById(cardId);
+		// boardService.deleteCard(cardId);
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}	
 }

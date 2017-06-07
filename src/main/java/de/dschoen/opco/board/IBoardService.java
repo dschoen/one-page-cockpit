@@ -18,4 +18,6 @@ public interface IBoardService {
 	
 	BoardColumn getBoardColumnById(int id);
 	BoardRow getBoardRowById(int id);
+	
+	void disableCardById(int cardId);
 }
