@@ -47,7 +47,7 @@ public class BoardController {
 	
 	// ----------------------------------------------------
 	
-	@GetMapping("/user/{id}/boards")
+	@GetMapping("/users/{id}/boards")
 	public ResponseEntity<List<Board>> getAllBoardsOfUserById(@PathVariable("id") Integer id) {		
 		User user = userService.getUserById(id);
 		List<Board> list = (List<Board>)user.getBoards();
@@ -56,10 +56,17 @@ public class BoardController {
 	
 	// ----------------------------------------------------
 	
-	@PostMapping("boards")
-	public ResponseEntity<Void> addBoard(@RequestBody Board board, UriComponentsBuilder builder) {
-        		
+	@PostMapping("/users/{userId}/boards")
+	public ResponseEntity<Void> addBoard(@RequestBody BoardDTO boardDTO, @PathVariable("userId") Integer userId, UriComponentsBuilder builder) {
+        
+		Board board = boardService.boardDTOtoBoard(boardDTO);
+		
 		boolean result = boardService.addBoard(board);
+		
+		User user = userService.getUserById(userId);
+		user.getBoards().add(board);
+		userService.updateUser(user);
+		
         if (result == false) {
         	return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         }
@@ -70,8 +77,8 @@ public class BoardController {
 	
 	// ----------------------------------------------------
 	
-	@PutMapping("boards")
-	public ResponseEntity<Board> updateBoard(@RequestBody Board board) {
+	@PutMapping("boards/{id}")
+	public ResponseEntity<Board> updateBoard(@RequestBody Board board, @PathVariable("id") Integer id) {
 		boardService.updateBoard(board);
 		return new ResponseEntity<Board>(board, HttpStatus.OK);
 	}

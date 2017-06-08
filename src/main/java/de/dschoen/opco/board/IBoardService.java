@@ -20,4 +20,5 @@ public interface IBoardService {
 	BoardRow getBoardRowById(int id);
 	
 	void disableCardById(int cardId);
+	Board boardDTOtoBoard(BoardDTO boardDTO);
 }

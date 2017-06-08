@@ -13,7 +13,7 @@ corkboard.factory('corkboardService', function ($http, $rootScope, CONFIG, messa
 		
 		return $http({
 			  method: 'GET',
-			  url: CONFIG.BACKEND_URL + '/user/' + authService.user.userId + '/boards',
+			  url: CONFIG.BACKEND_URL + 'users/' + authService.user.userId + '/boards',
 			  data: '',
 	          headers: {
 	              "Content-Type": "application/json"
@@ -147,6 +147,42 @@ corkboard.factory('corkboardService', function ($http, $rootScope, CONFIG, messa
 				
 			}, function errorCallback(response) {
 				messageService.addAlert("danger", "Cannot add Card");				
+			    return null;
+			});			
+	}
+	
+	// ------------------------------------------
+	
+	corkboardService.addOrEditBoard = function(board) {
+
+		console.log("addOrEditBoard: " + board.name);	
+		
+	
+		// prepare Card data
+		
+		// if new Request
+		if (board.boardId > 1) {
+			var http_method = 'PUT';
+			var http_url = CONFIG.BACKEND_URL + 'users/'+authService.user.userId+'/boards/'+board.boardId;
+		} else {
+			var http_method = 'POST';
+			var http_url = CONFIG.BACKEND_URL + 'users/'+authService.user.userId+'/boards';
+		}
+		
+		// add remote Card data		
+		return $http({
+			  method: http_method,
+			  url: http_url,
+			  data: angular.toJson(board),
+	          headers: {
+	              "Content-Type": "application/json"
+	          }
+			}).then(function successCallback(response) {				
+				messageService.addAlert("success", "Board saved.");
+				return;
+				
+			}, function errorCallback(response) {
+				messageService.addAlert("danger", "Cannot add Board");				
 			    return null;
 			});			
 	}

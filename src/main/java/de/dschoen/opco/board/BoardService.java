@@ -129,8 +129,29 @@ public class BoardService implements IBoardService{
 		if (cardDTO.endDate != null) {
 			card.setEndDate( Instant.parse(cardDTO.endDate) );
 		}
-
 		
 		return card;
+	}
+	
+	// ----------------------------------------------------
+	
+	@Override
+	public Board boardDTOtoBoard(BoardDTO boardDTO) {
+		Board board = new Board();
+		board.setBoardId(boardDTO.boardId);
+		board.setName(boardDTO.name);
+		
+		// Create Rows
+		for (String rowString : boardDTO.boardRows) {
+			BoardRow boardRow = new BoardRow(rowString);
+			board.getBoardRows().add(boardRow);
+		}
+		
+		for (String colString : boardDTO.boardColumns) {
+			BoardColumn boardColumn = new BoardColumn(colString);
+			board.getBoardColumns().add(boardColumn);
+		}	
+		
+		return board;
 	}
 }

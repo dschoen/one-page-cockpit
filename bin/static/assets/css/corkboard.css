@@ -13,6 +13,10 @@
 .nav-tabs > li.active > a {
 	background-color: rgba(255,255,255,0.5);
 }
+.nav-tabs > li.inactive > a {
+	color: #333333;
+	background-color: rgba(255,255,255,0.3);
+}
 .corkboard-button-new-card {
 	margin-top: 5px;
 }
@@ -169,3 +173,24 @@
 	margin-bottom:8px;
 }
 
+/* -- Board Form --*/
+.board-form {
+	margin: 0 auto;
+	margin-top:100px;	
+	width: 800px;
+	
+	background-color: #dedede;
+	border-radius: 5px;
+	border: 1px solid #BBBBBB;	
+	padding: 10px;	
+}
+.board-form .form-horizontal .form-group {
+	margin-left: 0px;
+	margin-right: 0px;
+}
+.board-form-label {
+	text-align: left !important;
+}
+.board-form-name {
+	margin-top: 20px;
+}

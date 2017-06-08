@@ -70,6 +70,20 @@ corkboard.controller('corkboardController', function($scope, corkboardService, m
 
 	// ----------------------------------------------------------
 	
+	$scope.submitBoardForm = function() {
+		$scope.data.showBoardOverlay = "overlay-hidden";
+		
+		corkboardService.addOrEditBoard($scope.data.board).then( function() {
+			
+			// reset card in scope
+			$scope.data.board = corkboardService.getBoardTemplate();
+			// Reload Boards
+			ctrl.getBoards();
+		});
+	};
+	
+	// ----------------------------------------------------------
+	
 	$scope.cancelCardForm = function() {
 		$scope.data.showCardOverlay = "overlay-hidden";
 		// reset Template
@@ -122,13 +136,18 @@ corkboard.controller('corkboardController', function($scope, corkboardService, m
 		// TODO
 	}
 	
-	
-	
 	// ----------------------------------------------------------
 	
 	ctrl.callback = function() {
 		ctrl.getBoards();
 	}
+	
+	// ----------------------------------------------------------
+	
+	$scope.openBoard = function(board) {
+		corkboardService.currentBoard = board;
+		ctrl.updateCurrentBoard();
+	};
 	
 	// ----------------------------------------------------------
 	
