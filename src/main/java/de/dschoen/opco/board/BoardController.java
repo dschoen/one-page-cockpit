@@ -22,7 +22,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
-import de.dschoen.opco.user.IUserService;
+import de.dschoen.opco.user.UserService;
 import de.dschoen.opco.user.User;
 
 @Controller
@@ -32,10 +32,10 @@ public class BoardController {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
-	private IBoardService boardService;
+	private BoardService boardService;
 	
 	@Autowired
-	private IUserService userService;
+	private UserService userService;
 	
 	// ----------------------------------------------------
 	

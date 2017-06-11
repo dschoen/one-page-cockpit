@@ -14,7 +14,7 @@ import de.dschoen.opco.user.User;
 
 @Transactional
 @Repository
-public class BoardDao implements IBoardDAO{
+public class BoardDaoImpl implements BoardDAO{
 
 	@PersistenceContext	
 	private EntityManager entityManager;	

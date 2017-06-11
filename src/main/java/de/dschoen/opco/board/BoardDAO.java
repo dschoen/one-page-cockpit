@@ -2,7 +2,7 @@ package de.dschoen.opco.board;
 
 import java.util.List;
 
-public interface IBoardDAO {
+public interface BoardDAO {
 
 	Board getBoardById(int id);
 	List<Board> getAllBoards();
