@@ -53,6 +53,15 @@ corkboard.controller('corkboardController', function($scope, corkboardService, m
 		$scope.data.card.startDate = ($scope.data.card.startDate ? new Date($scope.data.card.startDate) : null );
 		$scope.data.card.endDate = ($scope.data.card.endDate ? new Date($scope.data.card.endDate) : null);
 	};
+	
+// ----------------------------------------------------------
+	
+	$scope.openBoardFormEdit = function(board) {
+		$scope.data.showBoardOverlay = "overlay-visible";
+		
+		// Make a Copy of the chosen Card
+		$scope.data.board = JSON.parse(JSON.stringify(board));
+	};
 
 	// ----------------------------------------------------------
 	
@@ -100,14 +109,22 @@ corkboard.controller('corkboardController', function($scope, corkboardService, m
 	
 	// ----------------------------------------------------------
 	
-	$scope.addBoardRow = function() {	    
-		$scope.data.board.boardRows.push('');	
+	$scope.addBoardRow = function() {	 
+		var newBoardRow = {
+				boarRowId: null,
+				name:''
+		}
+		$scope.data.board.boardRows.push(newBoardRow);	
 	};
 
 	// ----------------------------------------------------------
 	
 	$scope.addBoardColumn = function() {    
-		$scope.data.board.boardColumns.push('');
+		var newBoardColumn = {
+				boarColumnId: null,
+				name:''
+		}
+		$scope.data.board.boardColumns.push(newBoardColumn);
 	};
 	
 	// ----------------------------------------------------------
@@ -132,12 +149,22 @@ corkboard.controller('corkboardController', function($scope, corkboardService, m
 	
 	// ----------------------------------------------------------
 	
+	$scope.deleteBoard = function(board) {
+		corkboardService.deleteBoard(board).then( function() {
+			ctrl.getBoards();
+		});
+	};
+	
+	// ----------------------------------------------------------
+	
 	$scope.printCard = function(divName) {
 		// TODO
 	}
 	
 	// ----------------------------------------------------------
 	
+	
+	// Callback is called when authentication is successfull
 	ctrl.callback = function() {
 		ctrl.getBoards();
 	}

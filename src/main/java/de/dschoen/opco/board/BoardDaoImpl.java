@@ -1,7 +1,6 @@
 package de.dschoen.opco.board;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -10,11 +9,9 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.dschoen.opco.user.User;
-
 @Transactional
 @Repository
-public class BoardDaoImpl implements BoardDAO{
+public class BoardDaoImpl implements BoardDao{
 
 	@PersistenceContext	
 	private EntityManager entityManager;	
@@ -38,25 +35,27 @@ public class BoardDaoImpl implements BoardDAO{
 	// ----------------------------------------------------
 	
 	@Override
-	public void addBoard(Board board) {		
+	public Board addBoard(Board board) {		
 		board.setCreateDate(Instant.now());
-		entityManager.persist(board);		
+		entityManager.persist(board);	
+		return board;
+	}
+
+	
+	// ----------------------------------------------------
+	
+	@Override
+	public Board updateBoard(Board board) {
+		board.setLastUpdate(Instant.now());			
+		entityManager.flush();
+		return board;
 	}
 
 	// ----------------------------------------------------
 	
 	@Override
-	public void updateBoard(Board board) {
-		Board brd = getBoardById(board.getBoardId());
-		brd.setName(board.getName());
-		entityManager.flush();		
-	}
-
-	// ----------------------------------------------------
-	
-	@Override
-	public void deleteBoard(int id) {
-		entityManager.remove(getBoardById(id));		
+	public void deleteBoard(Board board) {
+		entityManager.remove(board);		
 	}
 
 	// ----------------------------------------------------
@@ -80,4 +79,7 @@ public class BoardDaoImpl implements BoardDAO{
 	public BoardRow getBoardRowById(int id) {
 		return entityManager.find(BoardRow.class, id);
 	}
+	
+	// ----------------------------------------------------
+
 }

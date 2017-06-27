@@ -1,28 +1,51 @@
 <div ng-controller="corkboardController as cork" class="corkboard">
-	<div class="corkboard-tabs">			
-		<ul class="nav nav-tabs">
-			<li class="" 
-				ng-repeat="board in data.boards"
-				ng-class="(board.boardId == data.currentBoard.boardId) ? 'active' : 'inactive'">
-			  	<a href="#" ng-click="openBoard(board)">{{board.name}}</a>
-			</li>
-			  
-			<li><a href="#" 
-		  		class="btn btn-primary btn-xs"
-				ng-click="openBoardFormNew()">
-				<span class="glyphicon glyphicon-plus"></span>
-				</a>
-			</li>
-			<div class="corkboard-button-new-card" >
-				<a href="#" class="btn btn-success btn-sm"
+	<div class="corkboard-header">
+		<div class="corkboard-header-tabs">			
+			<ul class="nav nav-tabs">
+				<li class="" 
+					ng-repeat="board in data.boards"
+					ng-class="(board.boardId == data.currentBoard.boardId) ? 'active' : 'inactive'">
+				  	<a href="#" ng-click="openBoard(board)">{{board.name}}</a>
+				</li>				  
+				<li>
+					<a href="#" 
+			  		class="btn btn-primary btn-xs"
+					ng-click="openBoardFormNew()">
+					<span class="glyphicon glyphicon-plus"></span>
+					</a>
+				</li>			
+			</ul>		
+		</div>
+		<div class="corkboard-header-buttons" >
+			<div class="dropdown corkboard-header-button">
+				<button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Current Board
+					<span class="caret"></span>
+				</button>				
+				<ul class="dropdown-menu">
+				    <li>
+						<a href="#" class=""
+							ng-click="openBoardFormEdit(data.currentBoard)">
+							Edit Board
+						</a>
+					</li>
+				    <li>
+						<a href="#" class=""
+							ng-click="deleteBoard(data.currentBoard)">
+							Delete Board
+						</a>
+					</li>
+				</ul>
+			</div> 
+			<div class="corkboard-header-button">
+				<a href="#" class="btn btn-success btn-xs"
 					ng-click="openCardFormNew()">
 					<span class="glyphicon glyphicon-plus"></span>
 					Add new Card
 				</a>
-			</div>
-		</ul>		
+			</div>			
+		</div>
 	</div>
-	
+
 	<div class="corkboard-board">	
 		<table class="cork-table">	
 			<tr ng-repeat="row in data.currentBoard.boardRows" class="priority">
@@ -210,7 +233,7 @@
 				            	type='text'
 				            	class="col-xs-10"
 				            	placeholder='rowname'
-				            	ng-model='data.board.boardRows[$index]'
+				            	ng-model='data.board.boardRows[$index].name'
 				            	required />
 				            <div class="col-xs-2">
 				            	<button class="btn btn-sm btn-default" ng-click="removeBoardRow($index)">			            
@@ -229,11 +252,11 @@
 			        	<label class="control-label board-form-label col-xs-10">Spalten:</label>
 			        	<div class="form-group col-xs-10" ng-repeat="col in data.board.boardColumns track by $index">
 				        	<input
-				        		name="data.board.row"
+				        		name="data.board.column"
 				            	type='text'
 				            	class="col-xs-10"
 				            	placeholder='columnname'
-				            	ng-model='data.board.boardColumns[$index]'
+				            	ng-model='data.board.boardColumns[$index].name'
 				            	required />
 				             <div class="col-xs-2">
 					            <button class="btn btn-sm btn-default" ng-click="removeBoardColumn($index)">			            

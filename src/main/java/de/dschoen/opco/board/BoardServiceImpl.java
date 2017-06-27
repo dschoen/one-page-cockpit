@@ -1,9 +1,6 @@
 package de.dschoen.opco.board;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -17,16 +14,16 @@ public class BoardServiceImpl implements BoardService{
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
-	private BoardDAO boardDAO;
+	private BoardDao boardDao;
 	
 	@Autowired
-	private CardDAO cardDAO;
+	private CardDao cardDAO;
 	
 	// ----------------------------------------------------
 	
 	@Override
 	public Board getBoardById(int boardId) {
-		Board obj = boardDAO.getBoardById(boardId);
+		Board obj = boardDao.getBoardById(boardId);
 		return obj;
 	}	
 	
@@ -34,29 +31,39 @@ public class BoardServiceImpl implements BoardService{
 	
 	@Override
 	public List<Board> getAllBoards(){
-		return boardDAO.getAllBoards();
+		return boardDao.getAllBoards();
 	}
 	
 	// ----------------------------------------------------
 	
 	@Override
 	public synchronized boolean addBoard(Board board){
-        boardDAO.addBoard(board);
+        boardDao.addBoard(board);
         return true;
 	}
 	
 	// ----------------------------------------------------
 	
 	@Override
-	public void updateBoard(Board board) {
-		boardDAO.updateBoard(board);
+	public void updateBoard(Board board) {		
+		logger.debug("Update Board: "+board.getName());		
+		
+		Board newBoard = boardDao.getBoardById(board.getBoardId());
+		newBoard.setName(board.getName());
+		newBoard.updateBoardRows(board.getBoardRows());
+		newBoard.updateBoardColumns(board.getBoardColumns());
+		
+		//do not change Cards
+		
+		boardDao.updateBoard(board);
 	}
 	
 	// ----------------------------------------------------
 	
 	@Override
 	public void deleteBoard(int boardId) {
-		boardDAO.deleteBoard(boardId);
+		Board board = boardDao.getBoardById(boardId);
+		boardDao.deleteBoard(board);
 	}
 	
 	// ----------------------------------------------------
@@ -94,7 +101,7 @@ public class BoardServiceImpl implements BoardService{
 	
 	@Override
 	public BoardColumn getBoardColumnById(int boardColumnId) {
-		BoardColumn obj = boardDAO.getBoardColumnById(boardColumnId);
+		BoardColumn obj = boardDao.getBoardColumnById(boardColumnId);
 		return obj;
 	}
 		
@@ -102,7 +109,7 @@ public class BoardServiceImpl implements BoardService{
 	
 	@Override
 	public BoardRow getBoardRowById(int boardRowId) {
-		BoardRow obj = boardDAO.getBoardRowById(boardRowId);
+		BoardRow obj = boardDao.getBoardRowById(boardRowId);
 		return obj;
 	}
 	
@@ -134,24 +141,4 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	// ----------------------------------------------------
-	
-	@Override
-	public Board boardDTOtoBoard(BoardDTO boardDTO) {
-		Board board = new Board();
-		board.setBoardId(boardDTO.boardId);
-		board.setName(boardDTO.name);
-		
-		// Create Rows
-		for (String rowString : boardDTO.boardRows) {
-			BoardRow boardRow = new BoardRow(rowString);
-			board.getBoardRows().add(boardRow);
-		}
-		
-		for (String colString : boardDTO.boardColumns) {
-			BoardColumn boardColumn = new BoardColumn(colString);
-			board.getBoardColumns().add(boardColumn);
-		}	
-		
-		return board;
-	}
 }

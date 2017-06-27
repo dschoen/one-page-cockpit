@@ -57,9 +57,7 @@ public class BoardController {
 	// ----------------------------------------------------
 	
 	@PostMapping("/users/{userId}/boards")
-	public ResponseEntity<Void> addBoard(@RequestBody BoardDTO boardDTO, @PathVariable("userId") Integer userId, UriComponentsBuilder builder) {
-        
-		Board board = boardService.boardDTOtoBoard(boardDTO);
+	public ResponseEntity<Void> addBoard(@RequestBody Board board, @PathVariable("userId") Integer userId, UriComponentsBuilder builder) {
 		
 		boolean result = boardService.addBoard(board);
 		
@@ -77,8 +75,8 @@ public class BoardController {
 	
 	// ----------------------------------------------------
 	
-	@PutMapping("boards/{id}")
-	public ResponseEntity<Board> updateBoard(@RequestBody Board board, @PathVariable("id") Integer id) {
+	@PutMapping("/users/{userId}/boards/{boardId}")
+	public ResponseEntity<Board> updateBoard(@RequestBody Board board, @PathVariable("userId") Integer userId, @PathVariable("boardId") Integer boardId) {
 		boardService.updateBoard(board);
 		return new ResponseEntity<Board>(board, HttpStatus.OK);
 	}
@@ -109,7 +107,9 @@ public class BoardController {
 			ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 			String json;
 			json = ow.writeValueAsString(cardDTO);
-			logger.debug("AAAAAA " + json);
+			
+			logger.debug("Request to Add Card: " + json);
+			
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

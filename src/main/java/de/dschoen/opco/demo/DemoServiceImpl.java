@@ -11,9 +11,9 @@ import de.dschoen.opco.board.Board;
 import de.dschoen.opco.board.BoardColumn;
 import de.dschoen.opco.board.BoardRow;
 import de.dschoen.opco.board.Card;
-import de.dschoen.opco.board.CardDAOImpl;
-import de.dschoen.opco.board.BoardDAO;
-import de.dschoen.opco.board.CardDAO;
+import de.dschoen.opco.board.CardDaoImpl;
+import de.dschoen.opco.board.BoardDao;
+import de.dschoen.opco.board.CardDao;
 import de.dschoen.opco.user.UserDAO;
 import de.dschoen.opco.user.User;
 
@@ -26,10 +26,10 @@ public class DemoServiceImpl implements DemoService {
 	private UserDAO userDAO;
 	
 	@Autowired
-	private BoardDAO boardDAO;
+	private BoardDao boardDAO;
 	
 	@Autowired
-	private CardDAO cardDAO;
+	private CardDao cardDAO;
 		
 	// ----------------------------------------------------------------------------
 		

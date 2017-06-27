@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 @Repository
-public class CardDAOImpl implements CardDAO {
+public class CardDaoImpl implements CardDao {
 
 	@PersistenceContext	
 	private EntityManager entityManager;	
@@ -35,15 +35,16 @@ public class CardDAOImpl implements CardDAO {
 	// ----------------------------------------------------
 	
 	@Override
-	public void addCard(Card card) {		
+	public Card addCard(Card card) {		
 		card.setCreateDate(Instant.now());
-		entityManager.persist(card);		
+		entityManager.persist(card);
+		return card;
 	}
 
 	// ----------------------------------------------------
 	
 	@Override
-	public void updateCard(Card card) {
+	public Card updateCard(Card card) {
 		Card crd = getCardById(card.getCardId());
 		crd.setTitle(card.getTitle());
 		crd.setText(card.getText());
@@ -57,7 +58,8 @@ public class CardDAOImpl implements CardDAO {
 		
 		crd.setLastUpdate(Instant.now());
 		
-		entityManager.flush();		
+		entityManager.flush();
+		return crd;
 	}
 
 	// ----------------------------------------------------
@@ -86,4 +88,13 @@ public class CardDAOImpl implements CardDAO {
 		crd.setLastUpdate(Instant.now());		
 		entityManager.flush();		
 	}
+	
+	// ----------------------------------------------------
+	
+	@Override
+	public int countCards() {
+		String hql = "FROM Card";
+		return entityManager.createQuery(hql).getResultList().size();
+	}
+	
 }

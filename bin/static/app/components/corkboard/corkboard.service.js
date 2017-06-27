@@ -24,8 +24,9 @@ corkboard.factory('corkboardService', function ($http, $rootScope, CONFIG, messa
 				corkboardService.boards = response.data;
 				
 				// set active Board
-				// TODO check if there is at least one
-				corkboardService.currentBoard = response.data[0];
+				if (corkboardService.currentBoard.boardId == null) {
+					corkboardService.currentBoard = response.data[0];
+				}
 				
 				// generate current set of Cards
 				corkboardService.currentCards = corkboardService.prepareCards(corkboardService.currentBoard.cards);
@@ -156,9 +157,11 @@ corkboard.factory('corkboardService', function ($http, $rootScope, CONFIG, messa
 	corkboardService.addOrEditBoard = function(board) {
 
 		console.log("addOrEditBoard: " + board.name);	
-		
-	
-		// prepare Card data
+			
+		// prepare Board data
+		board.createDate		= null;
+		board.lastUpdate		= null;
+		board.cards				= null;
 		
 		// if new Request
 		if (board.boardId > 1) {
