@@ -15,62 +15,36 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-@Entity
-@Table(name="cards")
-public class Card implements Serializable{
 
-	private static final long serialVersionUID = 1L;
-		
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="card_id")
+public class Card {
+
+
     private int cardId;  
 	
-	@Column(name="title")
     private String title;
 	
-	@Column(name="text")
     private String text;
 	
-	@Column(name="status")
     private String status;
-	
-	@Column(name="effort")
+
     private String effort;
 	
-	@Column(name="active")
-	@NotNull
     private boolean active;	
 	
-	@Column(name="create_date")
     private Instant createDate;
 	
-	@Column(name="start_date")
     private Instant startDate;
 	
-	@Column(name="end_date")
     private Instant endDate;
 	
-	@Column(name="last_update")
     private Instant lastUpdate;
 
-//	@ManyToMany
-//	@JoinTable(name="cards_boards", 
-//		joinColumns=@JoinColumn(name="card_id"), 
-//		inverseJoinColumns=@JoinColumn(name="board_id"))
     private ArrayList<Board> boards = new ArrayList<Board>();
 
-//	@ManyToMany
-//	@JoinTable(name="cards_board_columns", 
-//		joinColumns=@JoinColumn(name="card_id"), 
-//		inverseJoinColumns=@JoinColumn(name="board_column_id"))
-    private ArrayList<BoardColumn> boardColumns = new ArrayList<BoardColumn>();
+    private ArrayList<Column> boardColumns = new ArrayList<Column>();
 	
-//	@ManyToMany
-//	@JoinTable(name="cards_board_rows", 
-//		joinColumns=@JoinColumn(name="card_id"), 
-//		inverseJoinColumns=@JoinColumn(name="board_row_id"))
-    private ArrayList<BoardRow> boardRows = new ArrayList<BoardRow>();
+
+    private ArrayList<Row> boardRows = new ArrayList<Row>();
 	
 	// --- Constructor -----------------------------
 	
@@ -164,11 +138,11 @@ public class Card implements Serializable{
 		return boards;
 	}
 
-	public ArrayList<BoardColumn> getBoardColumns() {
+	public ArrayList<Column> getBoardColumns() {
 		return boardColumns;
 	}
 
-	public ArrayList<BoardRow> getBoardRows() {
+	public ArrayList<Row> getBoardRows() {
 		return boardRows;
 	}
 }

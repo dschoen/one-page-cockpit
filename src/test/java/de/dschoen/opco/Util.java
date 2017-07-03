@@ -1,8 +1,8 @@
 package de.dschoen.opco;
 
 import de.dschoen.opco.board.model.Board;
-import de.dschoen.opco.board.model.BoardColumn;
-import de.dschoen.opco.board.model.BoardRow;
+import de.dschoen.opco.board.model.Column;
+import de.dschoen.opco.board.model.Row;
 import de.dschoen.opco.board.model.Card;
 
 public class Util {
@@ -19,13 +19,13 @@ public class Util {
 		return board;
 	}
 	
-	public static BoardRow rowDummy(String name) {
-		BoardRow row = new BoardRow(name);
+	public static Row rowDummy(String name) {
+		Row row = new Row(name);
 		return row;
 	}
 	
-	public static BoardColumn columnDummy(String name) {
-		BoardColumn column = new BoardColumn(name);
+	public static Column columnDummy(String name) {
+		Column column = new Column(name);
 		return column;
 	}
 }

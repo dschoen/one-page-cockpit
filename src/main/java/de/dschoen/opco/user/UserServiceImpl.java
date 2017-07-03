@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.dschoen.opco.board.model.Board;
-import de.dschoen.opco.board.model.BoardColumn;
-import de.dschoen.opco.board.model.BoardRow;
+import de.dschoen.opco.board.model.Column;
+import de.dschoen.opco.board.model.Row;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -100,36 +100,36 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void init() {
 		//check if Admin exists, else create
-		if (userDAO.existsUser("admin")) {
-			logger.info("User 'admin' already exists.");
-			return;
-		} 
-
-		logger.info("User 'admin' does not exist, therefore default 'admin'-'admin' is created.");
-		
-		User admin = new User();
-		admin.setUsername("admin");
-		admin.setPassword("admin");
-		admin.setFirstname("Havelock");
-		admin.setLastname("Vetinari");
-		admin.setEmail("none@mail.com");
-		
-		
-		Board board = new Board("DemoBoard");
-		
-		Collection<BoardRow> rows = board.getBoardRows();
-		rows.add(new BoardRow("high"));
-		rows.add(new BoardRow("medium"));
-		rows.add(new BoardRow("low"));		
-//		board.setBoardRows(rows);
-		
-		Collection<BoardColumn> cols = board.getBoardColumns();
-		cols.add(new BoardColumn("Todo"));
-		cols.add(new BoardColumn("inProgress"));
-		cols.add(new BoardColumn("Backlog"));
-		
-		admin.getBoards().add(board);
-		
-		userDAO.addUser(admin);
+//		if (userDAO.existsUser("admin")) {
+//			logger.info("User 'admin' already exists.");
+//			return;
+//		} 
+//
+//		logger.info("User 'admin' does not exist, therefore default 'admin'-'admin' is created.");
+//		
+//		User admin = new User();
+//		admin.setUsername("admin");
+//		admin.setPassword("admin");
+//		admin.setFirstname("Havelock");
+//		admin.setLastname("Vetinari");
+//		admin.setEmail("none@mail.com");
+//		
+//		
+//		Board board = new Board("DemoBoard");
+//		
+//		Collection<Row> rows = board.getBoardRows();
+//		rows.add(new Row("high"));
+//		rows.add(new Row("medium"));
+//		rows.add(new Row("low"));		
+////		board.setBoardRows(rows);
+//		
+//		Collection<Column> cols = board.getBoardColumns();
+//		cols.add(new Column("Todo"));
+//		cols.add(new Column("inProgress"));
+//		cols.add(new Column("Backlog"));
+//		
+//		admin.getBoards().add(board);
+//		
+//		userDAO.addUser(admin);
 	}
 } 

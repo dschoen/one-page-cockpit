@@ -1,62 +1,32 @@
 package de.dschoen.opco.user;
 
-import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import de.dschoen.opco.board.model.Board;
 import de.dschoen.opco.board.model.Card;
 
-@Entity
-@Table(name="users")
-public class User implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="user_id")
+public class User {
+
     private int userId;  
-	
-	@Column(name="username", unique=true, length = 50)
+
     private String username;
-	
-	@Column(name="firstname", length = 100)
+
     private String firstname;
-	
-	@Column(name="lastname", length = 100)
+
     private String lastname;
 
-	@Column(name="email")
     private String email;
-	
-	@Column(name="password")
+
     private String password;
-	
-	@Column(name="create_date")
+
     private Instant createDate;
-	
-	@Column(name="last_login")
+
     private Instant lastLogin;
-	
-	@JsonIgnore
-	@ManyToMany(cascade = CascadeType.ALL)
+
 	private Collection<Board> boards = new ArrayList<Board>();
 
-	@JsonIgnore
-	@ManyToMany(cascade = CascadeType.ALL)
 	private Collection<Card> cards = new ArrayList<Card>();
 	
 	// -----------------------------------------------

@@ -1,15 +1,17 @@
 package de.dschoen.opco.board.persist;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import de.dschoen.opco.board.model.Board;
-import de.dschoen.opco.board.model.BoardColumn;
-import de.dschoen.opco.board.model.BoardRow;
+import de.dschoen.opco.board.model.Column;
+import de.dschoen.opco.board.model.Row;
 
 public interface BoardDao {
 
-	public Board getBoardById(int id);
-	public List<Board> getAllBoards();
+	public void init();
+	
+	public ArrayList<Board> getAllBoards();
+	public Board getBoardById(int id);	
 	
 	public Board addBoard(Board board);
 	public Board updateBoard(Board board);
@@ -17,6 +19,6 @@ public interface BoardDao {
 	
 	public int countBoards();
 	
-	public BoardColumn getBoardColumnById(int id);
-	public BoardRow getBoardRowById(int id);
+	public Column getBoardColumnById(int id);
+	public Row getBoardRowById(int id);
 }

@@ -11,8 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import de.dschoen.opco.board.model.Board;
-import de.dschoen.opco.board.model.BoardColumn;
-import de.dschoen.opco.board.model.BoardRow;
+import de.dschoen.opco.board.model.Column;
+import de.dschoen.opco.board.model.Row;
 import de.dschoen.opco.board.model.Card;
 import de.dschoen.opco.board.persist.BoardDao;
 import de.dschoen.opco.board.persist.CardDao;
@@ -27,19 +27,19 @@ public class CardDaoTest {
 	private BoardDao bdao;
 	
 	private Board board;
-	private BoardRow boardRow;
-	private BoardColumn boardColumn;
+	private Row boardRow;
+	private Column boardColumn;
 	
 	@Before
 	public void createBoard() {
-		boardRow 	= Util.rowDummy("Reihe");
-		boardColumn = Util.columnDummy("Spalte");
-		board 		= Util.boardDummy("TestBoard");
-		
-		board.addBoardColumn(boardColumn);
-		board.addBoardRow(boardRow);
-		
-		bdao.addBoard(board);
+//		boardRow 	= Util.rowDummy("Reihe");
+//		boardColumn = Util.columnDummy("Spalte");
+//		board 		= Util.boardDummy("TestBoard");
+//		
+//		board.addBoardColumn(boardColumn);
+//		board.addBoardRow(boardRow);
+//		
+//		bdao.addBoard(board);
 	}	
 	
 	@Test
