@@ -1,9 +1,9 @@
 package de.dschoen.opco;
 
-import de.dschoen.opco.board.Board;
-import de.dschoen.opco.board.BoardColumn;
-import de.dschoen.opco.board.BoardRow;
-import de.dschoen.opco.board.Card;
+import de.dschoen.opco.board.model.Board;
+import de.dschoen.opco.board.model.BoardColumn;
+import de.dschoen.opco.board.model.BoardRow;
+import de.dschoen.opco.board.model.Card;
 
 public class Util {
 

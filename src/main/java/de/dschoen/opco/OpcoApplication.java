@@ -4,7 +4,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import de.dschoen.opco.demo.DemoServiceImpl;
 import de.dschoen.opco.user.UserServiceImpl;
 
 @SpringBootApplication
@@ -16,8 +15,6 @@ public class OpcoApplication {
 		
 		// init
 		context.getBean(UserServiceImpl.class).init();
-		
-		// demo
-		context.getBean(DemoServiceImpl.class).createDemoData();
+
 	}
 }

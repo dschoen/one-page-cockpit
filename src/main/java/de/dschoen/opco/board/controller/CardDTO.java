@@ -1,4 +1,4 @@
-package de.dschoen.opco.board;
+package de.dschoen.opco.board.controller;
 
 public class CardDTO {
 				

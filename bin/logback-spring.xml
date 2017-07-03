@@ -9,18 +9,18 @@
 	</appender>
 
 	<!-- File Log -->
-	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+	<!-- <appender name="FILE" class="ch.qos.logback.core.FileAppender">
 		<file>/home/developer/Logs/opco.log</file>
 		<append>true</append>
 		<encoder>
 			<pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level - %msg%n</pattern>
 		</encoder>
-	</appender>
+	</appender> -->
 
 	<!-- Log of Opco -->
 	<logger name="de.dschoen.opco" level="debug" additivity="false">
 		<appender-ref ref="STDOUT" />
-		<appender-ref ref="FILE" />
+		<!-- <appender-ref ref="FILE" /> -->
 	</logger>
 
 </configuration>

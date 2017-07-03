@@ -1,4 +1,4 @@
-package de.dschoen.opco.board;
+package de.dschoen.opco.board.persist;
 
 import java.time.Instant;
 import java.util.List;
@@ -8,6 +8,8 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import de.dschoen.opco.board.model.Card;
 
 @Transactional
 @Repository

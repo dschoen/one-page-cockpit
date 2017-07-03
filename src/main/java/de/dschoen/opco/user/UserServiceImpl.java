@@ -10,9 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import de.dschoen.opco.board.Board;
-import de.dschoen.opco.board.BoardColumn;
-import de.dschoen.opco.board.BoardRow;
+import de.dschoen.opco.board.model.Board;
+import de.dschoen.opco.board.model.BoardColumn;
+import de.dschoen.opco.board.model.BoardRow;
 
 @Service
 public class UserServiceImpl implements UserService {

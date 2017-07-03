@@ -1,6 +1,12 @@
-package de.dschoen.opco.board;
+package de.dschoen.opco.board.services;
 
 import java.util.List;
+
+import de.dschoen.opco.board.controller.CardDTO;
+import de.dschoen.opco.board.model.Board;
+import de.dschoen.opco.board.model.BoardColumn;
+import de.dschoen.opco.board.model.BoardRow;
+import de.dschoen.opco.board.model.Card;
 
 public interface BoardService {
 

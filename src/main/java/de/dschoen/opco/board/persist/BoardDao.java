@@ -1,6 +1,10 @@
-package de.dschoen.opco.board;
+package de.dschoen.opco.board.persist;
 
 import java.util.List;
+
+import de.dschoen.opco.board.model.Board;
+import de.dschoen.opco.board.model.BoardColumn;
+import de.dschoen.opco.board.model.BoardRow;
 
 public interface BoardDao {
 

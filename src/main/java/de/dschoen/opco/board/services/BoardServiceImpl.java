@@ -1,4 +1,4 @@
-package de.dschoen.opco.board;
+package de.dschoen.opco.board.services;
 
 import java.time.Instant;
 import java.util.List;
@@ -7,6 +7,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import de.dschoen.opco.board.controller.CardDTO;
+import de.dschoen.opco.board.model.Board;
+import de.dschoen.opco.board.model.BoardColumn;
+import de.dschoen.opco.board.model.BoardRow;
+import de.dschoen.opco.board.model.Card;
+import de.dschoen.opco.board.persist.BoardDao;
+import de.dschoen.opco.board.persist.CardDao;
 
 @Service
 public class BoardServiceImpl implements BoardService{

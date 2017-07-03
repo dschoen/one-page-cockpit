@@ -16,8 +16,8 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import de.dschoen.opco.board.Board;
-import de.dschoen.opco.board.Card;
+import de.dschoen.opco.board.model.Board;
+import de.dschoen.opco.board.model.Card;
 
 @Entity
 @Table(name="users")

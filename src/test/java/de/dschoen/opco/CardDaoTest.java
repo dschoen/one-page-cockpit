@@ -10,12 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import de.dschoen.opco.board.Board;
-import de.dschoen.opco.board.BoardColumn;
-import de.dschoen.opco.board.BoardDao;
-import de.dschoen.opco.board.BoardRow;
-import de.dschoen.opco.board.Card;
-import de.dschoen.opco.board.CardDao;
+import de.dschoen.opco.board.model.Board;
+import de.dschoen.opco.board.model.BoardColumn;
+import de.dschoen.opco.board.model.BoardRow;
+import de.dschoen.opco.board.model.Card;
+import de.dschoen.opco.board.persist.BoardDao;
+import de.dschoen.opco.board.persist.CardDao;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

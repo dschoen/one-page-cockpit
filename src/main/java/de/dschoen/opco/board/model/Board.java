@@ -1,4 +1,4 @@
-package de.dschoen.opco.board;
+package de.dschoen.opco.board.model;
 
 import java.io.Serializable;
 import java.time.Instant;

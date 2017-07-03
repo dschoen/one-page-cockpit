@@ -1,4 +1,4 @@
-package de.dschoen.opco.board;
+package de.dschoen.opco.board.controller;
 
 import java.util.List;
 
@@ -23,6 +23,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
 import de.dschoen.opco.user.UserService;
+import de.dschoen.opco.board.model.Board;
+import de.dschoen.opco.board.model.Card;
+import de.dschoen.opco.board.services.BoardService;
 import de.dschoen.opco.user.User;
 
 @Controller

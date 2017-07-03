@@ -1,6 +1,8 @@
-package de.dschoen.opco.board;
+package de.dschoen.opco.board.persist;
 
 import java.util.List;
+
+import de.dschoen.opco.board.model.Card;
 
 public interface CardDao {
 
