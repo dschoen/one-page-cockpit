@@ -133,9 +133,9 @@ public class BoardServiceImpl implements BoardService{
 		card.setEffort(cardDTO.effort);
 		
 		// get Board, Row and Column
-		card.setBoard(this.getBoardById(cardDTO.boardId));
-		card.setBoardColumn(this.getBoardColumnById(cardDTO.boardColumnId));
-		card.setBoardRow(this.getBoardRowById(cardDTO.boardRowId));
+//		card.setBoard(this.getBoardById(cardDTO.boardId));
+//		card.setBoardColumn(this.getBoardColumnById(cardDTO.boardColumnId));
+//		card.setBoardRow(this.getBoardRowById(cardDTO.boardRowId));
 		
 
 		if (cardDTO.startDate != null) {			

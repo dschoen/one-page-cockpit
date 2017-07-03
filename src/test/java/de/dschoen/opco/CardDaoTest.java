@@ -46,9 +46,9 @@ public class CardDaoTest {
 	public void addAndGetCardTest() {
 		
 		Card card = Util.cardDummy("Test1");
-		card.setBoard(board);
-		card.setBoardColumn(boardColumn);
-		card.setBoardRow(boardRow);		
+//		card.setBoard(board);
+//		card.setBoardColumn(boardColumn);
+//		card.setBoardRow(boardRow);		
 		card = dao.addCard(card);
 		
 		Card card2 = dao.getCardById(card.getCardId());
@@ -61,9 +61,9 @@ public class CardDaoTest {
 	public void updateCardTest() {
 		
 		Card card = Util.cardDummy("Test1");
-		card.setBoard(board);
-		card.setBoardColumn(boardColumn);
-		card.setBoardRow(boardRow);		
+//		card.setBoard(board);
+//		card.setBoardColumn(boardColumn);
+//		card.setBoardRow(boardRow);		
 		card = dao.addCard(card);
 		
 		card.setText("NEU");
@@ -78,9 +78,9 @@ public class CardDaoTest {
 		int c1 = dao.countCards();
 		
 		Card card = Util.cardDummy("Test1");
-		card.setBoard(board);
-		card.setBoardColumn(boardColumn);
-		card.setBoardRow(boardRow);		
+//		card.setBoard(board);
+//		card.setBoardColumn(boardColumn);
+//		card.setBoardRow(boardRow);		
 		card = dao.addCard(card);
 		
 		int c2 = dao.countCards();

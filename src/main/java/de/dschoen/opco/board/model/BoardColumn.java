@@ -25,9 +25,6 @@ public class BoardColumn implements Serializable{
 	
 	// --- Constructor -------------------------------
 	
-	public BoardColumn() {
-	}
-	
 	public BoardColumn(String name) {
 		this.name = name;
 	}

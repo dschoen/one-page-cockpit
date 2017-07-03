@@ -53,11 +53,7 @@ public class CardDaoImpl implements CardDao {
 		crd.setStatus(card.getStatus());
 		crd.setEffort(card.getEffort());
 		crd.setStartDate(card.getStartDate());
-		crd.setEndDate(card.getEndDate());
-		
-		crd.setBoardColumn(card.getBoardColumn());
-		crd.setBoardRow(card.getBoardRow());		
-		
+		crd.setEndDate(card.getEndDate());				
 		crd.setLastUpdate(Instant.now());
 		
 		entityManager.flush();

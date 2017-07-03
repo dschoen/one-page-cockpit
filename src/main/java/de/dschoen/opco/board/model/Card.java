@@ -2,19 +2,18 @@ package de.dschoen.opco.board.model;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="cards")
@@ -41,20 +40,7 @@ public class Card implements Serializable{
 	
 	@Column(name="active")
 	@NotNull
-    private boolean active;
-
-	@ManyToOne
-	@JoinColumn(name="board_row_id")
-    private BoardRow boardRow;
-	
-	@ManyToOne
-	@JoinColumn(name="board_column_id")
-    private BoardColumn boardColumn;
-	
-	@JsonIgnore
-	@ManyToOne
-	@JoinColumn(name="board_id")
-    private Board board;
+    private boolean active;	
 	
 	@Column(name="create_date")
     private Instant createDate;
@@ -68,6 +54,23 @@ public class Card implements Serializable{
 	@Column(name="last_update")
     private Instant lastUpdate;
 
+//	@ManyToMany
+//	@JoinTable(name="cards_boards", 
+//		joinColumns=@JoinColumn(name="card_id"), 
+//		inverseJoinColumns=@JoinColumn(name="board_id"))
+    private ArrayList<Board> boards = new ArrayList<Board>();
+
+//	@ManyToMany
+//	@JoinTable(name="cards_board_columns", 
+//		joinColumns=@JoinColumn(name="card_id"), 
+//		inverseJoinColumns=@JoinColumn(name="board_column_id"))
+    private ArrayList<BoardColumn> boardColumns = new ArrayList<BoardColumn>();
+	
+//	@ManyToMany
+//	@JoinTable(name="cards_board_rows", 
+//		joinColumns=@JoinColumn(name="card_id"), 
+//		inverseJoinColumns=@JoinColumn(name="board_row_id"))
+    private ArrayList<BoardRow> boardRows = new ArrayList<BoardRow>();
 	
 	// --- Constructor -----------------------------
 	
@@ -117,30 +120,6 @@ public class Card implements Serializable{
 		this.effort = effort;
 	}
 
-	public BoardRow getBoardRow() {
-		return boardRow;
-	}
-
-	public void setBoardRow(BoardRow boardRow) {
-		this.boardRow = boardRow;
-	}
-
-	public BoardColumn getBoardColumn() {
-		return boardColumn;
-	}
-
-	public void setBoardColumn(BoardColumn boardColumn) {
-		this.boardColumn = boardColumn;
-	}
-
-	public Board getBoard() {
-		return board;
-	}
-
-	public void setBoard(Board board) {
-		this.board = board;
-	}
-
 	public Instant getCreateDate() {
 		return createDate;
 	}
@@ -179,5 +158,17 @@ public class Card implements Serializable{
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+	
+	public ArrayList<Board> getBoards() {
+		return boards;
+	}
+
+	public ArrayList<BoardColumn> getBoardColumns() {
+		return boardColumns;
+	}
+
+	public ArrayList<BoardRow> getBoardRows() {
+		return boardRows;
 	}
 }

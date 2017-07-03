@@ -25,9 +25,6 @@ public class BoardRow implements Serializable{
 	
 	// --- Constructor -------------------------------
 	
-	public BoardRow() {
-	}
-	
 	public BoardRow(String name) {
 		this.name = name;
 	}

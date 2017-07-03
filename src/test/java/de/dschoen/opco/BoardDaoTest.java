@@ -30,8 +30,7 @@ public class BoardDaoTest {
 	
 	@Test
 	public void addAndGetBoardTest() {
-		Board board = new Board();
-		board.setName("JUNIT - Test - Board");		
+		Board board = new Board("JUNIT - Test - Board");
 		board = dao.addBoard(board);
 		
 		Board board2 = dao.getBoardById(board.getBoardId());
@@ -42,8 +41,7 @@ public class BoardDaoTest {
 	
 	@Test
 	public void updateBoardTest() {
-		Board board = new Board();
-		board.setName("JUNIT - Test - Board");
+		Board board = new Board("JUNIT - Test - Board");
 		board = dao.addBoard(board);
 		
 		board.setName("JUNIT-updateBoardTest-Update");		
@@ -55,8 +53,7 @@ public class BoardDaoTest {
 	
 	@Test
 	public void addBoardColumnTest() {
-		Board board = new Board();
-		board.setName("JUNIT-Test-Board");
+		Board board = new Board("JUNIT-Test-Board");
 		board = dao.addBoard(board);
 		
 		assertEquals(board.getBoardColumns().size(), 0);
@@ -71,8 +68,7 @@ public class BoardDaoTest {
 	
 	@Test
 	public void deleteBoardColumnTest() {
-		Board board = new Board();
-		board.setName("JUNIT-Test-Board");
+		Board board = new Board("JUNIT-Test-Board");
 		board = dao.addBoard(board);
 		
 		BoardColumn col = Util.columnDummy("JUNIT-addBoardColumnTest");
@@ -93,8 +89,7 @@ public class BoardDaoTest {
 	
 	@Test
 	public void addBoardRowTest() {
-		Board board = new Board();
-		board.setName("JUNIT-Test-Board");
+		Board board = new Board("JUNIT-Test-Board");
 		board = dao.addBoard(board);
 		
 		assertEquals(board.getBoardRows().size(), 0);
@@ -110,8 +105,7 @@ public class BoardDaoTest {
 	
 	@Test
 	public void deleteBoardRowTest() {
-		Board board = new Board();
-		board.setName("JUNIT-Test-Board");
+		Board board = new Board("JUNIT-Test-Board");
 		board = dao.addBoard(board);
 		
 		BoardRow col = Util.rowDummy("JUNIT-addBoardRowTest");
@@ -144,11 +138,11 @@ public class BoardDaoTest {
 		board = dao.addBoard(board);
 		
 		Card card = Util.cardDummy("JUNIT-deleteBoardTest");
-		card.setBoard(board);
-		card.setBoardColumn(col);
-		card.setBoardRow(row);
-		
-		board.addCard(card);
+//		card.setBoard(board);
+//		card.setBoardColumn(col);
+//		card.setBoardRow(row);
+//		
+//		board.addCard(card);
 		dao.updateBoard(board);
 			
 		int b2 = dao.countBoards();

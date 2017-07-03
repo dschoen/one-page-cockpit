@@ -15,20 +15,17 @@ public class Util {
 	}
 	
 	public static Board boardDummy(String name) {
-		Board board = new Board();
-		board.setName(name);
+		Board board = new Board(name);
 		return board;
 	}
 	
 	public static BoardRow rowDummy(String name) {
-		BoardRow row = new BoardRow();
-		row.setName(name);
+		BoardRow row = new BoardRow(name);
 		return row;
 	}
 	
 	public static BoardColumn columnDummy(String name) {
-		BoardColumn column = new BoardColumn();
-		column.setName(name);
+		BoardColumn column = new BoardColumn(name);
 		return column;
 	}
 }

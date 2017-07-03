@@ -121,7 +121,7 @@ public class UserServiceImpl implements UserService {
 		rows.add(new BoardRow("high"));
 		rows.add(new BoardRow("medium"));
 		rows.add(new BoardRow("low"));		
-		board.setBoardRows(rows);
+//		board.setBoardRows(rows);
 		
 		Collection<BoardColumn> cols = board.getBoardColumns();
 		cols.add(new BoardColumn("Todo"));

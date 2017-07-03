@@ -12,13 +12,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Where;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 
 @Entity
 @Table(name="boards")
@@ -40,25 +38,18 @@ public class Board implements Serializable {
 	@Column(name="last_update", columnDefinition="DATETIME")
     private Instant lastUpdate;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private Collection<BoardColumn> boardColumns = new ArrayList<BoardColumn>();
+//	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private ArrayList<BoardColumn> boardColumns = new ArrayList<BoardColumn>();
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private Collection<BoardRow> boardRows = new ArrayList<BoardRow>();
+//	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private ArrayList<BoardRow> boardRows = new ArrayList<BoardRow>();
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy="board", cascade = CascadeType.ALL)
-	@Where(clause = "active = true")
-	private Collection<Card> cards = new ArrayList<Card>();
+//	@JsonIgnore
+//	@ManyToMany(mappedBy="cards")    
+	private ArrayList<Card> cards = new ArrayList<Card>();
 	
-	@JsonIgnore
-	@OneToMany(mappedBy="board", cascade = CascadeType.ALL)
-	@Where(clause = "active = false")
-	private Collection<Card> disabledCards = new ArrayList<Card>();
 
 	// --- Constructor -------------------------------
-	
-	public Board() {
-	}
 	
 	public Board(String name) {
 		this.name = name;
@@ -172,15 +163,50 @@ public class Board implements Serializable {
 	
 	// -----------------------------------------------
 	
-	public void addCard(Card card) {
-		this.cards.add(card);
-	}
+	
 	
 	// -----------------------------------------------
+	// -----------------------------------------------
 	
-	public void removeCard(Card card) {
-		this.cards.remove(card);
-		//TODO handle Cards
+	
+	// ------------------------------------------------
+	
+	private void removeDeletedRows(Collection<BoardRow> boardRows) {
+		ArrayList<BoardRow> rowsToRemove = new ArrayList<BoardRow>();
+		for (BoardRow row : this.boardRows) {
+			if (!boardRowsContainRow(boardRows, row)) {
+				rowsToRemove.add(row);
+			}
+		}
+		this.boardRows.removeAll(rowsToRemove);
+	}
+	
+	private boolean boardRowsContainRow(Collection<BoardRow> rows, BoardRow row) {
+		for (BoardRow r : rows) {
+			if (r.getBoardRowId() == row.getBoardRowId()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private void removeDeletedColumns(Collection<BoardColumn> boardColumns) {
+		ArrayList<BoardColumn> columnsToRemove = new ArrayList<BoardColumn>();
+		for (BoardColumn column : this.boardColumns) {
+			if (!boardColumnsContainColumn(boardColumns, column)) {
+				columnsToRemove.add(column);
+			}
+		}
+		this.boardColumns.removeAll(columnsToRemove);
+	}
+	
+	private boolean boardColumnsContainColumn(Collection<BoardColumn> columns, BoardColumn column) {
+		for (BoardColumn c : columns) {
+			if (c.getBoardColumnId() == column.getBoardColumnId()) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	// -----------------------------------------------
@@ -221,77 +247,11 @@ public class Board implements Serializable {
 		return boardColumns;
 	}
 
-	public void setBoardColumns(Collection<BoardColumn> boardColumns) {
-		this.boardColumns = boardColumns;
-	}
-
-	public Collection<BoardRow> getBoardRows() {
+	public ArrayList<BoardRow> getBoardRows() {
 		return boardRows;
 	}
 
-	public void setBoardRows(Collection<BoardRow> boardRows) {
-		this.boardRows = boardRows;
-	}
-	
-	public Collection<Card> getCards() {
+	public ArrayList<Card> getCards() {
 		return cards;
-	}
-
-	public void setCards(Collection<Card> cards) {
-		this.cards = cards;
-	}
-
-	public Collection<Card> getDisabledCards() {
-		return disabledCards;
-	}
-
-	public void setDisabledCards(Collection<Card> disabledCards) {
-		this.disabledCards = disabledCards;
-	}
-	
-	// ------------------------------------------------
-	
-	private void removeDeletedRows(Collection<BoardRow> boardRows) {
-		ArrayList<BoardRow> rowsToRemove = new ArrayList<BoardRow>();
-		for (BoardRow row : this.boardRows) {
-			if (!boardRowsContainRow(boardRows, row)) {
-				rowsToRemove.add(row);
-			}
-		}
-		this.boardRows.removeAll(rowsToRemove);
-	}
-	
-	
-	
-	private boolean boardRowsContainRow(Collection<BoardRow> rows, BoardRow row) {
-		for (BoardRow r : rows) {
-			if (r.getBoardRowId() == row.getBoardRowId()) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	
-	
-	private void removeDeletedColumns(Collection<BoardColumn> boardColumns) {
-		ArrayList<BoardColumn> columnsToRemove = new ArrayList<BoardColumn>();
-		for (BoardColumn column : this.boardColumns) {
-			if (!boardColumnsContainColumn(boardColumns, column)) {
-				columnsToRemove.add(column);
-			}
-		}
-		this.boardColumns.removeAll(columnsToRemove);
-	}
-	
-	
-	
-	private boolean boardColumnsContainColumn(Collection<BoardColumn> columns, BoardColumn column) {
-		for (BoardColumn c : columns) {
-			if (c.getBoardColumnId() == column.getBoardColumnId()) {
-				return true;
-			}
-		}
-		return false;
 	}
 }
