@@ -1,5 +1,6 @@
 package de.dschoen.opco.board.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -95,10 +96,14 @@ public class BoardController {
 	// ----------------------------------------------------
 	
 	@GetMapping("boards/{id}/cards")
-	public ResponseEntity<List<Card>> getCardsOfBoard(@PathVariable("id") Integer id) {
+	public ResponseEntity<List<CardDTO>> getCardsOfBoard(@PathVariable("id") Integer id) {
 		Board board = boardService.getBoardById(id);
-		List<Card> cards = (List<Card>)board.getCards();
-		return new ResponseEntity<List<Card>>(cards, HttpStatus.OK);
+		
+		//TODO
+//		List<CardDTO> cards = (List<Card>)board.getCards();
+		List<CardDTO> cards = new ArrayList<CardDTO>();
+		
+		return new ResponseEntity<List<CardDTO>>(cards, HttpStatus.OK);
 	}
 	
 	// ----------------------------------------------------

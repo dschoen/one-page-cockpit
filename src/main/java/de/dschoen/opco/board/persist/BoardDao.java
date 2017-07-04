@@ -8,17 +8,28 @@ import de.dschoen.opco.board.model.Row;
 
 public interface BoardDao {
 
-	public void init();
+	public void createBoardTable();
+	public void createColumnTable();
+	public void createRowTable();
 	
-	public ArrayList<Board> getAllBoards();
+	public boolean boardExistsById(int id);
+	public int countBoards();
+
+	public ArrayList<Board> getBoards();
 	public Board getBoardById(int id);	
-	
-	public Board addBoard(Board board);
+	public Board addBoard(Board board);	
 	public Board updateBoard(Board board);
 	public void deleteBoard(Board board);
 	
-	public int countBoards();
+	public ArrayList<Column> getColumnsOfBoard(Board board);
+	public Column getColumnById(int id);
+	public Column addColumnToBoard(Column column, Board board);
+	public Column updateColumn(Column column);
+	public void deleteColumn(Column column);
 	
-	public Column getBoardColumnById(int id);
-	public Row getBoardRowById(int id);
+	public ArrayList<Row> getRowsOfBoard(Board board);
+	public Row getRowById(int id);
+	public Row addRowToBoard(Row row, Board board);
+	public Row updateRow(Row row);
+	public void deleteRow(Row row);	
 }

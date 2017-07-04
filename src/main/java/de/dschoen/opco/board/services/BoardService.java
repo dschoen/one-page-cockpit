@@ -22,17 +22,18 @@ public class BoardService {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
-	private BoardDao boardDao;
-	
+	private BoardDao boardDao;	
 	@Autowired
 	private CardDao cardDAO;
 	
 	// ----------------------------------------------------
 	/**
-	 * Init Board Module
+	 * Init Board Module. Creates all neccessary tables.
 	 */
 	public void init() {
-		this.boardDao.init();
+		this.boardDao.createBoardTable();
+		this.boardDao.createColumnTable();
+		this.boardDao.createRowTable();
 	}
 	
 	// ----------------------------------------------------
@@ -44,8 +45,8 @@ public class BoardService {
 	
 	// ----------------------------------------------------
 	
-	public ArrayList<Board> getAllBoards(){
-		return boardDao.getAllBoards();
+	public ArrayList<Board> getBoards(){
+		return boardDao.getBoards();
 	}
 	
 	// ----------------------------------------------------
@@ -108,14 +109,14 @@ public class BoardService {
 	// ----------------------------------------------------	
 	
 	public Column getBoardColumnById(int boardColumnId) {
-		Column obj = boardDao.getBoardColumnById(boardColumnId);
+		Column obj = boardDao.getColumnById(boardColumnId);
 		return obj;
 	}
 		
 	// ----------------------------------------------------	
 	
 	public Row getBoardRowById(int boardRowId) {
-		Row obj = boardDao.getBoardRowById(boardRowId);
+		Row obj = boardDao.getRowById(boardRowId);
 		return obj;
 	}
 	

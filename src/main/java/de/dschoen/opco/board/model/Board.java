@@ -1,7 +1,6 @@
 package de.dschoen.opco.board.model;
 
 import java.time.Instant;
-import java.util.ArrayList;
 
 public class Board  {
 
@@ -9,19 +8,17 @@ public class Board  {
     private String name;
     private Instant createDate;
     private Instant lastUpdate;
-    
-    private ArrayList<Column> columns 	= new ArrayList<Column>();
-    private ArrayList<Row> rows 		= new ArrayList<Row>();
-    private ArrayList<Card> cards 		= new ArrayList<Card>();
-    
-	// --- Constructor -------------------------------
-	
-	public Board(String name) {
-		this.name = name;
+    	
+	// --- Factory --------------------------------------------
+
+	public static Board fromName(String name) {
+		Board board = new Board();
+		board.setName(name);
+		return board;
 	}
 	
 	// -----------------------------------------------
-
+	
 	public int getBoardId() {
 		return boardId;
 	}
@@ -52,29 +49,5 @@ public class Board  {
 
 	public void setLastUpdate(Instant lastUpdate) {
 		this.lastUpdate = lastUpdate;
-	}
-
-	public ArrayList<Column> getColumns() {
-		return columns;
-	}
-
-	public void setColumns(ArrayList<Column> columns) {
-		this.columns = columns;
-	}
-
-	public ArrayList<Row> getRows() {
-		return rows;
-	}
-
-	public void setRows(ArrayList<Row> rows) {
-		this.rows = rows;
-	}
-
-	public ArrayList<Card> getCards() {
-		return cards;
-	}
-
-	public void setCards(ArrayList<Card> cards) {
-		this.cards = cards;
 	}	
 }

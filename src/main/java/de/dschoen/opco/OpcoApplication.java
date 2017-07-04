@@ -15,8 +15,11 @@ public class OpcoApplication {
 		ConfigurableApplicationContext context = SpringApplication.run(OpcoApplication.class, args);
 		
 		// init
-//		context.getBean(UserServiceImpl.class).init();
 		context.getBean(BoardService.class).init();
+		
+//		context.getBean(UserServiceImpl.class).init();
 
+
+		
 	}
 }
